@@ -16,38 +16,23 @@
                 fx.colorInit = true;
             }
             if (attr == 'borderColor') {
-                fx.elem.style['borderBottomColor'] = "rgb(" + [
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[0] - fx.start[0])) + fx.start[0]), 255), 0),
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[1] - fx.start[1])) + fx.start[1]), 255), 0),
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[2] - fx.start[2])) + fx.start[2]), 255), 0)
-                ].join(",") + ")";
-                ///
-                fx.elem.style['borderLeftColor'] = "rgb(" + [
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[0] - fx.start[0])) + fx.start[0]), 255), 0),
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[1] - fx.start[1])) + fx.start[1]), 255), 0),
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[2] - fx.start[2])) + fx.start[2]), 255), 0)
-                ].join(",") + ")";
-                ///
-                fx.elem.style['borderRightColor'] = "rgb(" + [
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[0] - fx.start[0])) + fx.start[0]), 255), 0),
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[1] - fx.start[1])) + fx.start[1]), 255), 0),
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[2] - fx.start[2])) + fx.start[2]), 255), 0)
-                ].join(",") + ")";
-                ///
-                fx.elem.style['borderTopColor'] = "rgb(" + [
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[0] - fx.start[0])) + fx.start[0]), 255), 0),
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[1] - fx.start[1])) + fx.start[1]), 255), 0),
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[2] - fx.start[2])) + fx.start[2]), 255), 0)
-                ].join(",") + ")";
+                changeRGB('borderTopColor', fx);
+                changeRGB('borderRightColor', fx);
+                changeRGB('borderLeftColor', fx);
+                changeRGB('borderBottomColor', fx);
             } else {
-                fx.elem.style[attr] = "rgb(" + [
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[0] - fx.start[0])) + fx.start[0]), 255), 0),
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[1] - fx.start[1])) + fx.start[1]), 255), 0),
-                Math.max(Math.min(parseInt((fx.pos * (fx.end[2] - fx.start[2])) + fx.start[2]), 255), 0)
-                ].join(",") + ")";
+                changeRGB(attr, fx);
             }
         }
     });
+
+    function changeRGB(attr, fx) {
+        fx.elem.style[attr] = "rgb(" + [
+        Math.max(Math.min(parseInt((fx.pos * (fx.end[0] - fx.start[0])) + fx.start[0]), 255), 0),
+        Math.max(Math.min(parseInt((fx.pos * (fx.end[1] - fx.start[1])) + fx.start[1]), 255), 0),
+        Math.max(Math.min(parseInt((fx.pos * (fx.end[2] - fx.start[2])) + fx.start[2]), 255), 0)
+        ].join(",") + ")";
+    }
 
     // Color Conversion functions from highlightFade
     // By Blair Mitchelmore
