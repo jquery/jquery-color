@@ -288,41 +288,4 @@
 		}
 
 	});
-
-	$.Color.elemColor = function( el, attr ) {
-		var color ;
-
-		do {
-			color = $.curCSS( el, attr );
-
-			if ( color || !el || !el.style ) {
-				break;
-			}
-
-			attr = "backgroundColor";
-		} while ( el = el.parentNode );
-		return $.Color( color );
-	};
-	
-
-	// OLD 1.0 stuff still around
-	// REMOVE EVENTUALLY
-    function getColor(elem, attr) {
-        var color;
-
-        do {
-            color = jQuery.curCSS(elem, attr);
-
-            // Keep going until we find an element that has color, or we hit the body
-            if ( color != '' && color != 'transparent' || jQuery.nodeName(elem, "body") )
-                break;
-
-            attr = "backgroundColor";
-        } while ( elem = elem.parentNode );
-
-        return $.Color(color);
-    };
-
-	
-
 })(jQuery);
