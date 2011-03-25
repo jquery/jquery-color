@@ -1,15 +1,20 @@
 module("parse", { teardown: moduleTeardown });
 
-function parseTest( str, results ) {
-	test("jQuery.Color( '"+str+"' )", function() {
+function parseTest( str, results, descr ) {
+	test(descr || "jQuery.Color( '"+str+"' )", function() {
 		expect( results.expect );
-		var color = jQuery.Color( str );
+		var color = descr ? str : jQuery.Color( str );
 		$.each( results, function( key , value ) {
 			if ( key == 'expect' ) return;
 			equals(color[ key ](), value, "."+key+"() is "+value);
 		});
 	});
 }
+
+parseTest( jQuery.Color( 255, 255, 255 ), { expect: 4, red: 255, green: 255, blue: 255, alpha: 1 }, "jQuery.color( 255, 255, 255 )" );
+
+parseTest( jQuery.Color([255,255,255]), { expect: 4, red: 255, green: 255, blue: 255, alpha: 1 },
+"jQuery.color([ 255, 255, 255 ])");
 
 parseTest( '', {
 	expect: 4,
@@ -62,3 +67,9 @@ parseTest('transparent', {
 	blue: undefined,
 	alpha: 0
 });
+
+module("color", { teardown: moduleTeardown });
+test("Simple Setters", function() {
+	var color = $.Color( [0,0,0] );
+	
+})

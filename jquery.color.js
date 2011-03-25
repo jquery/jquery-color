@@ -110,7 +110,13 @@
 					rgba = this._rgba = [],
 					source;
 
-				if ( $.type( color ) == "string" ) {
+				// more than 1 argument specified - assume ( red, green, blue, alpha )
+				if ( green ) {
+					color = [ color, green, blue, alpha ];
+					type = 'array';
+				}
+
+				if ( type == "string" ) {
 					$.each( stringParsers, function( i, parser ) {
 						var match = parser.re.exec( color ),
 							values = match && parser.parse( match );
@@ -131,9 +137,13 @@
 					}
 					
 					// named colors / default
-					source = colors[ color ] || colors._default;
+					color = colors[ color ] || colors._default;
+					type = 'array';
+				}
+				
+				if ( type == 'array' ) {
 					$.each( rgbaspace, function( key, prop ) {
-						rgba[ prop.idx ] = clamp( source[ prop.idx ], prop );
+						rgba[ prop.idx ] = clamp( color[ prop.idx ], prop );
 					});
 					return this;
 				}
