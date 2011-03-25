@@ -158,8 +158,17 @@
 				$.each( rgbaspace, function( key, prop ) {
 					var s = start[ prop.idx ],
 						e = end[ prop.idx ];
-					console.log( key, s, e );
-					rgba[ prop.idx ] = clamp( ( e - s ) * distance + s, prop );
+
+					// if undefined, don't override start value
+					if ( e === undefined ) {
+						return;
+					}
+					// if undefined - use end
+					if ( s === undefined ) { 
+						rgba[ prop.idx ] = e; 
+					} else {
+						rgba[ prop.idx ] = clamp( ( e - s ) * distance + s, prop );
+					}
 				});
 				return color( rgba );
 			},

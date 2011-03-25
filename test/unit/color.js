@@ -1,9 +1,10 @@
 module("parse", { teardown: moduleTeardown });
 
 function testParts( color, parts ) {
+	var prefix = parts.prefix || '';
 	$.each( parts, function( key , value ) {
-		if ( key == 'expect' ) return;
-		equals(color[ key ](), value, "."+key+"() is "+value);
+		if ( key == 'expect' || key == 'prefix' ) return;
+		equals(color[ key ](), value, prefix + "."+key+"() is "+value);
 	});	
 }
 
@@ -97,11 +98,26 @@ test("red green blue alpha Setters", function() {
 
 test(".transition()", function() {
 	var black = $.Color('black'),
-		white = $.Color('white').alpha(0.5),
-		fifty = black.transition(white, 0.5);
+		whiteAlpha = $.Color('white').alpha(0.5),
+		trans = $.Color('transparent');
+		fifty = black.transition(whiteAlpha, 0.5);
 	
-	expect( 4 );
-	testParts( fifty, { red: 127, green: 127, blue: 127, alpha: 0.75 });
+	expect( 12 );
+	testParts( fifty, {
+		prefix: 'black -> whiteAlpha 0.5',
+		red: 127,
+		green: 127,
+		blue: 127,
+		alpha: 0.75
+	});
+	testParts( black.transition(trans, 0.5), { 
+		prefix: 'black -> transparent 0.5 ',
+		red: 0, green: 0, blue: 0, alpha: 0.5
+	});
+	testParts( whiteAlpha.transition(trans, 0.5), { 
+		prefix: 'whiteAlpha -> transparent 0.5 ',
+		red: 255, green: 255, blue: 255, alpha: 0.25
+	});
 	
 });
 
