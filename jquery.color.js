@@ -107,6 +107,12 @@
 		color.fn = color.prototype = {
 			constructor: color,
 			parse: function( color, green, blue, alpha ) {
+				if ( color.jquery || color.nodeType ) {
+					color = color.jquery ? color.css( green ) :
+						color.nodeType ? $( color ).css( green ) :
+						color;
+					green = undefined;
+				}
 
 				var type = $.type( color ),
 					rgba = this._rgba = [],
@@ -269,59 +275,38 @@
 			_default: [ 255, 255, 255 ]
 		};
 
+	// add .fx.step functions
+	$.each( stepHooks, function( i, hook ) {
+		$.fx.step[ hook ] = function( fx ) {
+			if ( !fx.colorInit ) {
+				fx.start = color( fx.elem, hook );
+				fx.end = color( fx.end );
+				fx.colorInit = true;
+			}
+
+			fx.elem.style[ hook ] = fx.start.transition( fx.end, fx.pos ).toRgbaString();
+		}
+
+	});
+
+	$.Color.elemColor = function( el, attr ) {
+		var color ;
+
+		do {
+			color = $.curCSS( el, attr );
+
+			if ( color || !el || !el.style ) {
+				break;
+			}
+
+			attr = "backgroundColor";
+		} while ( el = el.parentNode );
+		return $.Color( color );
+	};
+	
 
 	// OLD 1.0 stuff still around
 	// REMOVE EVENTUALLY
-
-    // We override the animation for all of these color styles
-    jQuery.each(['backgroundColor', 'borderBottomColor', 'borderLeftColor', 'borderRightColor', 'borderTopColor', 'color', 'outlineColor'], function(i,attr){
-        jQuery.fx.step[attr] = function(fx){
-            if ( !fx.colorInit ) {
-                fx.start = color( getColor( fx.elem, attr ) );
-                fx.end = color( fx.end );
-                fx.colorInit = true;
-            }
-
-            fx.elem.style[attr] = fx.start.transition( fx.end, fx.pos ).toRgbaString();
-        }
-    });
-
-    // Color Conversion functions from highlightFade
-    // By Blair Mitchelmore
-    // http://jquery.offput.ca/highlightFade/
-
-    // Parse strings looking for color tuples [ 255, 255, 255 ]
-    function getRGB(color) {
-        var result;
-
-        // Check if we're already dealing with an array of colors
-        if ( color && color.constructor == Array && color.length == 3 )
-            return color;
-
-        // Look for rgb(num,num,num)
-        if (result = /rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)/.exec(color))
-            return [parseInt(result[1]), parseInt(result[2]), parseInt(result[3])];
-
-        // Look for rgb(num%,num%,num%)
-        if (result = /rgb\(\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*\)/.exec(color))
-            return [parseFloat(result[1])*2.55, parseFloat(result[2])*2.55, parseFloat(result[3])*2.55];
-
-        // Look for #a0b1c2
-        if (result = /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/.exec(color))
-            return [parseInt(result[1],16), parseInt(result[2],16), parseInt(result[3],16)];
-
-        // Look for #fff
-        if (result = /#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/.exec(color))
-            return [parseInt(result[1]+result[1],16), parseInt(result[2]+result[2],16), parseInt(result[3]+result[3],16)];
-
-        // Look for rgba(0, 0, 0, 0) == transparent in Safari 3
-        if (result = /rgba\(0, 0, 0, 0\)/.exec(color))
-            return colors['transparent'];
-
-        // Otherwise, we're most likely dealing with a named color
-        return colors[jQuery.trim(color).toLowerCase()];
-    }
-
     function getColor(elem, attr) {
         var color;
 
@@ -335,7 +320,7 @@
             attr = "backgroundColor";
         } while ( elem = elem.parentNode );
 
-        return getRGB(color);
+        return $.Color(color);
     };
 
 	
