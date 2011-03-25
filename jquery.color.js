@@ -119,6 +119,7 @@
 				}
 
 				if ( type == "string" ) {
+					color = color.toLowerCase();
 					$.each( stringParsers, function( i, parser ) {
 						var match = parser.re.exec( color ),
 							values = match && parser.parse( match );
@@ -142,13 +143,34 @@
 					color = colors[ color ] || colors._default;
 					type = 'array';
 				}
-				
+
 				if ( type == 'array' ) {
 					$.each( rgbaspace, function( key, prop ) {
 						rgba[ prop.idx ] = clamp( color[ prop.idx ], prop );
 					});
 					return this;
 				}
+			},
+			transition: function( other, distance ) {
+				var start = this._rgba,
+					end = other._rgba,
+					rgba = start.slice();
+				$.each( rgbaspace, function( key, prop ) {
+					var s = start[ prop.idx ],
+						e = end[ prop.idx ];
+					console.log( key, s, e );
+					rgba[ prop.idx ] = clamp( ( e - s ) * distance + s, prop );
+				});
+				return color( rgba );
+			},
+			toRgbaString: function() {
+				var rgba = this._rgba;
+
+				if ( rgba[ 3 ] == 1 ) {
+					rgba.length = 3;
+				}
+				
+				return ( rgba.length == 3 ? "rgb(" : "rgba(" ) + rgba.join(",") + ")";
 			}
 		};
 		color.fn.parse.prototype = color.fn;
@@ -246,16 +268,12 @@
     jQuery.each(['backgroundColor', 'borderBottomColor', 'borderLeftColor', 'borderRightColor', 'borderTopColor', 'color', 'outlineColor'], function(i,attr){
         jQuery.fx.step[attr] = function(fx){
             if ( !fx.colorInit ) {
-                fx.start = getColor( fx.elem, attr );
-                fx.end = getRGB( fx.end );
+                fx.start = color( getColor( fx.elem, attr ) );
+                fx.end = color( fx.end );
                 fx.colorInit = true;
             }
 
-            fx.elem.style[attr] = "rgb(" + [
-                Math.max(Math.min( parseInt((fx.pos * (fx.end[0] - fx.start[0])) + fx.start[0]), 255), 0),
-                Math.max(Math.min( parseInt((fx.pos * (fx.end[1] - fx.start[1])) + fx.start[1]), 255), 0),
-                Math.max(Math.min( parseInt((fx.pos * (fx.end[2] - fx.start[2])) + fx.start[2]), 255), 0)
-            ].join(",") + ")";
+            fx.elem.style[attr] = fx.start.transition( fx.end, fx.pos ).toRgbaString();
         }
     });
 

@@ -1,17 +1,24 @@
 module("parse", { teardown: moduleTeardown });
 
+function testParts( color, parts ) {
+	$.each( parts, function( key , value ) {
+		if ( key == 'expect' ) return;
+		equals(color[ key ](), value, "."+key+"() is "+value);
+	});	
+}
+
 function parseTest( str, results, descr ) {
 	test(descr || "jQuery.Color( '"+str+"' )", function() {
 		expect( results.expect );
 		var color = descr ? str : jQuery.Color( str );
-		$.each( results, function( key , value ) {
-			if ( key == 'expect' ) return;
-			equals(color[ key ](), value, "."+key+"() is "+value);
-		});
+		testParts( color, results );
 	});
 }
 
-parseTest( jQuery.Color( 255, 255, 255 ), { expect: 4, red: 255, green: 255, blue: 255, alpha: 1 }, "jQuery.color( 255, 255, 255 )" );
+test("jQuery.color( 255, 255, 255 )", function() {
+	expect(4);
+	testParts( jQuery.Color(255, 255, 255), { expect: 4, red: 255, green: 255, blue: 255, alpha: 1 });
+});
 
 parseTest( jQuery.Color([255,255,255]), { expect: 4, red: 255, green: 255, blue: 255, alpha: 1 },
 "jQuery.color([ 255, 255, 255 ])");
@@ -84,6 +91,26 @@ test("red green blue alpha Setters", function() {
 		equals( clamped[ fn ](), clamp, "color."+fn+"("+(clamp+1)+") clamped at "+clamp);
 		equals( color[ fn ](), 0, "color."+fn+"() still 0");
 		equals( plused[ fn ](), 1, "color."+fn+"('+=1')");
-	})
+	});
 	
-})
+});
+
+test(".transition()", function() {
+	var black = $.Color('black'),
+		white = $.Color('white').alpha(0.5),
+		fifty = black.transition(white, 0.5);
+	
+	expect( 4 );
+	testParts( fifty, { red: 127, green: 127, blue: 127, alpha: 0.75 });
+	
+});
+
+test(".toRgbaString()", function() {
+	var black = $.Color('black'),
+		trans = black.alpha(0.5);
+	
+	expect( 2 );
+	equals( black.toRgbaString(), "rgb(0,0,0)" );
+	equals( trans.toRgbaString(), "rgba(0,0,0,0.5)" );
+	
+});
