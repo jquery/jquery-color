@@ -1,0 +1,1 @@
+module("color", { teardown: moduleTeardown });
