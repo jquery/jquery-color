@@ -7,6 +7,8 @@
 (function(jQuery){
 	var stepHooks = 'backgroundColor borderBottomColor borderLeftColor borderRightColor borderTopColor color outlineColor'.split(' '),
 
+		// plusequals test for += 100 -= 100
+		rplusequals = /^([-+])=\s*(\d+\.?\d*)/,
 		// a set of RE's that can match strings and generate color tuples.
 		stringParsers = [{
 				re: /rgba?\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*(?:,\s*([0-9]+(?:\.[0-9]+))\s*)?\)/, 
@@ -155,23 +157,30 @@
 		$.each( rgbaspace, function( key, prop ) {
 			color.fn[ key ] = function( value ) {
 				var vtype = $.type( value ),
-					copy;
+					cur = this._rgba[ prop.idx ],
+					copy, match;
 
 				// called as a setter
 				if ( arguments.length ) {
 					if ( $.isFunction( value ) ) {
-						value = value.call( this, this._rgba[ prop.idx ] );
+						value = value.call( this, cur );
 					}
 					if ( value === undefined && prop.empty ) {
 						return this;
 					}
 
+					if ( $.type( value ) == 'string') {
+						match = rplusequals.exec( value );
+						if ( match ) {
+							value = cur + parseFloat( match[ 2 ] ) * ( match[ 1 ] == '+' ? 1 : -1 );
+						}
+					}
 					// chain
 					copy = this._rgba.slice();
 					copy[ prop.idx ] = clamp(value, prop);
 					return color(copy);
 				} else {
-					return this._rgba[ prop.idx ];
+					return cur;
 				}
 			};
 		});
