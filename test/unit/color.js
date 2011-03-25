@@ -70,6 +70,18 @@ parseTest('transparent', {
 
 module("color", { teardown: moduleTeardown });
 test("Simple Setters", function() {
-	var color = $.Color( [0,0,0] );
+	var props = 'red green blue alpha'.split(' ');
+	expect( 3 * props.length );
+	var color = $.Color( [0,0,0,0] );
+	$.each( props, function( i, fn ) {
+		var tv = fn=='alpha' ? 0.5 : 255,
+			set = color[ fn ]( tv ),
+			clamp = fn=='alpha' ? 1 : 255,
+			clamped = color[ fn ]( clamp + 1 );
+
+		equals( set[ fn ](), tv, "color."+fn+"("+tv+")."+fn+"()");
+		equals( clamped[ fn ](), clamp, "color."+fn+"("+(clamp+1)+") clamped at "+clamp);
+		equals( color[ fn ](), 0, "color."+fn+"() still 0");
+	})
 	
 })
