@@ -211,6 +211,7 @@
 				}).join("");
 			}
 		};
+		color.fn.toString = color.fn.toRgbaString;
 		color.fn.parse.prototype = color.fn;
 
 		// Create .red() .green() .blue() .alpha()
