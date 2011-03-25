@@ -108,9 +108,7 @@
 			constructor: color,
 			parse: function( color, green, blue, alpha ) {
 				if ( color.jquery || color.nodeType ) {
-					color = color.jquery ? color.css( green ) :
-						color.nodeType ? $( color ).css( green ) :
-						color;
+					color = color.jquery ? color.css( green ) : $( color ).css( green );;
 					green = undefined;
 				}
 
@@ -191,7 +189,7 @@
 				}));
 			},
 			toRgbaString: function() {
-				var rgba = this._rgba;
+				var rgba = this._rgba.slice();
 
 				if ( rgba[ 3 ] == 1 ) {
 					rgba.length = 3;
@@ -200,8 +198,10 @@
 				return ( rgba.length == 3 ? "rgb(" : "rgba(" ) + rgba.join(",") + ")";
 			},
 			toHexString: function( includeAlpha ) {
-				var rgba = this._rgba;
-				if ( !includeAlpha ) rgba.length = 3;
+				var rgba = this._rgba.slice();
+				if ( !includeAlpha ) {
+					rgba.length = 3;
+				}
 
 				return '#' + $.map( rgba, function( v, i ) {
 					var fac = ( i == 3 ) ? 255 : 1,

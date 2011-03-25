@@ -163,6 +163,19 @@ test(".toHexString()", function() {
 	
 });
 
+test("toString() methods keep alpha intact", function() {
+	expect( 4 );
+	var color = $.Color("transparent"),
+		red = $.Color("red");
+	color.toRgbaString(); red.toRgbaString();
+	equals( color.alpha(), 0, "toRgbaString()");
+	equals( red.alpha(), 1, "toRgbaString()");
+	color.toHexString();
+	equals( color.alpha(), 0, "toHexString()");
+	equals( red.alpha(), 0, "toHexString()");
+});
+
+module("animate", { teardown: moduleTeardown })
 test("animated", function() {
 	expect( 8 );
 	var el = $("<div>").css({ color: '#000000' });
