@@ -178,6 +178,18 @@
 				});
 				return color( rgba );
 			},
+			blend: function( opaque ) {
+				// if we are already opaque - return ourself
+				if ( this._rgba[ 3 ] == 1) return this;
+
+				var rgb = this._rgba.slice(),
+					a = rgb.pop(),
+					blend = opaque._rgba;
+
+				return color( $.map( rgb, function( v, i ) {
+					return ( 1 - a ) * blend[ i ] + a * v;
+				}));
+			},
 			toRgbaString: function() {
 				var rgba = this._rgba;
 

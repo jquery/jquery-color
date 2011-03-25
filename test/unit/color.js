@@ -104,6 +104,20 @@ test("red green blue alpha Setters", function() {
 	
 });
 
+test(".blend()", function() {
+	var halfwhite = $.Color('white').alpha(0.5),
+		red = $.Color('red'),
+		blend = halfwhite.blend(red);
+	
+	expect(4);
+	testParts( blend, {
+		red: 255,
+		green: 127,
+		blue: 127,
+		alpha: 1
+	});
+});
+
 test(".transition()", function() {
 	var black = $.Color('black'),
 		whiteAlpha = $.Color('white').alpha(0.5),
