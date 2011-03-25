@@ -170,9 +170,9 @@ test("toString() methods keep alpha intact", function() {
 	color.toRgbaString(); red.toRgbaString();
 	equals( color.alpha(), 0, "toRgbaString()");
 	equals( red.alpha(), 1, "toRgbaString()");
-	color.toHexString();
+	color.toHexString(); red.toHexString();
 	equals( color.alpha(), 0, "toHexString()");
-	equals( red.alpha(), 0, "toHexString()");
+	equals( red.alpha(), 1, "toHexString()");
 });
 
 module("animate", { teardown: moduleTeardown })
