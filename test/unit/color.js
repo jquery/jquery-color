@@ -21,6 +21,14 @@ test("jQuery.color( 255, 255, 255 )", function() {
 	testParts( jQuery.Color(255, 255, 255), { expect: 4, red: 255, green: 255, blue: 255, alpha: 1 });
 });
 
+test("jQuery.color( element, 'color' )", function() {
+	expect(8);
+	var $div = $("<div>").css('color', '#ffffff');
+	testParts( jQuery.Color($div, 'color'), { expect: 4, prefix: 'jQuery(<div>): ', red: 255, green: 255, blue: 255, alpha: 1 });
+	testParts( jQuery.Color($div[0], 'color'), { expect: 4, prefix: '<div>: ', red: 255, green: 255, blue: 255, alpha: 1 });
+	
+})
+
 parseTest( jQuery.Color([255,255,255]), { expect: 4, red: 255, green: 255, blue: 255, alpha: 1 },
 "jQuery.color([ 255, 255, 255 ])");
 
@@ -130,3 +138,31 @@ test(".toRgbaString()", function() {
 	equals( trans.toRgbaString(), "rgba(0,0,0,0.5)" );
 	
 });
+
+test(".toHexString()", function() {
+	var almostBlack = $.Color('black').red(2).blue(16),
+		trans = almostBlack.alpha(0.5);
+	
+	expect( 2 );
+	equals( almostBlack.toHexString(), "#020010" , "to hex");
+	equals( trans.toHexString(true), "#0200107f", "to hex with alpha" );
+	
+});
+
+test("animated", function() {
+	expect( 8 );
+	var el = $("<div>").css({ color: '#000000' });
+	stop();
+	el.animate({ color: '#ffffff' }, 200, function() {
+		testParts( $.Color( $( this ).css('color') ) , {
+			prefix: 'Post Animated Color',
+			red: 255, green: 255, blue: 255, alpha: 1
+		});
+		$( this ).animate({ color: '#000000' }, 200).stop()
+		testParts( $.Color( el.css('color') ) , {
+			prefix: 'Immediately Stopped.. Animated Color',
+			red: 255, green: 255, blue: 255, alpha: 1
+		});
+		start();
+	});
+})

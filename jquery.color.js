@@ -184,8 +184,19 @@
 				if ( rgba[ 3 ] == 1 ) {
 					rgba.length = 3;
 				}
-				
+
 				return ( rgba.length == 3 ? "rgb(" : "rgba(" ) + rgba.join(",") + ")";
+			},
+			toHexString: function( includeAlpha ) {
+				var rgba = this._rgba;
+				if ( !includeAlpha ) rgba.length = 3;
+
+				return '#' + $.map( rgba, function( v, i ) {
+					var fac = ( i == 3 ) ? 255 : 1,
+						hex = ( v * fac ).toString( 16 );
+
+					return hex.length == 1 ? "0" + hex : hex.substr(0, 2);
+				}).join("");
 			}
 		};
 		color.fn.parse.prototype = color.fn;
@@ -285,7 +296,7 @@
 			}
 
 			fx.elem.style[ hook ] = fx.start.transition( fx.end, fx.pos ).toRgbaString();
-		}
+		};
 
 	});
 })(jQuery);
