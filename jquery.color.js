@@ -4,7 +4,7 @@
  * Released under the MIT and GPL licenses.
  */
 
-(function(jQuery){
+(function( jQuery, undefined ){
 	var stepHooks = 'backgroundColor borderBottomColor borderLeftColor borderRightColor borderTopColor color outlineColor'.split(' '),
 
 		// plusequals test for += 100 -= 100
