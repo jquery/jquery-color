@@ -1,1 +1,64 @@
-module("color", { teardown: moduleTeardown });
+module("parse", { teardown: moduleTeardown });
+
+function parseTest( str, results ) {
+	test("jQuery.Color( '"+str+"' )", function() {
+		expect( results.expect );
+		var color = jQuery.Color( str );
+		$.each( results, function( key , value ) {
+			if ( key == 'expect' ) return;
+			equals(color[ key ](), value, "."+key+"() is "+value);
+		});
+	});
+}
+
+parseTest( '', {
+	expect: 4,
+	red: 255,
+	green: 255,
+	blue: 255,
+	alpha: 1
+});
+
+var sevens = {
+	expect: 4,
+	red: 119,
+	green: 119,
+	blue: 119,
+	alpha: 1
+};
+parseTest( '#777', sevens );
+parseTest( '#777777', sevens );
+
+var fiftypercent = {
+	expect: 4,
+	red: 127,
+	green: 127,
+	blue: 127,
+	alpha: 1
+}, fiftypercentalpha = {
+	expect: 4,
+	red: 127,
+	green: 127,
+	blue: 127,
+	alpha: 0.5	
+};
+parseTest('rgb(127,127,127)', fiftypercent);
+parseTest('rgb(50%,50%,50%)', fiftypercent);
+parseTest('rgba(127,127,127,0.5)', fiftypercentalpha);
+parseTest('rgba(50%,50%,50%,0.5)', fiftypercentalpha);
+
+parseTest('red', {
+	expect: 4,
+	red: 255,
+	green: 0,
+	blue: 0,
+	alpha: 1
+});
+
+parseTest('transparent', {
+	expect: 4,
+	red: undefined,
+	green: undefined,
+	blue: undefined,
+	alpha: 0
+});
