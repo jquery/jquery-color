@@ -29,6 +29,10 @@ test("jQuery.color( element, 'color' )", function() {
 	
 })
 
+parseTest( jQuery.Color({ red: 100 }), { expect: 4, red: 100, green: null, blue: null, alpha: 1 },"jQuery.Color({ red: 100 })");
+
+parseTest( jQuery.Color(jQuery.Color('red')), { expect: 4, red: 255, green: 0, blue: 0, alpha: 1 },"jQuery.Color(jQuery.Color('red'))");
+
 parseTest( jQuery.Color([255,255,255]), { expect: 4, red: 255, green: 255, blue: 255, alpha: 1 },
 "jQuery.color([ 255, 255, 255 ])");
 

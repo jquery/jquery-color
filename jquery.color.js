@@ -106,26 +106,26 @@
 
 		color.fn = color.prototype = {
 			constructor: color,
-			parse: function( color, green, blue, alpha ) {
-				if ( color.jquery || color.nodeType ) {
-					color = color.jquery ? color.css( green ) : $( color ).css( green );;
+			parse: function( red, green, blue, alpha ) {
+				if ( red instanceof $ || red.nodeType ) {
+					red = red instanceof $ ? red.css( green ) : $( red ).css( green );;
 					green = undefined;
 				}
 
-				var type = $.type( color ),
+				var type = $.type( red ),
 					rgba = this._rgba = [],
 					source;
 
 				// more than 1 argument specified - assume ( red, green, blue, alpha )
-				if ( green ) {
-					color = [ color, green, blue, alpha ];
+				if ( green !== undefined ) {
+					red = [ red, green, blue, alpha ];
 					type = 'array';
 				}
 
 				if ( type == "string" ) {
-					color = color.toLowerCase();
+					red = red.toLowerCase();
 					$.each( stringParsers, function( i, parser ) {
-						var match = parser.re.exec( color ),
+						var match = parser.re.exec( red ),
 							values = match && parser.parse( match );
 
 						if ( values ) {
@@ -143,15 +143,26 @@
 						return this;
 					}
 
-					// named colors / default
-					color = colors[ color ] || colors._default;
+					// named colorss / default
+					red = colors[ red ] || colors._default;
 					type = 'array';
 				}
 
 				if ( type == 'array' ) {
 					$.each( rgbaspace, function( key, prop ) {
-						rgba[ prop.idx ] = clamp( color[ prop.idx ], prop );
+						rgba[ prop.idx ] = clamp( red[ prop.idx ], prop );
 					});
+					return this;
+				}
+
+				if ( type == 'object' ) {
+					if ( red instanceof color ) {
+						this._rgba = red._rgba.slice( 0 );
+					} else {
+						$.each( rgbaspace, function( key, prop ) {
+							rgba[ prop.idx ] = clamp( red[ key ], prop );
+						});
+					}
 					return this;
 				}
 			},
