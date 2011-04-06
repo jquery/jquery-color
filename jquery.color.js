@@ -11,18 +11,18 @@
 		rplusequals = /^([-+])=\s*(\d+\.?\d*)/,
 		// a set of RE's that can match strings and generate color tuples.
 		stringParsers = [{
-				re: /rgba?\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*(?:,\s*([0-9]+(?:\.[0-9]+))\s*)?\)/, 
-				parse: function( execResult ) { 
+				re: /rgba?\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*(?:,\s*([0-9]+(?:\.[0-9]+))\s*)?\)/,
+				parse: function( execResult ) {
 					return [
-						execResult[ 1 ], 
-						execResult[ 2 ], 
+						execResult[ 1 ],
+						execResult[ 2 ],
 						execResult[ 3 ],
 						execResult[ 4 ]
 					];
 				}
 			}, {
 				re: /rgba?\(\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*(?:,\s*([0-9]+(?:\.[0-9]+)?)\s*)?\)/,
-				parse: function( execResult ) { 
+				parse: function( execResult ) {
 					return [
 						2.55 * execResult[1],
 						2.55 * execResult[2],
@@ -32,8 +32,8 @@
 				}
 			}, {
 				re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/,
-				parse: function( execResult ) { 
-					return [ 
+				parse: function( execResult ) {
+					return [
 						parseInt( execResult[ 1 ], 16 ),
 						parseInt( execResult[ 2 ], 16 ),
 						parseInt( execResult[ 3 ], 16 )
@@ -41,8 +41,8 @@
 				}
 			}, {
 				re: /#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/,
-				parse: function( execResult ) { 
-					return [ 
+				parse: function( execResult ) {
+					return [
 						parseInt( execResult[ 1 ] + execResult[ 1 ], 16 ),
 						parseInt( execResult[ 2 ] + execResult[ 2 ], 16 ),
 						parseInt( execResult[ 3 ] + execResult[ 3 ], 16 )
@@ -89,10 +89,10 @@
 		colors;
 
 		function clamp( value, prop ) {
-			if ( prop.empty && value === undefined ) {
-				return value;
+			if ( prop.empty && ( value === undefined || value ===  null ) ) {
+				return null;
 			}
-			if (prop.def && value === undefined || value === null) {
+			if (prop.def && ( value === undefined || value === null ) ) {
 				value = prop.def;
 			}
 			if ( prop.type == 'int' ) {
@@ -142,7 +142,7 @@
 					if ( rgba.length != 0 ) {
 						return this;
 					}
-					
+
 					// named colors / default
 					color = colors[ color ] || colors._default;
 					type = 'array';
@@ -155,6 +155,29 @@
 					return this;
 				}
 			},
+			rgba: function( red, green, blue, alpha ) {
+
+				// no arguments - return our values
+				if ( red === undefined ) {
+					return this._rgba.slice();
+				}
+
+				var type = $.type( red ),
+					obj = type == 'array' ? { red: red[0], green: red[1], blue: red[2], alpha: red[3] } :
+						type == 'object' ? red :
+						{ red: red, green: green, blue: blue, alpha: alpha },
+					ret = this._rgba.slice();
+
+				$.each( rgbaspace, function( key, prop ) {
+					var val = obj[ key ];
+					if ( val !== undefined && val !== null ) {
+
+						// will automaticaly clamp when passed to color()
+						ret[ prop.idx ] = val;
+					}
+				});
+				return color( ret );
+			},
 			transition: function( other, distance ) {
 				var start = this._rgba,
 					end = other._rgba,
@@ -163,13 +186,13 @@
 					var s = start[ prop.idx ],
 						e = end[ prop.idx ];
 
-					// if undefined, don't override start value
-					if ( e === undefined ) {
+					// if null, don't override start value
+					if ( e === null ) {
 						return;
 					}
-					// if undefined - use end
-					if ( s === undefined ) { 
-						rgba[ prop.idx ] = e; 
+					// if null - use end
+					if ( s === null ) {
+						rgba[ prop.idx ] = e;
 					} else {
 						rgba[ prop.idx ] = clamp( ( e - s ) * distance + s, prop );
 					}
@@ -178,7 +201,7 @@
 			},
 			blend: function( opaque ) {
 				// if we are already opaque - return ourself
-				if ( this._rgba[ 3 ] == 1) return this;
+				if ( this._rgba[ 3 ] == 1 ) return this;
 
 				var rgb = this._rgba.slice(),
 					a = rgb.pop(),
@@ -226,7 +249,7 @@
 					if ( $.isFunction( value ) ) {
 						value = value.call( this, cur );
 					}
-					if ( value === undefined && prop.empty ) {
+					if ( value === null && prop.empty ) {
 						return this;
 					}
 
@@ -295,7 +318,7 @@
 			silver: [ 192, 192, 192 ],
 			white: [ 255, 255, 255 ],
 			yellow: [ 255, 255, 0 ],
-			transparent: [ undefined, undefined, undefined, 0 ],
+			transparent: [ null, null, null, 0 ],
 			_default: [ 255, 255, 255 ]
 		};
 
@@ -312,4 +335,4 @@
 		};
 
 	});
-})(jQuery);
+})( jQuery );

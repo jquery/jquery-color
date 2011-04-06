@@ -104,6 +104,44 @@ test("red green blue alpha Setters", function() {
 	
 });
 
+test(".rgba()", function() {
+	var color = $.Color('black'),
+		getter = color.rgba(),
+		set1 = color.rgba( null, 100, null, 0 ),
+		set2 = color.rgba([ null, null, 100, 0.5 ]);
+		set3 = color.rgba({ red: 300, alpha: 2 });
+	
+	expect(14);
+	
+	deepEqual( getter, color._rgba, "Returned a array has same values" );
+	notEqual( getter, color._rgba, "Returned a COPY of the rgba" );
+	
+	testParts( set1, {
+		prefix: ".rgba( null, 100, null, 0 )",
+		red: 0,
+		green: 100,
+		blue: 0,
+		alpha: 0
+	});
+	
+	testParts( set2, {
+		prefix: ".rgba([ null, null, 100, 0 ])",
+		red: 0,
+		green: 0,
+		blue: 100,
+		alpha: 0.5
+	});
+
+	testParts( set3, {
+		prefix: ".rgba({ red: 300, alpha: 2 })",
+		red: 255,
+		green: 0,
+		blue: 0,
+		alpha: 1
+	});
+	
+});
+
 test(".blend()", function() {
 	var halfwhite = $.Color('white').alpha(0.5),
 		red = $.Color('red'),
