@@ -11,7 +11,7 @@
 		rplusequals = /^([-+])=\s*(\d+\.?\d*)/,
 		// a set of RE's that can match strings and generate color tuples.
 		stringParsers = [{
-				re: /rgba?\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*(?:,\s*([0-9]+(?:\.[0-9]+))\s*)?\)/,
+				re: /rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
 				parse: function( execResult ) {
 					return [
 						execResult[ 1 ],
@@ -21,7 +21,7 @@
 					];
 				}
 			}, {
-				re: /rgba?\(\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*(?:,\s*([0-9]+(?:\.[0-9]+)?)\s*)?\)/,
+				re: /rgba?\(\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
 				parse: function( execResult ) {
 					return [
 						2.55 * execResult[1],
