@@ -84,6 +84,7 @@
 				def: 1
 			}
 		},
+		support = color.support = {},
 
 		// colors = $.Color.names
 		colors;
@@ -100,6 +101,9 @@
 			}
 			if ( prop.type == 'float' ) {
 				value = parseFloat( value );
+			}
+			if ( $.isNaN( value ) ) {
+				value = prop.def;
 			}
 			return prop.min > value ? prop.min : prop.max < value ? prop.max : value;
 		}
@@ -157,7 +161,7 @@
 
 				if ( type == 'object' ) {
 					if ( red instanceof color ) {
-						this._rgba = red._rgba.slice( 0 );
+						this._rgba = red._rgba.slice();
 					} else {
 						$.each( rgbaspace, function( key, prop ) {
 							rgba[ prop.idx ] = clamp( red[ key ], prop );
@@ -223,7 +227,9 @@
 				}));
 			},
 			toRgbaString: function() {
-				var rgba = this._rgba.slice();
+				var rgba = $.map( this._rgba, function( v ) {
+					return v === null ? 0 : v;
+				});
 
 				if ( rgba[ 3 ] == 1 ) {
 					rgba.length = 3;
@@ -335,15 +341,44 @@
 
 	// add .fx.step functions
 	$.each( stepHooks, function( i, hook ) {
+		$.cssHooks[ hook ] = {
+			set: function( elem, value ) {
+				value = color( value );
+				if ( !support.rgba && value._rgba[ 3 ] != 1 ) {
+					var curElem = hook == 'backgroundColor' ? elem.parentNode : elem,
+						backgroundColor;
+					do {
+						backgroundColor = $.curCSS( curElem, 'backgroundColor' );
+						if ( backgroundColor != '' && backgroundColor != 'transparent' ) {
+							break;
+						}
+						
+					} while ( ( elem = elem.parentNode ) && elem.style );
+
+					value = value.blend( color( backgroundColor || '_default' ) );
+				}
+
+				value = value.toRgbaString();
+
+				elem.style[ hook ] = value;
+			}
+		};
 		$.fx.step[ hook ] = function( fx ) {
 			if ( !fx.colorInit ) {
 				fx.start = color( fx.elem, hook );
 				fx.end = color( fx.end );
 				fx.colorInit = true;
 			}
-
-			fx.elem.style[ hook ] = fx.start.transition( fx.end, fx.pos ).toRgbaString();
+			$.cssHooks[ hook ].set( fx.elem, fx.start.transition( fx.end, fx.pos ) );
 		};
+	});
 
+	// detect rgba support
+	$(function() {
+		var div = document.createElement( 'div' ),
+			div_style = div.style;
+
+		div_style.cssText = 'background-color:rgba(150,255,150,.5)';
+		support.rgba = div_style.backgroundColor.indexOf( 'rgba' ) > -1;
 	});
 })( jQuery );
