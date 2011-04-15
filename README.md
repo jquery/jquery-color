@@ -1,5 +1,9 @@
 jQuery.color
 =======
+New API
+-------------
+Check out [Color Library on jQuery UI Planning Wiki](http://wiki.jqueryui.com/w/page/12137744/Color-Library) for more information about the new API in this branch
+
 This plugin adds the ability to animate color properties on elements using jQuery's [`.animate()`](http://api.jquery.com/animate)
 
 Supported Properties
