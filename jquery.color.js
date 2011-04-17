@@ -5,7 +5,7 @@
  */
 
 (function( jQuery, undefined ){
-	var stepHooks = 'backgroundColor borderBottomColor borderLeftColor borderRightColor borderTopColor color outlineColor'.split(' '),
+	var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightColor borderTopColor color outlineColor".split(" "),
 
 		// plusequals test for += 100 -= 100
 		rplusequals = /^([-+])=\s*(\d+\.?\d*)/,
@@ -59,28 +59,28 @@
 				idx: 0,
 				min: 0,
 				max: 255,
-				type: 'int',
+				type: "int",
 				empty: true
 			},
 			green: {
 				idx: 1,
 				min: 0,
 				max: 255,
-				type: 'int',
+				type: "int",
 				empty: true
 			},
 			blue: {
 				idx: 2,
 				min: 0,
 				max: 255,
-				type: 'int',
+				type: "int",
 				empty: true
 			},
 			alpha: {
 				idx: 3,
 				min: 0,
 				max: 1,
-				type: 'float',
+				type: "float",
 				def: 1
 			}
 		},
@@ -96,10 +96,10 @@
 			if (prop.def && value == null ) {
 				value = prop.def;
 			}
-			if ( prop.type === 'int' ) {
+			if ( prop.type === "int" ) {
 				value = ~~value;
 			}
-			if ( prop.type === 'float' ) {
+			if ( prop.type === "float" ) {
 				value = parseFloat( value );
 			}
 			if ( jQuery.isNaN( value ) ) {
@@ -123,7 +123,7 @@
 				// more than 1 argument specified - assume ( red, green, blue, alpha )
 				if ( green !== undefined ) {
 					red = [ red, green, blue, alpha ];
-					type = 'array';
+					type = "array";
 				}
 
 				if ( type === "string" ) {
@@ -149,17 +149,17 @@
 
 					// named colorss / default
 					red = colors[ red ] || colors._default;
-					type = 'array';
+					type = "array";
 				}
 
-				if ( type === 'array' ) {
+				if ( type === "array" ) {
 					jQuery.each( rgbaspace, function( key, prop ) {
 						rgba[ prop.idx ] = clamp( red[ prop.idx ], prop );
 					});
 					return this;
 				}
 
-				if ( type === 'object' ) {
+				if ( type === "object" ) {
 					if ( red instanceof color ) {
 						this._rgba = red._rgba.slice();
 					} else {
@@ -178,8 +178,8 @@
 				}
 
 				var type = jQuery.type( red ),
-					obj = type === 'array' ? { red: red[0], green: red[1], blue: red[2], alpha: red[3] } :
-						type === 'object' ? red :
+					obj = type === "array" ? { red: red[0], green: red[1], blue: red[2], alpha: red[3] } :
+						type === "object" ? red :
 						{ red: red, green: green, blue: blue, alpha: alpha },
 					ret = this._rgba.slice();
 
@@ -243,7 +243,7 @@
 					rgba.length = 3;
 				}
 
-				return '#' + jQuery.map( rgba, function( v, i ) {
+				return "#" + jQuery.map( rgba, function( v, i ) {
 					var fac = ( i === 3 ) ? 255 : 1,
 						hex = ( v * fac ).toString( 16 );
 
@@ -270,10 +270,10 @@
 						return this;
 					}
 
-					if ( jQuery.type( value ) === 'string') {
+					if ( jQuery.type( value ) === "string") {
 						match = rplusequals.exec( value );
 						if ( match ) {
-							value = cur + parseFloat( match[ 2 ] ) * ( match[ 1 ] === '+' ? 1 : -1 );
+							value = cur + parseFloat( match[ 2 ] ) * ( match[ 1 ] === "+" ? 1 : -1 );
 						}
 					}
 					// chain
@@ -292,17 +292,17 @@
 			set: function( elem, value ) {
 				value = color( value );
 				if ( !support.rgba && value._rgba[ 3 ] != 1 ) {
-					var curElem = hook === 'backgroundColor' ? elem.parentNode : elem,
+					var curElem = hook === "backgroundColor" ? elem.parentNode : elem,
 						backgroundColor;
 					do {
-						backgroundColor = jQuery.curCSS( curElem, 'backgroundColor' );
-						if ( backgroundColor != '' && backgroundColor != 'transparent' ) {
+						backgroundColor = jQuery.curCSS( curElem, "backgroundColor" );
+						if ( backgroundColor != "" && backgroundColor != "transparent" ) {
 							break;
 						}
 						
 					} while ( ( elem = elem.parentNode ) && elem.style );
 
-					value = value.blend( color( backgroundColor || '_default' ) );
+					value = value.blend( color( backgroundColor || "_default" ) );
 				}
 
 				value = value.toRgbaString();
@@ -322,11 +322,11 @@
 
 	// detect rgba support
 	jQuery(function() {
-		var div = document.createElement( 'div' ),
+		var div = document.createElement( "div" ),
 			div_style = div.style;
 
-		div_style.cssText = 'background-color:rgba(150,255,150,.5)';
-		support.rgba = div_style.backgroundColor.indexOf( 'rgba' ) > -1;
+		div_style.cssText = "background-color:rgba(150,255,150,.5)";
+		support.rgba = div_style.backgroundColor.indexOf( "rgba" ) > -1;
 	});
 
 	// Some named colors to work with
