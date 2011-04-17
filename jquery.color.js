@@ -93,7 +93,7 @@
 			if ( prop.empty && value == null ) {
 				return null;
 			}
-			if (prop.def && value == null ) {
+			if ( prop.def && value == null ) {
 				value = prop.def;
 			}
 			if ( prop.type === "int" ) {
