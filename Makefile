@@ -7,8 +7,6 @@ JS_ENGINE ?= `which node nodejs`
 COMPILER = ${JS_ENGINE} ${BUILD_DIR}/uglify.js --unsafe
 POST_COMPILER = ${JS_ENGINE} ${BUILD_DIR}/post-compile.js
 
-BASE_FILE = jquery.color.js
-
 SRC = jquery.color.js
 
 MAX = ${DIST_DIR}/jquery.color.js
@@ -21,22 +19,22 @@ COLOR_VER = $(shell cat version.txt)
 SED_VER = sed "s/@VERSION/${JQ_VER}/"
 
 
-all: update_submodules core
+all: update color
 
-core: color min lint
+color: max min lint
 	@@echo "jQuery color build complete."
 
 ${DIST_DIR}:
 	@@mkdir -p ${DIST_DIR}
 
-color: ${MAX}
+max: ${MAX}
 
 ${MAX}: ${SRC} ${DIST_DIR}
 	@@echo "Building" ${MAX}
 
 	@@cat ${SRC} | ${SED_DATE} | ${SED_VER} > ${MAX};
 
-lint: color
+lint: max
 	@@if test ! -z ${JS_ENGINE}; then \
 		echo "Checking jQuery.color against JSLint..."; \
 		${JS_ENGINE} build/jslint-check.js; \
@@ -44,7 +42,7 @@ lint: color
 		echo "You must have NodeJS installed in order to test jQuery against JSLint."; \
 	fi
 
-min: color ${MIN}
+min: max ${MIN}
 
 ${MIN}: ${MAX}
 	@@if test ! -z ${JS_ENGINE}; then \
@@ -63,7 +61,7 @@ distclean: clean
 # change pointers for submodules and update them to what is specified in jQuery
 # --merge  doesn't work when doing an initial clone, thus test if we have non-existing
 #  submodules, then do an real update
-update_submodules:
+update:
 	@@if [ -d .git ]; then \
 		if git submodule status | grep -q -E '^-'; then \
 			git submodule update --init --recursive; \
@@ -73,12 +71,9 @@ update_submodules:
 	fi;
 
 # update the submodules to the latest at the most logical branch
-pull_submodules:
+pull:
 	@@git submodule foreach "git pull \$$(git config remote.origin.url)"
 	@@git submodule summary
-
-pull: pull_submodules
-	@@git pull ${REMOTE} ${BRANCH}
 
 clean:
 	@@echo "Removing Distribution directory:" ${DIST_DIR}

@@ -23,8 +23,8 @@ Example Use
     border:1px solid green;
     }
     </style>
-    <script src="http://code.jquery.com/jquery-1.5.js"></script>
-    <script src="jquery.color.js"></script>
+    <script src="http://code.jquery.com/jquery-1.5.min.js"></script>
+    <script src="jquery.color.min.js"></script>
     </head>
     <body>
       <button id="go">Run</button>
