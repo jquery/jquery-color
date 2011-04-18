@@ -1,7 +1,11 @@
 /*
  * jQuery Color Animations v@VERSION
+ * http://jquery.org/
+ *
  * Copyright 2011 John Resig
- * Released under the MIT and GPL licenses.
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jqery.org/license
+ *
  * Date: @DATE
  */
 

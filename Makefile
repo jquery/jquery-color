@@ -9,30 +9,32 @@ POST_COMPILER = ${JS_ENGINE} ${BUILD_DIR}/post-compile.js
 
 BASE_FILE = jquery.color.js
 
-COLOR = ${DIST_DIR}/jquery-color.js
-COLOR_MIN = ${DIST_DIR}/jquery-color.min.js
+SRC = jquery.color.js
 
-DATE=$(shell git log -1 --pretty=format:%ad)
+MAX = ${DIST_DIR}/jquery.color.js
+MIN = ${DIST_DIR}/jquery.color.min.js
 
-JQ_VER = $(shell cat version.txt)
-VER = sed "s/@VERSION/${JQ_VER}/"
+COLOR_DATE = $(shell git log -1 --pretty=format:%ad)
+SED_DATE = sed "s/@DATE/${JQ_VER}/"
+
+COLOR_VER = $(shell cat version.txt)
+SED_VER = sed "s/@VERSION/${JQ_VER}/"
+
 
 all: update_submodules core
 
 core: color min lint
-	@@echo "jQuery-color build complete."
+	@@echo "jQuery color build complete."
 
 ${DIST_DIR}:
 	@@mkdir -p ${DIST_DIR}
 
-color: ${COLOR}
+color: ${MAX}
 
-${COLOR}: jquery.color.js ${DIST_DIR}
-	@@echo "Building" ${COLOR}
+${MAX}: ${SRC} ${DIST_DIR}
+	@@echo "Building" ${MAX}
 
-	@@cat jquery.color.js | \
-		sed 's/@DATE/'"${DATE}"'/' | \
-		${VER} > ${COLOR};
+	@@cat ${SRC} | ${SED_DATE} | ${SED_VER} > ${MAX};
 
 lint: color
 	@@if test ! -z ${JS_ENGINE}; then \
@@ -42,14 +44,14 @@ lint: color
 		echo "You must have NodeJS installed in order to test jQuery against JSLint."; \
 	fi
 
-min: color ${COLOR_MIN}
+min: color ${MIN}
 
-${COLOR_MIN}: ${COLOR}
+${MIN}: ${MAX}
 	@@if test ! -z ${JS_ENGINE}; then \
-		echo "Minifying jQuery.color" ${COLOR_MIN}; \
-		${COMPILER} ${COLOR} > ${COLOR_MIN}.tmp; \
-		${POST_COMPILER} ${COLOR_MIN}.tmp > ${COLOR_MIN}; \
-		rm -f ${COLOR_MIN}.tmp; \
+		echo "Minifying jQuery.color" ${MIN}; \
+		${COMPILER} ${MAX} > ${MIN}.tmp; \
+		${POST_COMPILER} ${MIN}.tmp > ${MIN}; \
+		rm -f ${MIN}.tmp; \
 	else \
 		echo "You must have NodeJS installed in order to minify jQuery."; \
 	fi
@@ -77,7 +79,6 @@ pull_submodules:
 
 pull: pull_submodules
 	@@git pull ${REMOTE} ${BRANCH}
-
 
 clean:
 	@@echo "Removing Distribution directory:" ${DIST_DIR}
