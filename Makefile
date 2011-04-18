@@ -1,7 +1,6 @@
 TEST_DIR = test
 BUILD_DIR = build
-PREFIX = .
-DIST_DIR = ${PREFIX}/dist
+DIST_DIR = ./dist
 
 JS_ENGINE ?= `which node nodejs`
 COMPILER = ${JS_ENGINE} ${BUILD_DIR}/uglify.js --unsafe
@@ -56,7 +55,7 @@ ${MIN}: ${MAX}
 
 distclean: clean
 	@@echo "Removing submodules"
-	@@rm -rf test/qunit src/sizzle
+	@@rm -rf test/qunit
 
 # change pointers for submodules and update them to what is specified in jQuery
 # --merge  doesn't work when doing an initial clone, thus test if we have non-existing
