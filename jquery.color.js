@@ -1,14 +1,15 @@
 /*
- * jQuery Color Animations
- * Copyright 2007 John Resig
+ * jQuery Color Animations v@VERSION
+ * Copyright 2011 John Resig
  * Released under the MIT and GPL licenses.
+ * Date: @DATE
  */
 
 (function( jQuery, undefined ){
 	var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightColor borderTopColor color outlineColor".split(" "),
 
 		// plusequals test for += 100 -= 100
-		rplusequals = /^([-+])=\s*(\d+\.?\d*)/,
+		rplusequals = /^([\-+])=\s*(\d+\.?\d*)/,
 		// a set of RE's that can match strings and generate color tuples.
 		stringParsers = [{
 				re: /rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
@@ -112,7 +113,7 @@
 			constructor: color,
 			parse: function( red, green, blue, alpha ) {
 				if ( red instanceof jQuery || red.nodeType ) {
-					red = red instanceof jQuery ? red.css( green ) : jQuery( red ).css( green );;
+					red = red instanceof jQuery ? red.css( green ) : jQuery( red ).css( green );
 					green = undefined;
 				}
 
@@ -185,7 +186,9 @@
 
 				jQuery.each( rgbaspace, function( key, prop ) {
 					var val = obj[ key ];
-					if ( ! ( val == null ) ) {
+
+					// unless its null or undefined
+					if ( val != null ) {
 
 						// will automaticaly clamp when passed to color()
 						ret[ prop.idx ] = val;
@@ -216,7 +219,9 @@
 			},
 			blend: function( opaque ) {
 				// if we are already opaque - return ourself
-				if ( this._rgba[ 3 ] === 1 ) return this;
+				if ( this._rgba[ 3 ] === 1 ) {
+					return this;
+				}
 
 				var rgb = this._rgba.slice(),
 					a = rgb.pop(),
