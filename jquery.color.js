@@ -143,7 +143,7 @@
 					});
 
 					// Found a stringParser that handled it
-					if ( rgba.length != 0 ) {
+					if ( rgba.length !== 0 ) {
 						return this;
 					}
 
@@ -291,12 +291,12 @@
 		jQuery.cssHooks[ hook ] = {
 			set: function( elem, value ) {
 				value = color( value );
-				if ( !support.rgba && value._rgba[ 3 ] != 1 ) {
+				if ( !support.rgba && value._rgba[ 3 ] !== 1 ) {
 					var curElem = hook === "backgroundColor" ? elem.parentNode : elem,
 						backgroundColor;
 					do {
 						backgroundColor = jQuery.curCSS( curElem, "backgroundColor" );
-						if ( backgroundColor != "" && backgroundColor != "transparent" ) {
+						if ( backgroundColor !== "" && backgroundColor !== "transparent" ) {
 							break;
 						}
 						
