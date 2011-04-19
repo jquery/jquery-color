@@ -149,6 +149,12 @@
 
 					// Found a stringParser that handled it
 					if ( rgba.length !== 0 ) {
+
+						// if this came from a parsed string, force "transparent" when alpha is 0
+						// chrome, (and maybe others) return "transparent" as rgba(0,0,0,0)
+						if ( alpha && rgba[ 3 ] === 0 && rgba[ 0 ] != null ) {
+							$.extend( rgba, colors.transparent );
+						}
 						return this;
 					}
 
@@ -308,7 +314,7 @@
 						if ( backgroundColor !== "" && backgroundColor !== "transparent" ) {
 							break;
 						}
-						
+
 					} while ( ( elem = elem.parentNode ) && elem.style );
 
 					value = value.blend( color( backgroundColor || "_default" ) );
