@@ -152,7 +152,7 @@
 
 						// if this came from a parsed string, force "transparent" when alpha is 0
 						// chrome, (and maybe others) return "transparent" as rgba(0,0,0,0)
-						if ( alpha && rgba[ 3 ] === 0 && rgba[ 0 ] != null ) {
+						if ( rgba[ 3 ] === 0 && rgba[ 0 ] != null ) {
 							$.extend( rgba, colors.transparent );
 						}
 						return this;
