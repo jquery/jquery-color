@@ -353,7 +353,9 @@
 			}).join("");
 		},
 		toString: function() {
-			if ( this._rgba[ 3 ] === 0 ) return "transparent";
+			if ( this._rgba[ 3 ] === 0 ) {
+				return "transparent";
+			}
 			return this.toRgbaString();
 		}
 	};
@@ -444,7 +446,9 @@
 			d = M - m;
 
 		// achromatic
-		if ( M == m ) return [ 0, 0, l, a ];
+		if ( M == m ) {
+			return [ 0, 0, l, a ];
+		}
 
 		s = l > 0.5 ? d / (2 - M - m) : d / (M + m);
 		if ( M === r ) {
@@ -459,9 +463,15 @@
 
 	function hue2rgb( p, q, t ) {
 		t = (t + 1) % 1;
-		if ( t < 1/6 ) return p + (q - p) * 6 * t;
-		if ( t < 1/2 ) return q;
-		if ( t < 2/3 ) return p + (q - p) * (2/3 - t) * 6;
+		if ( t < 1/6 ) {
+			return p + (q - p) * 6 * t;
+		}
+		if ( t < 1/2 ) {
+			return q;
+		}
+		if ( t < 2/3 ) {
+			return p + (q - p) * (2/3 - t) * 6;
+		}
 		return p;
 	}
 
@@ -473,7 +483,7 @@
 			q, p,
 			r, g, b;
 
-		if ( s == 0 ) {
+		if ( s === 0 ) {
 			return [ l * 255, l * 255, l * 255, a ];
 		} else {
 			q = l < 0.5 ? l * ( 1 + s ) : l + s - l * s;
