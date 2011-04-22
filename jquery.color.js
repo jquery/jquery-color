@@ -94,212 +94,215 @@
 		// colors = jQuery.Color.names
 		colors;
 
-		function clamp( value, prop ) {
-			if ( prop.empty && value == null ) {
-				return null;
-			}
-			if ( prop.def && value == null ) {
-				value = prop.def;
-			}
-			if ( prop.type === "int" ) {
-				value = ~~value;
-			}
-			if ( prop.type === "float" ) {
-				value = parseFloat( value );
-			}
-			if ( jQuery.isNaN( value ) ) {
-				value = prop.def;
-			}
-			return prop.min > value ? prop.min : prop.max < value ? prop.max : value;
+	function clamp( value, prop ) {
+		if ( prop.empty && value == null ) {
+			return null;
 		}
+		if ( prop.def && value == null ) {
+			value = prop.def;
+		}
+		if ( prop.type === "int" ) {
+			value = ~~value;
+		}
+		if ( prop.mod ) {
+			value = ( value < 0 ? -value : value ) % prop.mod;
+		}
+		if ( prop.type === "float" ) {
+			value = parseFloat( value );
+		}
+		if ( jQuery.isNaN( value ) ) {
+			value = prop.def;
+		}
+		return prop.min > value ? prop.min : prop.max < value ? prop.max : value;
+	}
 
-		color.fn = color.prototype = {
-			constructor: color,
-			parse: function( red, green, blue, alpha ) {
-				if ( red instanceof jQuery || red.nodeType ) {
-					red = red instanceof jQuery ? red.css( green ) : jQuery( red ).css( green );
-					green = undefined;
-				}
+	color.fn = color.prototype = {
+		constructor: color,
+		parse: function( red, green, blue, alpha ) {
+			if ( red instanceof jQuery || red.nodeType ) {
+				red = red instanceof jQuery ? red.css( green ) : jQuery( red ).css( green );
+				green = undefined;
+			}
 
-				var type = jQuery.type( red ),
-					rgba = this._rgba = [],
-					source;
+			var type = jQuery.type( red ),
+				rgba = this._rgba = [],
+				source;
 
-				// more than 1 argument specified - assume ( red, green, blue, alpha )
-				if ( green !== undefined ) {
-					red = [ red, green, blue, alpha ];
-					type = "array";
-				}
+			// more than 1 argument specified - assume ( red, green, blue, alpha )
+			if ( green !== undefined ) {
+				red = [ red, green, blue, alpha ];
+				type = "array";
+			}
 
-				if ( type === "string" ) {
-					red = red.toLowerCase();
-					jQuery.each( stringParsers, function( i, parser ) {
-						var match = parser.re.exec( red ),
-							values = match && parser.parse( match );
+			if ( type === "string" ) {
+				red = red.toLowerCase();
+				jQuery.each( stringParsers, function( i, parser ) {
+					var match = parser.re.exec( red ),
+						values = match && parser.parse( match );
 
-						if ( values ) {
-							jQuery.each( rgbaspace, function( key, prop ) {
-								rgba[ prop.idx ] = clamp( values[ prop.idx ], prop );
-							});
-
-							// exit jQuery.each( stringParsers ) here because we found ours
-							return false;
-						}
-					});
-
-					// Found a stringParser that handled it
-					if ( rgba.length !== 0 ) {
-
-						// if this came from a parsed string, force "transparent" when alpha is 0
-						// chrome, (and maybe others) return "transparent" as rgba(0,0,0,0)
-						if ( rgba[ 3 ] === 0 && rgba[ 0 ] != null ) {
-							$.extend( rgba, colors.transparent );
-						}
-						return this;
-					}
-
-					// named colorss / default
-					red = colors[ red ] || colors._default;
-					type = "array";
-				}
-
-				if ( type === "array" ) {
-					jQuery.each( rgbaspace, function( key, prop ) {
-						rgba[ prop.idx ] = clamp( red[ prop.idx ], prop );
-					});
-					return this;
-				}
-
-				if ( type === "object" ) {
-					if ( red instanceof color ) {
-						this._rgba = red._rgba.slice();
-					} else {
+					if ( values ) {
 						jQuery.each( rgbaspace, function( key, prop ) {
-							rgba[ prop.idx ] = clamp( red[ key ], prop );
+							rgba[ prop.idx ] = clamp( values[ prop.idx ], prop );
 						});
+
+						// exit jQuery.each( stringParsers ) here because we found ours
+						return false;
+					}
+				});
+
+				// Found a stringParser that handled it
+				if ( rgba.length !== 0 ) {
+
+					// if this came from a parsed string, force "transparent" when alpha is 0
+					// chrome, (and maybe others) return "transparent" as rgba(0,0,0,0)
+					if ( rgba[ 3 ] === 0 && rgba[ 0 ] != null ) {
+						$.extend( rgba, colors.transparent );
 					}
 					return this;
 				}
-			},
-			rgba: function( red, green, blue, alpha ) {
 
-				// no arguments - return our values
-				if ( red === undefined ) {
-					return this._rgba.slice();
+				// named colorss / default
+				red = colors[ red ] || colors._default;
+				type = "array";
+			}
+
+			if ( type === "array" ) {
+				jQuery.each( rgbaspace, function( key, prop ) {
+					rgba[ prop.idx ] = clamp( red[ prop.idx ], prop );
+				});
+				return this;
+			}
+
+			if ( type === "object" ) {
+				if ( red instanceof color ) {
+					this._rgba = red._rgba.slice();
+				} else {
+					jQuery.each( rgbaspace, function( key, prop ) {
+						rgba[ prop.idx ] = clamp( red[ key ], prop );
+					});
 				}
+				return this;
+			}
+		},
+		rgba: function( red, green, blue, alpha ) {
 
-				var type = jQuery.type( red ),
-					obj = type === "array" ? { red: red[0], green: red[1], blue: red[2], alpha: red[3] } :
-						type === "object" ? red :
-						{ red: red, green: green, blue: blue, alpha: alpha },
-					ret = this._rgba.slice();
+			// no arguments - return our values
+			if ( red === undefined ) {
+				return this._rgba.slice();
+			}
 
-				jQuery.each( rgbaspace, function( key, prop ) {
-					var val = obj[ key ];
+			var type = jQuery.type( red ),
+				obj = type === "array" ? { red: red[0], green: red[1], blue: red[2], alpha: red[3] } :
+					type === "object" ? red :
+					{ red: red, green: green, blue: blue, alpha: alpha },
+				ret = this._rgba.slice();
 
-					// unless its null or undefined
-					if ( val != null ) {
+			jQuery.each( rgbaspace, function( key, prop ) {
+				var val = obj[ key ];
 
-						// will automaticaly clamp when passed to color()
-						ret[ prop.idx ] = val;
-					}
-				});
-				return color( ret );
-			},
-			transition: function( other, distance ) {
-				var start = this._rgba,
-					end = other._rgba,
-					rgba = start.slice();
-				jQuery.each( rgbaspace, function( key, prop ) {
-					var s = start[ prop.idx ],
-						e = end[ prop.idx ];
+				// unless its null or undefined
+				if ( val != null ) {
 
-					// if null, don't override start value
-					if ( e === null ) {
-						return;
-					}
-					// if null - use end
-					if ( s === null ) {
-						rgba[ prop.idx ] = e;
-					} else {
-						rgba[ prop.idx ] = clamp( ( e - s ) * distance + s, prop );
-					}
-				});
-				return color( rgba );
-			},
-			blend: function( opaque ) {
-				// if we are already opaque - return ourself
-				if ( this._rgba[ 3 ] === 1 ) {
+					// will automaticaly clamp when passed to color()
+					ret[ prop.idx ] = val;
+				}
+			});
+			return color( ret );
+		},
+		transition: function( other, distance ) {
+			var start = this._rgba,
+				end = other._rgba,
+				rgba = start.slice();
+			jQuery.each( rgbaspace, function( key, prop ) {
+				var s = start[ prop.idx ],
+					e = end[ prop.idx ];
+
+				// if null, don't override start value
+				if ( e === null ) {
+					return;
+				}
+				// if null - use end
+				if ( s === null ) {
+					rgba[ prop.idx ] = e;
+				} else {
+					rgba[ prop.idx ] = clamp( ( e - s ) * distance + s, prop );
+				}
+			});
+			return color( rgba );
+		},
+		blend: function( opaque ) {
+			// if we are already opaque - return ourself
+			if ( this._rgba[ 3 ] === 1 ) {
+				return this;
+			}
+
+			var rgb = this._rgba.slice(),
+				a = rgb.pop(),
+				blend = opaque._rgba;
+
+			return color( jQuery.map( rgb, function( v, i ) {
+				return ( 1 - a ) * blend[ i ] + a * v;
+			}));
+		},
+		toRgbaString: function() {
+			var rgba = jQuery.map( this._rgba, function( v ) {
+				return v === null ? 0 : v;
+			});
+
+			if ( rgba[ 3 ] === 1 ) {
+				rgba.length = 3;
+			}
+
+			return ( rgba.length === 3 ? "rgb(" : "rgba(" ) + rgba.join(",") + ")";
+		},
+		toHexString: function( includeAlpha ) {
+			var rgba = this._rgba.slice();
+			if ( !includeAlpha ) {
+				rgba.length = 3;
+			}
+
+			return "#" + jQuery.map( rgba, function( v, i ) {
+				var fac = ( i === 3 ) ? 255 : 1,
+					hex = ( v * fac ).toString( 16 );
+
+				return hex.length === 1 ? "0" + hex : hex.substr(0, 2);
+			}).join("");
+		}
+	};
+	color.fn.toString = color.fn.toRgbaString;
+	color.fn.parse.prototype = color.fn;
+
+	// Create .red() .green() .blue() .alpha()
+	jQuery.each( rgbaspace, function( key, prop ) {
+		color.fn[ key ] = function( value ) {
+			var vtype = jQuery.type( value ),
+				cur = this._rgba[ prop.idx ],
+				copy, match;
+
+			// called as a setter
+			if ( arguments.length ) {
+				if ( jQuery.isFunction( value ) ) {
+					value = value.call( this, cur );
+				}
+				if ( value === null && prop.empty ) {
 					return this;
 				}
 
-				var rgb = this._rgba.slice(),
-					a = rgb.pop(),
-					blend = opaque._rgba;
-
-				return color( jQuery.map( rgb, function( v, i ) {
-					return ( 1 - a ) * blend[ i ] + a * v;
-				}));
-			},
-			toRgbaString: function() {
-				var rgba = jQuery.map( this._rgba, function( v ) {
-					return v === null ? 0 : v;
-				});
-
-				if ( rgba[ 3 ] === 1 ) {
-					rgba.length = 3;
+				if ( jQuery.type( value ) === "string") {
+					match = rplusequals.exec( value );
+					if ( match ) {
+						value = cur + parseFloat( match[ 2 ] ) * ( match[ 1 ] === "+" ? 1 : -1 );
+					}
 				}
-
-				return ( rgba.length === 3 ? "rgb(" : "rgba(" ) + rgba.join(",") + ")";
-			},
-			toHexString: function( includeAlpha ) {
-				var rgba = this._rgba.slice();
-				if ( !includeAlpha ) {
-					rgba.length = 3;
-				}
-
-				return "#" + jQuery.map( rgba, function( v, i ) {
-					var fac = ( i === 3 ) ? 255 : 1,
-						hex = ( v * fac ).toString( 16 );
-
-					return hex.length === 1 ? "0" + hex : hex.substr(0, 2);
-				}).join("");
+				// chain
+				copy = this._rgba.slice();
+				copy[ prop.idx ] = clamp(value, prop);
+				return color(copy);
+			} else {
+				return cur;
 			}
 		};
-		color.fn.toString = color.fn.toRgbaString;
-		color.fn.parse.prototype = color.fn;
-
-		// Create .red() .green() .blue() .alpha()
-		jQuery.each( rgbaspace, function( key, prop ) {
-			color.fn[ key ] = function( value ) {
-				var vtype = jQuery.type( value ),
-					cur = this._rgba[ prop.idx ],
-					copy, match;
-
-				// called as a setter
-				if ( arguments.length ) {
-					if ( jQuery.isFunction( value ) ) {
-						value = value.call( this, cur );
-					}
-					if ( value === null && prop.empty ) {
-						return this;
-					}
-
-					if ( jQuery.type( value ) === "string") {
-						match = rplusequals.exec( value );
-						if ( match ) {
-							value = cur + parseFloat( match[ 2 ] ) * ( match[ 1 ] === "+" ? 1 : -1 );
-						}
-					}
-					// chain
-					copy = this._rgba.slice();
-					copy[ prop.idx ] = clamp(value, prop);
-					return color(copy);
-				} else {
-					return cur;
-				}
-			};
-		});
+	});
 
 	// add .fx.step functions
 	jQuery.each( stepHooks, function( i, hook ) {
