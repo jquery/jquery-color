@@ -117,9 +117,9 @@ parseTest( "rgba(127,127,127,0.5)", fiftypercentalpha );
 parseTest( "rgba(50%,50%,50%,0.5)", fiftypercentalpha );
 parseTest( "rgba(0, 0, 0, 0)", {
 	expect: 4,
-	red: 0,
-	green: 0,
-	blue: 0,
+	red: null,
+	green: null,
+	blue: null,
 	alpha: 0
 });
 
