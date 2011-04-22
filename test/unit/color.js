@@ -278,6 +278,55 @@ test( "toString() methods keep alpha intact", function() {
 	equals( opaque.alpha(), 1, "toHexString()" );
 });
 
+module( "hsla" );
+parseTest("hsla(180,50%,50%,0.5)", {
+	expect: 7,
+	hue: 180,
+	saturation: 0.5,
+	lightness: 0.5,
+	red: 64,
+	green: 191,
+	blue: 191,
+	alpha: 0.5
+});
+
+parseTest("hsl(72, 77%, 59%)", {
+	expect: 7,
+	hue: 72,
+	saturation: 0.77,
+	lightness: 0.59,
+	red: 199,
+	green: 231,
+	blue: 70,
+	alpha: 1
+});
+
+test(".toHslaString()", function() {
+	var red = $.Color( "red" );
+	expect(1);
+	equals( red.toHslaString(), "hsl(0,100%,50%)", "HSLA value from red");
+});
+
+test( "hue saturation lightness alpha Setters", function() {
+	var props = "hue saturation lightness alpha".split(" "),
+		color = $.Color( [0,0,0,0] );
+	console.dir( color );
+	expect( 4 * props.length );
+	$.each( props, function( i, fn ) {
+		var tv = fn === "hue" ? 359 : 0.5 ,
+			set = color[ fn ]( tv ),
+			clamp = fn === "hue" ? -360 : 1,
+			clamped = color[ fn ]( clamp + 1 ),
+			plused = color[ fn ]( "+=1" );
+
+		equals( set[ fn ](), tv, "color."+fn+"("+tv+")."+fn+"()" );
+		equals( clamped[ fn ](), 1, "color."+fn+"("+(clamp+1)+") clamped at 1" );
+		equals( color[ fn ](), 0, "color."+fn+"() still 0" );
+		equals( plused[ fn ](), 1, "color."+fn+"(\"+=1\")" );
+	});
+});
+
+
 module( "animate" );
 test( "animated", function() {
 	var el = $( "<div>" ).appendTo( "body" ).css({ color: "#000000" });

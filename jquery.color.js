@@ -53,6 +53,17 @@
 						parseInt( execResult[ 3 ] + execResult[ 3 ], 16 )
 					];
 				}
+			}, {
+				re: /hsla?\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
+				fn: "hsla",
+				parse: function( execResult ) {
+					return [
+						execResult[1],
+						execResult[2] / 100,
+						execResult[3] / 100,
+						execResult[4]
+					];
+				}
 			}],
 
 		// jQuery.Color( )
@@ -89,10 +100,34 @@
 				def: 1
 			}
 		},
+		hslaspace = {
+			hue: {
+				idx: 0,
+				mod: 360,
+				type: "int",
+				empty: true
+			},
+			saturation: {
+				idx: 1,
+				min: 0,
+				max: 1,
+				type: "float",
+				empty: true
+			},
+			lightness: {
+				idx: 2,
+				min: 0,
+				max: 1,
+				type: "float",
+				empty: true
+			}
+		},
 		support = color.support = {},
 
 		// colors = jQuery.Color.names
 		colors;
+
+	hslaspace.alpha = rgbaspace.alpha;
 
 	function clamp( value, prop ) {
 		if ( prop.empty && value == null ) {
@@ -105,7 +140,7 @@
 			value = ~~value;
 		}
 		if ( prop.mod ) {
-			value = ( value < 0 ? -value : value ) % prop.mod;
+			value = ( value < 0 ? value + 360 * ( 1 + ~~( -value / 360 ) ) : value ) % prop.mod;
 		}
 		if ( prop.type === "float" ) {
 			value = parseFloat( value );
@@ -124,7 +159,8 @@
 				green = undefined;
 			}
 
-			var type = jQuery.type( red ),
+			var inst = this,
+				type = jQuery.type( red ),
 				rgba = this._rgba = [],
 				source;
 
@@ -138,12 +174,20 @@
 				red = red.toLowerCase();
 				jQuery.each( stringParsers, function( i, parser ) {
 					var match = parser.re.exec( red ),
-						values = match && parser.parse( match );
+						values = match && parser.parse( match ),
+						parsed;
+
 
 					if ( values ) {
-						jQuery.each( rgbaspace, function( key, prop ) {
-							rgba[ prop.idx ] = clamp( values[ prop.idx ], prop );
-						});
+						if ( parser.fn ) {
+							parsed = inst[ parser.fn ]( values );
+							rgba = inst._rgba = parsed._rgba;
+							inst._hsla = parsed._hsla;
+						} else {
+							jQuery.each( rgbaspace, function( key, prop ) {
+								rgba[ prop.idx ] = clamp( values[ prop.idx ], prop );
+							});
+						}
 
 						// exit jQuery.each( stringParsers ) here because we found ours
 						return false;
@@ -209,6 +253,33 @@
 			});
 			return color( ret );
 		},
+		hsla: function( hue, saturation, lightness, alpha ) {
+			if ( !this._hsla ) {
+				this._hsla = toHsla( this._rgba );
+			}
+			if ( hue === undefined ) {
+				return this._hsla.slice();
+			}
+
+			var type = jQuery.type( hue ),
+				obj = type === "array" ? { hue: hue[0], saturation: hue[1], lightness: hue[2], alpha: hue[3] } :
+					type === "object" ? hue :
+					{ hue: hue, saturation: saturation, lightness: lightness, alpha: alpha },
+				ret = this._hsla.slice(), rgb;
+
+			jQuery.each( hslaspace, function( key, prop ) {
+				var val = obj[ key ];
+
+				// unless its null or undefined
+				if ( val != null ) {
+
+					ret[ prop.idx ] = clamp( val, prop );
+				}
+			});
+			rgb = color( fromHsla( ret ) );
+			rgb._hsla = ret;
+			return rgb;
+		},
 		transition: function( other, distance ) {
 			var start = this._rgba,
 				end = other._rgba,
@@ -255,6 +326,19 @@
 
 			return ( rgba.length === 3 ? "rgb(" : "rgba(" ) + rgba.join(",") + ")";
 		},
+		toHslaString: function() {
+			var hsla = jQuery.map( this.hsla(), function( v, i ) {
+				v = v === null ? 0 : v;
+				if ( i === 1 || i === 2 ) {
+					v = ( v * 100 ) + "%";
+				}
+				return v;
+			});
+			if ( hsla[ 3 ] === 1 ) {
+				hsla.length = 3;
+			}
+			return ( hsla.length === 3 ? "hsl(" : "hsla(" ) + hsla.join(",") + ")";
+		},
 		toHexString: function( includeAlpha ) {
 			var rgba = this._rgba.slice();
 			if ( !includeAlpha ) {
@@ -267,9 +351,12 @@
 
 				return hex.length === 1 ? "0" + hex : hex.substr(0, 2);
 			}).join("");
+		},
+		toString: function() {
+			if ( this._rgba[ 3 ] === 0 ) return "transparent";
+			return this.toRgbaString();
 		}
 	};
-	color.fn.toString = color.fn.toRgbaString;
 	color.fn.parse.prototype = color.fn;
 
 	// Create .red() .green() .blue() .alpha()
@@ -280,15 +367,16 @@
 				copy, match;
 
 			// called as a setter
-			if ( arguments.length ) {
-				if ( jQuery.isFunction( value ) ) {
+			if ( vtype !== "undefined" ) {
+				if ( vtype === "function" ) {
 					value = value.call( this, cur );
+					vtype = jQuery.type( value );
 				}
 				if ( value === null && prop.empty ) {
 					return this;
 				}
 
-				if ( jQuery.type( value ) === "string") {
+				if ( vtype === "string") {
 					match = rplusequals.exec( value );
 					if ( match ) {
 						value = cur + parseFloat( match[ 2 ] ) * ( match[ 1 ] === "+" ? 1 : -1 );
@@ -296,13 +384,108 @@
 				}
 				// chain
 				copy = this._rgba.slice();
-				copy[ prop.idx ] = clamp(value, prop);
-				return color(copy);
+				copy[ prop.idx ] = value;
+				copy = color(copy);
+				if ( key === "alpha" && this._hsla ) {
+					copy._hsla = this._hsla.slice();
+					copy._hsla[ 3 ] = copy._rgba[ 3 ];
+				}
+				return copy;
 			} else {
 				return cur;
 			}
 		};
 	});
+
+	// create .hue() .saturation() .lightness()
+	jQuery.each( hslaspace, function( key, prop ) {
+		// skip alpha()
+		if ( key === "alpha" ) {
+			return;
+		}
+		color.fn[ key ] = function( value ) {
+			var vtype = jQuery.type( value ),
+				copy = this.hsla(),
+				cur = copy[ prop.idx ],
+				match;
+
+			if ( vtype === "undefined" ) {
+				return cur;
+			}
+
+			if ( vtype === "function" ) {
+				value = value.call( this, cur );
+				vtype = jQuery.type( value );
+			}
+			if ( value == null && prop.empty ) {
+				return this;
+			}
+			if ( vtype === "string" ) {
+				match = rplusequals.exec( value );
+				if ( match ) {
+					value = cur + parseFloat( match[ 2 ] ) * ( match[ 1 ] === "+" ? 1 : -1 );
+				}
+			}
+			copy[ prop.idx ] = value;
+			return this.hsla( copy );
+		};
+	});
+
+	// hsla conversions adapted from:
+	// http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
+	function toHsla( rgba ) {
+		var r = rgba[0] / 255,
+			g = rgba[1] / 255,
+			b = rgba[2] / 255,
+			a = rgba[3],
+			M = Math.max(r,g,b),
+			m = Math.min(r,g,b),
+			h, s, l = (M + m) / 2,
+			d = M - m;
+
+		// achromatic
+		if ( M == m ) return [ 0, 0, l, a ];
+
+		s = l > 0.5 ? d / (2 - M - m) : d / (M + m);
+		if ( M === r ) {
+			h = ( g - b ) / d + ( g < b ? 6 : 0 );
+		} else if ( M === g ) {
+			h = ( b - r ) / d + 2;
+		} else {
+			h = ( r - g ) / d + 4;
+		}
+		return [ h * 60, s, l , a ];
+	}
+
+	function hue2rgb( p, q, t ) {
+		t = (t + 1) % 1;
+		if ( t < 1/6 ) return p + (q - p) * 6 * t;
+		if ( t < 1/2 ) return q;
+		if ( t < 2/3 ) return p + (q - p) * (2/3 - t) * 6;
+		return p;
+	}
+
+	function fromHsla( hsla ) {
+		var h = hsla[ 0 ] / 360,
+			s = hsla[ 1 ],
+			l = hsla[ 2 ],
+			a = hsla[ 3 ],
+			q, p,
+			r, g, b;
+
+		if ( s == 0 ) {
+			return [ l * 255, l * 255, l * 255, a ];
+		} else {
+			q = l < 0.5 ? l * ( 1 + s ) : l + s - l * s;
+			p = 2 * l - q;
+			return [
+				Math.round( hue2rgb( p, q, h + 1 / 3 ) * 255 ),
+				Math.round( hue2rgb( p, q, h ) * 255 ),
+				Math.round( hue2rgb( p, q, h - 1 / 3 ) * 255 ),
+				a
+			];
+		}
+	}
 
 	// add .fx.step functions
 	jQuery.each( stepHooks, function( i, hook ) {

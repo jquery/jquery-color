@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>jQuery-Color Test Suite</title>
+	<script src="data/testinit.js"></script>
+	<script src="jquery-1.5.1.js"></script>
+	<script src="../jquery.color.js"></script>
+</head>
+<body id="body">
+	<style media="screen">
+		.testArea {
+			background: blue;
+		}
+		
+		.box {
+			width: 100px;
+			height: 100px;
+			
+		}
+	</style>
+	
+	<div class='testArea'>
+		<div class='box'>box1</div>
+		<div class='box'>box2</div>
+		<div class='box'>box3</div>
+		<div class='box'>box4</div>
+		<div class='box'>box5</div>
+	</div>
+	
+	<script type="text/javascript" charset="utf-8">
+		$(function() {
+			$(".box").each(function(i) {
+				var box = $( this ),
+					trans = $.Color( 'transparent' ),
+					faded = $.Color( 'red' ).alpha( i * 0.25 );
+
+				(function loopy() {
+					box.animate({
+						backgroundColor: faded,
+						color: trans
+					}, 1000 ).animate({
+						backgroundColor: trans,
+						color: 'black'
+					}, 1000 );
+				})();
+			});
+		});
+	</script>
+</body>
+
