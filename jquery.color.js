@@ -134,7 +134,7 @@
 			return null;
 		}
 		if ( prop.def && value == null ) {
-			value = prop.def;
+			return prop.def;
 		}
 		if ( prop.type === "int" ) {
 			value = ~~value;
@@ -271,7 +271,7 @@
 				var val = obj[ key ];
 
 				// unless its null or undefined
-				if ( val != null ) {
+				if ( val != null || ret[ prop.idx ] == null ) {
 
 					ret[ prop.idx ] = clamp( val, prop );
 				}
@@ -361,54 +361,18 @@
 	};
 	color.fn.parse.prototype = color.fn;
 
-	// Create .red() .green() .blue() .alpha()
-	jQuery.each( rgbaspace, function( key, prop ) {
-		color.fn[ key ] = function( value ) {
-			var vtype = jQuery.type( value ),
-				cur = this._rgba[ prop.idx ],
-				copy, match;
+	// Creates Setter/Getter for
+	function makeSetterGetter( space, key, prop ) {
 
-			// called as a setter
-			if ( vtype !== "undefined" ) {
-				if ( vtype === "function" ) {
-					value = value.call( this, cur );
-					vtype = jQuery.type( value );
-				}
-				if ( value === null && prop.empty ) {
-					return this;
-				}
-
-				if ( vtype === "string") {
-					match = rplusequals.exec( value );
-					if ( match ) {
-						value = cur + parseFloat( match[ 2 ] ) * ( match[ 1 ] === "+" ? 1 : -1 );
-					}
-				}
-				// chain
-				copy = this._rgba.slice();
-				copy[ prop.idx ] = value;
-				copy = color(copy);
-				if ( key === "alpha" && this._hsla ) {
-					copy._hsla = this._hsla.slice();
-					copy._hsla[ 3 ] = copy._rgba[ 3 ];
-				}
-				return copy;
-			} else {
-				return cur;
-			}
-		};
-	});
-
-	// create .hue() .saturation() .lightness()
-	jQuery.each( hslaspace, function( key, prop ) {
-		// skip alpha()
-		if ( key === "alpha" ) {
+		// alpha is included in more than one space
+		if ( color.fn[ key ] ) {
 			return;
 		}
 		color.fn[ key ] = function( value ) {
 			var vtype = jQuery.type( value ),
-				copy = this.hsla(),
-				cur = copy[ prop.idx ],
+				fn = ( key === 'alpha' ? ( this._hsla ? 'hsla' : 'rgba' ) : space ),
+				local = this[ fn ](),
+				cur = local[ prop.idx ],
 				match;
 
 			if ( vtype === "undefined" ) {
@@ -428,9 +392,19 @@
 					value = cur + parseFloat( match[ 2 ] ) * ( match[ 1 ] === "+" ? 1 : -1 );
 				}
 			}
-			copy[ prop.idx ] = value;
-			return this.hsla( copy );
+			local[ prop.idx ] = value;
+			return this[ fn ]( local );
 		};
+	}
+
+	// Create .red() .green() .blue() .alpha()
+	jQuery.each( rgbaspace, function( key, prop ) {
+		makeSetterGetter( "rgba", key, prop );
+	});
+
+	// create .hue() .saturation() .lightness()
+	jQuery.each( hslaspace, function( key, prop ) {
+		makeSetterGetter( "hsla", key, prop );
 	});
 
 	// hsla conversions adapted from:
