@@ -12,7 +12,7 @@ MAX = ${DIST_DIR}/jquery.color.js
 MIN = ${DIST_DIR}/jquery.color.min.js
 
 COLOR_DATE = $(shell git log -1 --pretty=format:%ad)
-SED_DATE = sed "s/@DATE/${COLOR_VER}/"
+SED_DATE = sed "s/@DATE/${COLOR_DATE}/"
 
 COLOR_VER = $(shell cat version.txt)
 SED_VER = sed "s/@VERSION/${COLOR_VER}/"
