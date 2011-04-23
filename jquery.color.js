@@ -330,7 +330,7 @@
 			var hsla = jQuery.map( this.hsla(), function( v, i ) {
 				v = v === null ? 0 : v;
 				if ( i === 1 || i === 2 ) {
-					v = ( v * 100 ) + "%";
+					v = Math.round( v * 100 ) + "%";
 				}
 				return v;
 			});
@@ -434,43 +434,49 @@
 	});
 
 	// hsla conversions adapted from:
-	// http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
+	// http://www.google.com/codesearch/p#OAMlx_jo-ck/src/third_party/WebKit/Source/WebCore/inspector/front-end/Color.js&d=7&l=193
 	function toHsla( rgba ) {
-		var r = rgba[0] / 255,
-			g = rgba[1] / 255,
-			b = rgba[2] / 255,
-			a = rgba[3],
-			M = Math.max(r,g,b),
-			m = Math.min(r,g,b),
-			h, s, l = (M + m) / 2,
-			d = M - m;
+		var r = rgba[ 0 ] / 255,
+			g = rgba[ 1 ] / 255,
+			b = rgba[ 2 ] / 255,
+			a = rgba[ 3 ],
+			max = Math.max( r, g, b ),
+			min = Math.min( r, g, b ),
+			diff = max - min,
+			add = max + min,
+			l = add * 0.5,
+			h, s;
 
-		// achromatic
-		if ( M == m ) {
-			return [ 0, 0, l, a ];
-		}
-
-		s = l > 0.5 ? d / (2 - M - m) : d / (M + m);
-		if ( M === r ) {
-			h = ( g - b ) / d + ( g < b ? 6 : 0 );
-		} else if ( M === g ) {
-			h = ( b - r ) / d + 2;
+		if ( min === max ) {
+			h = 0;
+		} else if ( r === max ) {
+			h = ( ( 60 * ( g - b ) / diff ) + 360 ) % 360;
+		} else if ( g === max ) {
+			h = ( 60 * ( b - r ) / diff ) + 120;
 		} else {
-			h = ( r - g ) / d + 4;
+			h = ( 60 * ( r - g ) / diff ) + 240;
 		}
-		return [ h * 60, s, l , a ];
+
+		if ( l === 0 || l === 1 ) {
+			s = l;
+		} else if ( l <= 0.5 ) {
+			s = diff / add;
+		} else {
+			s = diff / ( 2 - add );
+		}
+		return [ h, s, l, a ];
 	}
 
-	function hue2rgb( p, q, t ) {
-		t = (t + 1) % 1;
-		if ( t < 1/6 ) {
-			return p + (q - p) * 6 * t;
+	function hue2rgb( p, q, h ) {
+		h = ( h + 1 ) % 1;
+		if ( h * 6 < 1 ) {
+			return p + (q - p) * 6 * h;
 		}
-		if ( t < 1/2 ) {
+		if ( h * 2 < 1) {
 			return q;
 		}
-		if ( t < 2/3 ) {
-			return p + (q - p) * (2/3 - t) * 6;
+		if ( h * 3 < 2 ) {
+			return p + (q - p) * ((2/3) - h) * 6;
 		}
 		return p;
 	}
@@ -480,21 +486,16 @@
 			s = hsla[ 1 ],
 			l = hsla[ 2 ],
 			a = hsla[ 3 ],
-			q, p,
+			q = l <= 0.5 ? l * ( 1 + s ) : l + s - l * s,
+			p = 2 * l - q,
 			r, g, b;
-
-		if ( s === 0 ) {
-			return [ l * 255, l * 255, l * 255, a ];
-		} else {
-			q = l < 0.5 ? l * ( 1 + s ) : l + s - l * s;
-			p = 2 * l - q;
-			return [
-				Math.round( hue2rgb( p, q, h + 1 / 3 ) * 255 ),
-				Math.round( hue2rgb( p, q, h ) * 255 ),
-				Math.round( hue2rgb( p, q, h - 1 / 3 ) * 255 ),
-				a
-			];
-		}
+		
+		return [
+			Math.round( hue2rgb( p, q, h + ( 1 / 3 ) ) * 255 ),
+			Math.round( hue2rgb( p, q, h ) * 255 ),
+			Math.round( hue2rgb( p, q, h - ( 1 / 3 ) ) * 255 ),
+			a
+		];
 	}
 
 	// add .fx.step functions

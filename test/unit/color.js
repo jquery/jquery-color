@@ -301,16 +301,22 @@ parseTest("hsl(72, 77%, 59%)", {
 	alpha: 1
 });
 
-test(".toHslaString()", function() {
-	var red = $.Color( "red" );
-	expect(1);
-	equals( red.toHslaString(), "hsl(0,100%,50%)", "HSLA value from red");
+test("HSLA Conversions", function() {
+	expect(8);
+	equals( $.Color( "#f00" ).toHslaString(), "hsl(0,100%,50%)", "HSLA value from #f00");
+	equals( $.Color( "#ff0" ).toHslaString(), "hsl(60,100%,50%)", "HSLA value from #ff0");
+	equals( $.Color( "#0f0" ).toHslaString(), "hsl(120,100%,50%)", "HSLA value from #0f0");
+	equals( $.Color( "#0ff" ).toHslaString(), "hsl(180,100%,50%)", "HSLA value from #0ff");
+	equals( $.Color( "#00f" ).toHslaString(), "hsl(240,100%,50%)", "HSLA value from #00f");
+	equals( $.Color( "#f0f" ).toHslaString(), "hsl(300,100%,50%)", "HSLA value from #f0f");
+	equals( $.Color( "#7f007f" ).toHslaString(), "hsl(300,100%,25%)", "HSLA value from #7f007f");
+	equals( $.Color( "#ff7fff" ).toHslaString(), "hsl(300,100%,75%)", "HSLA value from #ff7fff");
 });
+
 
 test( "hue saturation lightness alpha Setters", function() {
 	var props = "hue saturation lightness alpha".split(" "),
 		color = $.Color( [0,0,0,0] );
-	console.dir( color );
 	expect( 4 * props.length );
 	$.each( props, function( i, fn ) {
 		var tv = fn === "hue" ? 359 : 0.5 ,
