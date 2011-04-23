@@ -55,7 +55,7 @@
 				}
 			}, {
 				re: /hsla?\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
-				fn: "hsla",
+				space: "hsla",
 				parse: function( execResult ) {
 					return [
 						execResult[1],
@@ -70,64 +70,73 @@
 		color = jQuery.Color = function( color, green, blue, alpha ) {
 			return new jQuery.Color.fn.parse( color, green, blue, alpha );
 		},
-		rgbaspace = {
-			red: {
-				idx: 0,
-				min: 0,
-				max: 255,
-				type: "int",
-				empty: true
+		spaces = {
+			rgba: {
+				cache: "_rgba",
+				props: {
+					red: {
+						idx: 0,
+						min: 0,
+						max: 255,
+						type: "int",
+						empty: true
+					},
+					green: {
+						idx: 1,
+						min: 0,
+						max: 255,
+						type: "int",
+						empty: true
+					},
+					blue: {
+						idx: 2,
+						min: 0,
+						max: 255,
+						type: "int",
+						empty: true
+					},
+					alpha: {
+						idx: 3,
+						min: 0,
+						max: 1,
+						type: "float",
+						def: 1
+					}
+				}
 			},
-			green: {
-				idx: 1,
-				min: 0,
-				max: 255,
-				type: "int",
-				empty: true
-			},
-			blue: {
-				idx: 2,
-				min: 0,
-				max: 255,
-				type: "int",
-				empty: true
-			},
-			alpha: {
-				idx: 3,
-				min: 0,
-				max: 1,
-				type: "float",
-				def: 1
+			hsla: {
+				cache: "_hsla",
+				props: {
+					hue: {
+						idx: 0,
+						mod: 360,
+						type: "int",
+						empty: true
+					},
+					saturation: {
+						idx: 1,
+						min: 0,
+						max: 1,
+						type: "float",
+						empty: true
+					},
+					lightness: {
+						idx: 2,
+						min: 0,
+						max: 1,
+						type: "float",
+						empty: true
+					}
+				}
 			}
 		},
-		hslaspace = {
-			hue: {
-				idx: 0,
-				mod: 360,
-				type: "int",
-				empty: true
-			},
-			saturation: {
-				idx: 1,
-				min: 0,
-				max: 1,
-				type: "float",
-				empty: true
-			},
-			lightness: {
-				idx: 2,
-				min: 0,
-				max: 1,
-				type: "float",
-				empty: true
-			}
-		},
+		rgbaspace = spaces.rgba.props,
 		support = color.support = {},
 
 		// colors = jQuery.Color.names
 		colors;
 
-	hslaspace.alpha = rgbaspace.alpha;
+	spaces.hsla.props.alpha = rgbaspace.alpha;
 
 	function clamp( value, prop ) {
 		if ( prop.empty && value == null ) {
@@ -175,19 +184,17 @@
 				jQuery.each( stringParsers, function( i, parser ) {
 					var match = parser.re.exec( red ),
 						values = match && parser.parse( match ),
-						parsed;
+						parsed,
+						spaceName = parser.space || "rgba",
+						cache = spaces[ spaceName ].cache;
 
 
 					if ( values ) {
-						if ( parser.fn ) {
-							parsed = inst[ parser.fn ]( values );
-							rgba = inst._rgba = parsed._rgba;
-							inst._hsla = parsed._hsla;
-						} else {
-							jQuery.each( rgbaspace, function( key, prop ) {
-								rgba[ prop.idx ] = clamp( values[ prop.idx ], prop );
-							});
+						parsed = inst[ spaceName ]( values );
+						if ( spaceName != "rgba" ) {
+							inst[ cache ] = parsed[ cache ];
 						}
+						rgba = inst._rgba = parsed._rgba;
 
 						// exit jQuery.each( stringParsers ) here because we found ours
 						return false;
@@ -199,13 +206,13 @@
 
 					// if this came from a parsed string, force "transparent" when alpha is 0
 					// chrome, (and maybe others) return "transparent" as rgba(0,0,0,0)
-					if ( rgba[ 3 ] === 0 && rgba[ 0 ] != null ) {
+					if ( Math.max.apply( Math, rgba ) === 0 ) {
 						$.extend( rgba, colors.transparent );
 					}
 					return this;
 				}
 
-				// named colorss / default
+				// named colors / default
 				red = colors[ red ] || colors._default;
 				type = "array";
 			}
@@ -219,7 +226,11 @@
 
 			if ( type === "object" ) {
 				if ( red instanceof color ) {
-					this._rgba = red._rgba.slice();
+					jQuery.each( spaces, function( spaceName, space ) {
+						if ( red[ space.cache ] ) {
+							inst[ space.cache ] = red[ space.cache ].slice();
+						}
+					});
 				} else {
 					jQuery.each( rgbaspace, function( key, prop ) {
 						rgba[ prop.idx ] = clamp( red[ key ], prop );
@@ -227,58 +238,6 @@
 				}
 				return this;
 			}
-		},
-		rgba: function( red, green, blue, alpha ) {
-
-			// no arguments - return our values
-			if ( red === undefined ) {
-				return this._rgba.slice();
-			}
-
-			var type = jQuery.type( red ),
-				obj = type === "array" ? { red: red[0], green: red[1], blue: red[2], alpha: red[3] } :
-					type === "object" ? red :
-					{ red: red, green: green, blue: blue, alpha: alpha },
-				ret = this._rgba.slice();
-
-			jQuery.each( rgbaspace, function( key, prop ) {
-				var val = obj[ key ];
-
-				// unless its null or undefined
-				if ( val != null ) {
-
-					// will automaticaly clamp when passed to color()
-					ret[ prop.idx ] = val;
-				}
-			});
-			return color( ret );
-		},
-		hsla: function( hue, saturation, lightness, alpha ) {
-			if ( !this._hsla ) {
-				this._hsla = toHsla( this._rgba );
-			}
-			if ( hue === undefined ) {
-				return this._hsla.slice();
-			}
-
-			var type = jQuery.type( hue ),
-				obj = type === "array" ? { hue: hue[0], saturation: hue[1], lightness: hue[2], alpha: hue[3] } :
-					type === "object" ? hue :
-					{ hue: hue, saturation: saturation, lightness: lightness, alpha: alpha },
-				ret = this._hsla.slice(), rgb;
-
-			jQuery.each( hslaspace, function( key, prop ) {
-				var val = obj[ key ];
-
-				// unless its null or undefined
-				if ( val != null || ret[ prop.idx ] == null ) {
-
-					ret[ prop.idx ] = clamp( val, prop );
-				}
-			});
-			rgb = color( fromHsla( ret ) );
-			rgb._hsla = ret;
-			return rgb;
 		},
 		transition: function( other, distance ) {
 			var start = this._rgba,
@@ -361,55 +320,24 @@
 	};
 	color.fn.parse.prototype = color.fn;
 
-	// Creates Setter/Getter for
-	function makeSetterGetter( space, key, prop ) {
-
-		// alpha is included in more than one space
-		if ( color.fn[ key ] ) {
-			return;
-		}
-		color.fn[ key ] = function( value ) {
-			var vtype = jQuery.type( value ),
-				fn = ( key === 'alpha' ? ( this._hsla ? 'hsla' : 'rgba' ) : space ),
-				local = this[ fn ](),
-				cur = local[ prop.idx ],
-				match;
-
-			if ( vtype === "undefined" ) {
-				return cur;
-			}
-
-			if ( vtype === "function" ) {
-				value = value.call( this, cur );
-				vtype = jQuery.type( value );
-			}
-			if ( value == null && prop.empty ) {
-				return this;
-			}
-			if ( vtype === "string" ) {
-				match = rplusequals.exec( value );
-				if ( match ) {
-					value = cur + parseFloat( match[ 2 ] ) * ( match[ 1 ] === "+" ? 1 : -1 );
-				}
-			}
-			local[ prop.idx ] = value;
-			return this[ fn ]( local );
-		};
-	}
-
-	// Create .red() .green() .blue() .alpha()
-	jQuery.each( rgbaspace, function( key, prop ) {
-		makeSetterGetter( "rgba", key, prop );
-	});
-
-	// create .hue() .saturation() .lightness()
-	jQuery.each( hslaspace, function( key, prop ) {
-		makeSetterGetter( "hsla", key, prop );
-	});
-
 	// hsla conversions adapted from:
 	// http://www.google.com/codesearch/p#OAMlx_jo-ck/src/third_party/WebKit/Source/WebCore/inspector/front-end/Color.js&d=7&l=193
-	function toHsla( rgba ) {
+
+	function hue2rgb( p, q, h ) {
+		h = ( h + 1 ) % 1;
+		if ( h * 6 < 1 ) {
+			return p + (q - p) * 6 * h;
+		}
+		if ( h * 2 < 1) {
+			return q;
+		}
+		if ( h * 3 < 2 ) {
+			return p + (q - p) * ((2/3) - h) * 6;
+		}
+		return p;
+	}
+
+	spaces.hsla.to = function ( rgba ) {
 		var r = rgba[ 0 ] / 255,
 			g = rgba[ 1 ] / 255,
 			b = rgba[ 2 ] / 255,
@@ -439,23 +367,9 @@
 			s = diff / ( 2 - add );
 		}
 		return [ Math.round(h) % 360, s, l, a == null ? 1 : a ];
-	}
+	};
 
-	function hue2rgb( p, q, h ) {
-		h = ( h + 1 ) % 1;
-		if ( h * 6 < 1 ) {
-			return p + (q - p) * 6 * h;
-		}
-		if ( h * 2 < 1) {
-			return q;
-		}
-		if ( h * 3 < 2 ) {
-			return p + (q - p) * ((2/3) - h) * 6;
-		}
-		return p;
-	}
-
-	function fromHsla( hsla ) {
+	spaces.hsla.from = function ( hsla ) {
 		var h = hsla[ 0 ] / 360,
 			s = hsla[ 1 ],
 			l = hsla[ 2 ],
@@ -463,14 +377,89 @@
 			q = l <= 0.5 ? l * ( 1 + s ) : l + s - l * s,
 			p = 2 * l - q,
 			r, g, b;
-		
+
 		return [
 			Math.round( hue2rgb( p, q, h + ( 1 / 3 ) ) * 255 ),
 			Math.round( hue2rgb( p, q, h ) * 255 ),
 			Math.round( hue2rgb( p, q, h - ( 1 / 3 ) ) * 255 ),
 			a
 		];
-	}
+	};
+
+
+	jQuery.each( spaces, function( spaceName, space ) {
+		var props = space.props,
+			cache = space.cache,
+			to = space.to,
+			from = space.from;
+
+		// makes rgba() and hsla()
+		color.fn[ spaceName ] = function( value ) {
+
+			// generate a cache for this space if it doesn't exist
+			if ( to && !this[ cache ] ) {
+				this[ cache ] = to( this._rgba );
+			}
+			if ( value === undefined ) {
+				return this[ cache ].slice();
+			}
+
+			var type = jQuery.type( value ),
+				arr = ( type === "array" || type === "object" ) ? value : arguments,
+				local = this[ cache ].slice(),
+				ret;
+
+			jQuery.each( props, function( key, prop ) {
+				var val = arr[ type === "object" ? key : prop.idx ];
+				if ( val != null ) {
+					local[ prop.idx ] = clamp( val, prop );
+				}
+			});
+
+			if ( from ) {
+				ret = color( from( local ) );
+				ret[ cache ] = local;
+				return ret;
+			} else {
+				return color( local );
+			}
+		};
+
+		// makes red() green() blue() alpha() hue() saturation() lightness()
+		jQuery.each( props, function( key, prop ) {
+			// alpha is included in more than one space
+			if ( color.fn[ key ] ) {
+				return;
+			}
+			color.fn[ key ] = function( value ) {
+				var vtype = jQuery.type( value ),
+					fn = ( key === 'alpha' ? ( this._hsla ? 'hsla' : 'rgba' ) : spaceName ),
+					local = this[ fn ](),
+					cur = local[ prop.idx ],
+					match;
+
+				if ( vtype === "undefined" ) {
+					return cur;
+				}
+
+				if ( vtype === "function" ) {
+					value = value.call( this, cur );
+					vtype = jQuery.type( value );
+				}
+				if ( value == null && prop.empty ) {
+					return this;
+				}
+				if ( vtype === "string" ) {
+					match = rplusequals.exec( value );
+					if ( match ) {
+						value = cur + parseFloat( match[ 2 ] ) * ( match[ 1 ] === "+" ? 1 : -1 );
+					}
+				}
+				local[ prop.idx ] = value;
+				return this[ fn ]( local );
+			};
+		});
+	});
 
 	// add .fx.step functions
 	jQuery.each( stepHooks, function( i, hook ) {
