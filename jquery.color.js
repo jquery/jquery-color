@@ -424,7 +424,7 @@
 		if ( min === max ) {
 			h = 0;
 		} else if ( r === max ) {
-			h = ( ( 60 * ( g - b ) / diff ) + 360 ) % 360;
+			h = ( 60 * ( g - b ) / diff ) + 360;
 		} else if ( g === max ) {
 			h = ( 60 * ( b - r ) / diff ) + 120;
 		} else {
@@ -438,7 +438,7 @@
 		} else {
 			s = diff / ( 2 - add );
 		}
-		return [ h, s, l, a ];
+		return [ Math.round(h) % 360, s, l, a == null ? 1 : a ];
 	}
 
 	function hue2rgb( p, q, h ) {
