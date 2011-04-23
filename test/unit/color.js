@@ -25,7 +25,7 @@ function parseTest( str, results, descr ) {
 	});
 }
 
-test( "jQuery.color( 255, 255, 255 )", function() {
+test( "jQuery.Color( 255, 255, 255 )", function() {
 	expect( 4 );
 	testParts( jQuery.Color( 255, 255, 255 ), {
 		expect: 4,
@@ -36,7 +36,7 @@ test( "jQuery.color( 255, 255, 255 )", function() {
 	});
 });
 
-test( "jQuery.color( element, \"color\" )", function() {
+test( "jQuery.Color( element, \"color\" )", function() {
 	var $div = $( "<div>" ).appendTo( "body" ).css( "color", "#fff" );
 	expect( 8 );
 	testParts( jQuery.Color( $div, "color" ), {
@@ -70,7 +70,7 @@ parseTest( jQuery.Color( jQuery.Color( "red" ) ), {
 	green: 0,
 	blue: 0,
 	alpha: 1
-}, "jQuery.Color(j Query.Color(\"red\") )" );
+}, "jQuery.Color( jQuery.Color(\"red\") )" );
 
 parseTest( jQuery.Color([ 255, 255, 255 ]), {
 	expect: 4,
@@ -78,7 +78,7 @@ parseTest( jQuery.Color([ 255, 255, 255 ]), {
 	green: 255,
 	blue: 255,
 	alpha: 1
-}, "jQuery.color([ 255, 255, 255 ])" );
+}, "jQuery.Color([ 255, 255, 255 ])" );
 
 parseTest( "", {
 	expect: 4,
