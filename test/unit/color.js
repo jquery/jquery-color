@@ -302,7 +302,7 @@ parseTest("hsl(72, 77%, 59%)", {
 });
 
 test("HSLA Conversions", function() {
-	expect(8);
+	expect(9);
 	equals( $.Color( "#f00" ).toHslaString(), "hsl(0,100%,50%)", "HSLA value from #f00");
 	equals( $.Color( "#ff0" ).toHslaString(), "hsl(60,100%,50%)", "HSLA value from #ff0");
 	equals( $.Color( "#0f0" ).toHslaString(), "hsl(120,100%,50%)", "HSLA value from #0f0");
@@ -311,6 +311,7 @@ test("HSLA Conversions", function() {
 	equals( $.Color( "#f0f" ).toHslaString(), "hsl(300,100%,50%)", "HSLA value from #f0f");
 	equals( $.Color( "#7f007f" ).toHslaString(), "hsl(300,100%,25%)", "HSLA value from #7f007f");
 	equals( $.Color( "#ff7fff" ).toHslaString(), "hsl(300,100%,75%)", "HSLA value from #ff7fff");
+	equals( $.Color( "rgba(127,127,127,0.1)" ).toHslaString(), "hsla(0,0%,50%,0.1)", "HSLA value from rgba(127,127,127,0)");
 });
 
 
