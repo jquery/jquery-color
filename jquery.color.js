@@ -149,7 +149,7 @@
 			value = ~~value;
 		}
 		if ( prop.mod ) {
-			value = ( value < 0 ? value + 360 * ( 1 + ~~( -value / 360 ) ) : value ) % prop.mod;
+			value = ( value < 0 ? value + prop.mod * ( 1 + ~~( -value / prop.mod ) ) : value ) % prop.mod;
 		}
 		if ( prop.type === "float" ) {
 			value = parseFloat( value );
