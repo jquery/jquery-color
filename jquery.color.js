@@ -75,6 +75,29 @@
         return getRGB(color);
     };
 
+
+ $.fn.backgroundFade = function(time,color1,color2){ 
+	 //this function can take unlimited arguments
+	 //first one is an integer(miliseconds)
+	 //all the othes hexadecimal numbers for color
+	 //it will fade from one color to the other repeatedly..
+	 //example: $('body').backgroundFade(1000, '#fff', '#000');
+
+	var args = arguments;
+	return this.each(function recurse(){
+	    var self = this;
+	    
+	    for(var i = 1;i < args.length;i++){
+		$(this).animate({
+		    backgroundColor: args[i]
+		},time,function(){
+		    if(i==args.length) recurse.call(self);
+		})
+	    }
+	    
+	});
+    };
+
     // Some named colors to work with
     // From Interface by Stefan Petre
     // http://interface.eyecon.ro/
