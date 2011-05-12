@@ -55,9 +55,35 @@
         if (result = /rgba\(0, 0, 0, 0\)/.exec(color))
             return colors['transparent'];
 
+        // Look for hsl(num,num%,num%)
+        if (result = /hsl\(\s*([0-9]+(?:\.[0-9]+)?)\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*\)/.exec(color)) {
+            // Algorithm from the CSS3 spec: http://www.w3.org/TR/css3-color/#hsl-color.
+            var hue, saturation, lightness, m1, m2, r, g, b;
+            hue = result[1] / 360.0;
+            saturation = result[2] / 100.0;
+            lightness = result[3] / 100.0;
+
+            m2 = lightness <= 0.5 ? lightness * (saturation + 1) : lightness + saturation - lightness * saturation;
+            m1 = lightness * 2 - m2;
+            r = parseInt(hueToRgb(m1, m2, hue + 1.0/3) * 255);
+            g = parseInt(hueToRgb(m1, m2, hue) * 100);
+            b = parseInt(hueToRgb(m1, m2, hue - 1.0/3) * 255);
+
+            return [r, g, b];
+        }
+
         // Otherwise, we're most likely dealing with a named color
         return colors[jQuery.trim(color).toLowerCase()];
     }
+
+    function hueToRgb(m1, m2, h) {
+        if (h < 0) h += 1;
+        if (h > 1) h -= 1;
+        if (h * 6 < 1) return m1 + (m2 - m1) * h * 6;
+        if (h * 2 < 1) return m2;
+        if (h * 3 < 2) return m1 + (m2 - m1) * (2.0/3 - h) * 6;
+        return m1;
+    };
 
     function getColor(elem, attr) {
         var color;
