@@ -9,20 +9,51 @@
     // We override the animation for all of these color styles
     jQuery.each(['backgroundColor', 'borderBottomColor', 'borderLeftColor', 'borderRightColor', 'borderTopColor', 'color', 'outlineColor'], function(i,attr){
         jQuery.fx.step[attr] = function(fx){
-            if ( !fx.colorInit ) {
+			if ( !fx.colorInit )
+			{		                
                 fx.start = getColor( fx.elem, attr );
                 fx.end = getRGB( fx.end );
                 fx.colorInit = true;
             }
-
-            fx.elem.style[attr] = "rgb(" + [
-                Math.max(Math.min( parseInt((fx.pos * (fx.end[0] - fx.start[0])) + fx.start[0]), 255), 0),
-                Math.max(Math.min( parseInt((fx.pos * (fx.end[1] - fx.start[1])) + fx.start[1]), 255), 0),
-                Math.max(Math.min( parseInt((fx.pos * (fx.end[2] - fx.start[2])) + fx.start[2]), 255), 0)
-            ].join(",") + ")";
+			
+			// if we have a RGBA color, we have to animate the alpha channel
+			if (isRGBA(fx.start) || isRGBA(fx.end))
+			{
+				if (!isRGBA(fx.start))
+					fx.start[3] = 1
+				if (!isRGBA(fx.end))
+					fx.end[3] = 1
+					
+				fx.elem.style[attr] = "rgba(" + [
+	                Math.max(Math.min( parseInt((fx.pos * (fx.end[0] - fx.start[0])) + fx.start[0]), 255), 0),
+	                Math.max(Math.min( parseInt((fx.pos * (fx.end[1] - fx.start[1])) + fx.start[1]), 255), 0),
+	                Math.max(Math.min( parseInt((fx.pos * (fx.end[2] - fx.start[2])) + fx.start[2]), 255), 0),
+					Math.max(Math.min((parseInt((fx.pos * (fx.end[3] * 100 - fx.start[3] * 100)) + fx.start[3] * 100)) / 100, 1), 0)
+	            ].join(",") + ")";
+			}
+			else
+			{
+				fx.elem.style[attr] = "rgb(" + [
+	                Math.max(Math.min( parseInt((fx.pos * (fx.end[0] - fx.start[0])) + fx.start[0]), 255), 0),
+	                Math.max(Math.min( parseInt((fx.pos * (fx.end[1] - fx.start[1])) + fx.start[1]), 255), 0),
+	                Math.max(Math.min( parseInt((fx.pos * (fx.end[2] - fx.start[2])) + fx.start[2]), 255), 0)
+	            ].join(",") + ")";
+			}
         }
     });
-
+	
+	function isRGBA(color)
+	{
+		if (color.length == 4)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
     // Color Conversion functions from highlightFade
     // By Blair Mitchelmore
     // http://jquery.offput.ca/highlightFade/
@@ -50,10 +81,12 @@
         // Look for #fff
         if (result = /#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/.exec(color))
             return [parseInt(result[1]+result[1],16), parseInt(result[2]+result[2],16), parseInt(result[3]+result[3],16)];
-
-        // Look for rgba(0, 0, 0, 0) == transparent in Safari 3
-        if (result = /rgba\(0, 0, 0, 0\)/.exec(color))
-            return colors['transparent'];
+		
+		// look for rgba(num,num,num,num)
+		if (result = /rgba\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]+(\.[0-9]*)?)\s*\)/.exec(color))
+		{
+			return [parseInt(result[1]), parseInt(result[2]), parseInt(result[3]), parseFloat(result[4])]
+		}
 
         // Otherwise, we're most likely dealing with a named color
         return colors[jQuery.trim(color).toLowerCase()];
@@ -122,8 +155,7 @@
         red:[255,0,0],
         silver:[192,192,192],
         white:[255,255,255],
-        yellow:[255,255,0],
-        transparent: [255,255,255]
+        yellow:[255,255,0]
     };
 
 })(jQuery);
