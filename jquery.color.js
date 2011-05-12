@@ -232,18 +232,37 @@
 						}
 					});
 				} else {
-					jQuery.each( rgbaspace, function( key, prop ) {
-						rgba[ prop.idx ] = clamp( red[ key ], prop );
+					jQuery.each( spaces, function( spaceName, space ) {
+						jQuery.each( space.props, function( key, prop ) {
+							var cache = space.cache;
+							if ( !inst[ cache ] && key !== "alpha" && space.to ) {
+								inst[ cache ] = space.to( inst._rgba );
+							}
+							inst[ cache ][ prop.idx ] = clamp( red[ key ], prop );
+						});
 					});
 				}
 				return this;
 			}
 		},
+		_space: function() {
+			var used = [],
+				inst = this;
+			jQuery.each( spaces, function( spaceName, space ) {
+				if ( inst[ space.cache ] ) {
+					used.push( spaceName );
+				}
+			});
+			return used.pop();
+		},
 		transition: function( other, distance ) {
-			var start = this._rgba,
-				end = other._rgba,
-				rgba = start.slice();
-			jQuery.each( rgbaspace, function( key, prop ) {
+			var spaceName = other._space(),
+				space = spaces[ spaceName ],
+				start = this[ space.cache ] || space.to( this._rgba ),
+				end = other[ space.cache ],
+				arr = start.slice();
+
+			jQuery.each( space.props, function( key, prop ) {
 				var s = start[ prop.idx ],
 					e = end[ prop.idx ];
 
@@ -253,12 +272,19 @@
 				}
 				// if null - use end
 				if ( s === null ) {
-					rgba[ prop.idx ] = e;
+					arr[ prop.idx ] = e;
 				} else {
-					rgba[ prop.idx ] = clamp( ( e - s ) * distance + s, prop );
+					if ( prop.mod ) {
+						if ( e - s > prop.mod / 2 ) {
+							s += prop.mod;
+						} else if ( s - e > prop.mod / 2 ) {
+							s -= prop.mod;
+						}
+					}
+					arr[ prop.idx ] = clamp( ( e - s ) * distance + s, prop );
 				}
 			});
-			return color( rgba );
+			return this[ spaceName ]( arr );
 		},
 		blend: function( opaque ) {
 			// if we are already opaque - return ourself
@@ -338,6 +364,9 @@
 	}
 
 	spaces.hsla.to = function ( rgba ) {
+		if ( rgba[ 0 ] == null || rgba[ 1 ] == null || rgba[ 2 ] == null ) {
+			return [ null, null, null, rgba[ 3 ] ];
+		}
 		var r = rgba[ 0 ] / 255,
 			g = rgba[ 1 ] / 255,
 			b = rgba[ 2 ] / 255,
@@ -370,6 +399,9 @@
 	};
 
 	spaces.hsla.from = function ( hsla ) {
+		if ( hsla[ 0 ] == null || hsla[ 1 ] == null || hsla[ 2 ] == null ) {
+			return [ null, null, null, hsla[ 3 ] ];
+		}
 		var h = hsla[ 0 ] / 360,
 			s = hsla[ 1 ],
 			l = hsla[ 2 ],
@@ -411,9 +443,10 @@
 
 			jQuery.each( props, function( key, prop ) {
 				var val = arr[ type === "object" ? key : prop.idx ];
-				if ( val != null ) {
-					local[ prop.idx ] = clamp( val, prop );
+				if ( val == null ) {
+					val = local[ prop.idx ];
 				}
+				local[ prop.idx ] = clamp( val, prop );
 			});
 
 			if ( from ) {

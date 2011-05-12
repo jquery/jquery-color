@@ -301,6 +301,29 @@ parseTest("hsl(72, 77%, 59%)", {
 	alpha: 1
 });
 
+parseTest( jQuery.Color({ alpha: 0 }), {
+	expect: 7,
+	hue: null,
+	saturation: null,
+	lightness: null,
+	alpha: 0,
+	red: null,
+	green: null,
+	blue: null
+}, "jQuery.Color({ alpha: 0 })" );
+
+parseTest( jQuery.Color({ saturation: 0 }), {
+	expect: 7,
+	hue: null,
+	saturation: 0,
+	lightness: null,
+	alpha: 1,
+	red: null,
+	green: null,
+	blue: null
+}, "jQuery.Color({ saturation: 0 })" );
+
+
 test("HSLA Conversions", function() {
 	expect(9);
 	equals( $.Color( "#f00" ).toHslaString(), "hsl(0,100%,50%)", "HSLA value from #f00");
@@ -312,6 +335,44 @@ test("HSLA Conversions", function() {
 	equals( $.Color( "#7f007f" ).toHslaString(), "hsl(300,100%,25%)", "HSLA value from #7f007f");
 	equals( $.Color( "#ff7fff" ).toHslaString(), "hsl(300,100%,75%)", "HSLA value from #ff7fff");
 	equals( $.Color( "rgba(127,127,127,0.1)" ).toHslaString(), "hsla(0,0%,50%,0.1)", "HSLA value from rgba(127,127,127,0)");
+});
+
+test("HSLA Transitions", function() {
+	var red = $.Color("red"),
+		desaturate = red.transition( $.Color({ saturation: 0 }), 0.5 ),
+		hue10 = red.transition( $.Color({ hue: 10 }), 0.5),
+		hue350 = red.transition( $.Color({ hue: 350 }), 0.5),
+		hueWrapPos = $.Color({ hue: 350 }).transition( $.Color({ hue: 10 }));
+	
+	testParts( desaturate, {
+		prefix: "red -> desaturatue 0.5",
+		hue: 0,
+		saturation: 0.5,
+		lightness: 0.5,
+		alpha: 1
+	});
+	testParts( hue10, {
+		prefix: "red -> hue 10 0.5",
+		hue: 5,
+		saturation: 1,
+		lightness: 0.5,
+		alpha: 1
+	});
+	testParts( hue350, {
+		prefix: "red -> hue 350 0.5",
+		hue: 355,
+		saturation: 1,
+		lightness: 0.5,
+		alpha: 1
+	});
+	testParts( hueWrapPos, {
+		prefix: " hue 350 -> hue 10 0.5",
+		hue: 0,
+		saturation: null,
+		lightness: null,
+		alpha: 1
+	});
+	
 });
 
 
