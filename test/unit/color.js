@@ -323,6 +323,17 @@ parseTest( jQuery.Color({ saturation: 0 }), {
 	blue: null
 }, "jQuery.Color({ saturation: 0 })" );
 
+parseTest( jQuery.Color({ saturation: 0, alpha: 0 }), {
+	expect: 7,
+	hue: null,
+	saturation: 0,
+	lightness: null,
+	alpha: 0,
+	red: null,
+	green: null,
+	blue: null
+}, "jQuery.Color({ saturation: 0, alpha: 0 })" );
+
 
 test("HSLA Conversions", function() {
 	expect(9);
@@ -392,6 +403,11 @@ test( "hue saturation lightness alpha Setters", function() {
 		equals( color[ fn ](), 0, "color."+fn+"() still 0" );
 		equals( plused[ fn ](), 1, "color."+fn+"(\"+=1\")" );
 	});
+});
+
+test( "alpha setter leaves space as hsla", function() {
+	var test = $.Color({hue: 0, saturation: 0, lightness: 0, alpha: 0}).alpha( 1 );
+	ok( test._hsla, "HSLA cache still exists after calling alpha setter" );
 });
 
 
