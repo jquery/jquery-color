@@ -61,7 +61,7 @@ parseTest( jQuery.Color({ red: 100 }), {
 	red: 100,
 	green: null,
 	blue: null,
-	alpha: 1
+	alpha: null
 }, "jQuery.Color({ red: 100 })" );
 
 parseTest( jQuery.Color( jQuery.Color( "red" ) ), {
@@ -317,7 +317,7 @@ parseTest( jQuery.Color({ saturation: 0 }), {
 	hue: null,
 	saturation: 0,
 	lightness: null,
-	alpha: 1,
+	alpha: null,
 	red: null,
 	green: null,
 	blue: null

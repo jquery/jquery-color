@@ -138,8 +138,8 @@
 
 	spaces.hsla.props.alpha = rgbaspace.alpha;
 
-	function clamp( value, prop ) {
-		if ( prop.empty && value == null ) {
+	function clamp( value, prop, alwaysAllowEmpty ) {
+		if ( ( prop.empty || alwaysAllowEmpty ) && value == null ) {
 			return null;
 		}
 		if ( prop.def && value == null ) {
@@ -163,6 +163,10 @@
 	color.fn = color.prototype = {
 		constructor: color,
 		parse: function( red, green, blue, alpha ) {
+			if ( red === undefined ) {
+				this._rgba = [null,null,null,null];
+				return this;
+			}
 			if ( red instanceof jQuery || red.nodeType ) {
 				red = red instanceof jQuery ? red.css( green ) : jQuery( red ).css( green );
 				green = undefined;
@@ -238,7 +242,10 @@
 							if ( !inst[ cache ] && key !== "alpha" && space.to ) {
 								inst[ cache ] = space.to( inst._rgba );
 							}
-							inst[ cache ][ prop.idx ] = clamp( red[ key ], prop );
+
+							// this is the only case where we allow nulls for ALL properties.
+							// call clamp with alwaysAllowEmpty
+							inst[ cache ][ prop.idx ] = clamp( red[ key ], prop, true );
 						});
 					});
 				}
@@ -301,8 +308,8 @@
 			}));
 		},
 		toRgbaString: function() {
-			var rgba = jQuery.map( this._rgba, function( v ) {
-				return v === null ? 0 : v;
+			var rgba = jQuery.map( this._rgba, function( v, i ) {
+				return v == null ? ( i > 2 ? 1 : 0 ) : v;
 			});
 
 			if ( rgba[ 3 ] === 1 ) {
@@ -313,7 +320,7 @@
 		},
 		toHslaString: function() {
 			var hsla = jQuery.map( this.hsla(), function( v, i ) {
-				v = v === null ? 0 : v;
+				v = v == null ? ( i > 2 ? 1 : 0 ) : v;
 				if ( i === 1 || i === 2 ) {
 					v = Math.round( v * 100 ) + "%";
 				}
