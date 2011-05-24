@@ -46,11 +46,10 @@ Example Use
 
 
 ##The $.Color Function Object
-The `$.Color()` function allows you to work with colors.
+The `$.Color()` function allows you to create and manipulate color objects that are accepted by jQuery's `.animate()` and `.css()` functions via supplied cssHooks.
 
-1) Returns a new Color object, similar to $() or $.Event
- 
-2) Accepts a color value to create a new Color object with a `$.Color.fn` prototype
+* Returns a new Color object, similar to `$()` or `$.Event`
+* Accepts many formats to create a new Color object with a `$.Color.fn` prototype
 
 ###Example uses:
 
@@ -104,9 +103,9 @@ The `$.Color()` function allows you to work with colors.
     
 
 ###String Methods:
-    toRgbString() // as css ex "rgba(255, 255, 255, 1)"
-    toHslString() // returns a css string ex "hsla(330, 75%, 25%, 1)"
-    toHexString( includeAlpha ) // as css ex "#abcdef" , with "includeAlpha" use "#rrggbbaa"
+    toRgbString() // returns a css string "rgba(255, 255, 255, 1)"
+    toHslString() // returns a css string "hsla(330, 75%, 25%, 1)"
+    toHexString( includeAlpha ) // returns a css string "#abcdef", with "includeAlpha" uses "#rrggbbaa" (alpha *= 255)
 
 ###Working with other colors:
     transition( othercolor, distance ) // the color distance ( 0.0 - 1.0 ) of the way between this color and othercolor
@@ -115,38 +114,39 @@ The `$.Color()` function allows you to work with colors.
 
 ##jQuery.Color properties
 
-####`jQuery.Color.names`
-A list of named color tuples will be stored on `$.Color.names`.  The value they contain should be parsable by `$.Color()`... All named colors should be lowercased.  I.E. `$.Color("Red")` is the same as doing `$.Color( $.Color.names["red"] );`
 
-There should also be a named color `"_default"` which is set to white, this is used for situations where a color is unparseable.
+##Internals on The Color Object
+* Internally, RGBA values are stored as `color._rgba[0] = red, color._rgba[1] = green, color._rgba[2] = blue, color._rgba[3] = alpha`.  However, please remember there are nice convenient setters and getters for each of these properties.
+* `undefined`/`null` values for colors indicate non-existence. This signals the `transition()` function to keep whatever value was set in the other end of the transition. For example, animating to `$.Color([ 255, null, null, 1 ])` would only animate the red and alpha values of the color.
+
+###`jQuery.Color.names`
+A list of named colors is stored on the `$.Color.names` object.  The value they contain should be parseable by `$.Color()`. All names on this object should be lowercased.  I.E. `$.Color("Red")` is the same as doing `$.Color( $.Color.names["red"] );`
+
+There is also a named color `"_default"` which by default is white, this is used for situations where a color is unparseable.
 
 ###`"transparent"`
-A special note about the color `"transparent"` - it will return `null` for rgb unless you specify colors for these values... The transition funciton makes use of this by detecting null values and using the other endpoint - allowing for something like this:
+A special note about the color `"transparent"` - It returns `null` for red greed and blue unless you specify colors for these values.
 
     $.Color("#abcdef").transition("transparent", 0.5)
 
-Animating to the value "transparent" will still use "#abcdef" for RGB the whole time....
+Animating to or from the value `"transparent"` will still use "#abcdef" for red green and blue.
 
-##Internals on The Color Object
-1) Internally, rgba is stored as `$colorObj._rgba[0] = red, $colorObj._rgba[1] = green, $colorObj._rgba[2] = blue, $colorObj._rgba[3] = alpha`.
+##HSLA Support
 
-2) `undefined`/`null` values for colors indicate non-existance. For example, animating to `_rgb[ 255, null, null, 1 ]` would only animate the 
+If a color is created using any of the HSLA functions or parsers, it will keep the `_rgba` array up to date as well as having a `_hsla` array.  Once an RGBA operation is performed on HSLA, however, the `_hsla` cache is removed and all operations will continue based off of rgb (unless you go back into HSLA). The `._hsla` array follows the same format as `._rbga`, `[hue, saturation, lightness, alpha ]`.  If you need to build an HSLA color from an HSLA array, `$.Color().hsla( array )` works for that purpose.
 
-
-##HSL Support
-
-The internal color object properties will probably still be stored in RGBA. However if initiated with an HSLA color or an hsla operations is made, it will store/use the `_hsla` data and update the `_rgba` information as well. Once an RGBA operation is performed on HSLA, however, the `_hsla` cache is removed and all operations will continue based off of rgb.
-
-The `._hsla` array will follow the same format as `._rbga`, `[h,s,l,a]`. 
-
-Colors with 0 saturation, or 100%/0% lightness will be stored with a hue of 0
+**Colors with 0 saturation, or 100%/0% lightness will be stored with a hue of 0**
 
 ##Extensibility
 
-It is possible for you to add your own functions to the color object, for instance, this function could tell you if its better to use black or white on a given background color.
+It is possible for you to add your own functions to the color object.  For instance, this function will tell you if its better to use black or white on a given background color.
 
     // method taken from https://gist.github.com/960189
     $.Color.fn.contrastColor = function() {
         var r = this._rgba[0], g = this._rgba[1], b = this._rgba[2];
-        return (((r*299)+(g*587)+(b*144))/1000) >= 131.5 ? 'black' : 'white';
+        return (((r*299)+(g*587)+(b*144))/1000) >= 131.5 ? "black" : "white";
     };
+    
+    // usage examples:
+    $.Color("#bada55").contrastColor(); // "white"
+    element.css( "color", $.Color( element, "backgroundColor" ).contrastColor() );
