@@ -242,6 +242,18 @@ test( ".transition()", function() {
 	});
 });
 
+test( ".is()", function() {
+	var red = jQuery.Color( "red" );
+	ok( red.is( red ), "Red is equal to itself");
+	ok( red.is({ red: 255 }), "Red is equal to { red: 255 }");
+	ok( red.is({ saturation: 1 }), "Red is equal to { saturation: 1 }");
+	ok( red.is([255,0,0]), "Red is equal to [255,0,0]");
+	ok( red.is("red"), "Red is equal to \"red\"");
+	ok( !red.is("blue"), "Red is not blue");
+	ok( !red.is({ alpha: 0 }), "Red is not { alpha: 0 }");
+
+});
+
 test( ".toRgbaString()", function() {
 	var black = jQuery.Color( "black" ),
 		trans = black.alpha( 0.5 );
