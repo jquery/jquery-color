@@ -7,7 +7,7 @@ function testParts( color, parts ) {
 		expect( parts.expect );
 	}
 
-	$.each( parts, function( key , value ) {
+	jQuery.each( parts, function( key , value ) {
 
 		// these two properties are just helpers for the test function, ignore them
 		if ( key === "expect" || key === "prefix" ) {
@@ -37,7 +37,7 @@ test( "jQuery.Color( 255, 255, 255 )", function() {
 });
 
 test( "jQuery.Color( element, \"color\" )", function() {
-	var $div = $( "<div>" ).appendTo( "body" ).css( "color", "#fff" );
+	var $div = jQuery( "<div>" ).appendTo( "body" ).css( "color", "#fff" );
 	expect( 8 );
 	testParts( jQuery.Color( $div, "color" ), {
 		prefix: "jQuery(<div>): ",
@@ -143,10 +143,10 @@ module( "color" );
 
 test( "red green blue alpha Setters", function() {
 	var props = "red green blue alpha".split(" "),
-		color = $.Color( [0,0,0,0] );
+		color = jQuery.Color( [0,0,0,0] );
 
 	expect( 4 * props.length );
-	$.each( props, function( i, fn ) {
+	jQuery.each( props, function( i, fn ) {
 		var tv = fn==="alpha" ? 0.5 : 255,
 			set = color[ fn ]( tv ),
 			clamp = fn==="alpha" ? 1 : 255,
@@ -161,7 +161,7 @@ test( "red green blue alpha Setters", function() {
 });
 
 test( ".rgba()", function() {
-	var color = $.Color( "black" ),
+	var color = jQuery.Color( "black" ),
 		getter = color.rgba(),
 		set1 = color.rgba( null, 100, null, 0 ),
 		set2 = color.rgba([ null, null, 100, 0.5 ]);
@@ -199,8 +199,8 @@ test( ".rgba()", function() {
 });
 
 test( ".blend()", function() {
-	var halfwhite = $.Color( "white" ).alpha( 0.5 ),
-		red = $.Color( "red" ),
+	var halfwhite = jQuery.Color( "white" ).alpha( 0.5 ),
+		red = jQuery.Color( "red" ),
 		blend = halfwhite.blend( red );
 
 	testParts( blend, {
@@ -213,9 +213,9 @@ test( ".blend()", function() {
 });
 
 test( ".transition()", function() {
-	var black = $.Color( "black" ),
-		whiteAlpha = $.Color( "white" ).alpha( 0.5 ),
-		trans = $.Color( "transparent" );
+	var black = jQuery.Color( "black" ),
+		whiteAlpha = jQuery.Color( "white" ).alpha( 0.5 ),
+		trans = jQuery.Color( "transparent" );
 		fifty = black.transition( whiteAlpha, 0.5 );
 
 	expect( 12 );
@@ -243,7 +243,7 @@ test( ".transition()", function() {
 });
 
 test( ".toRgbaString()", function() {
-	var black = $.Color( "black" ),
+	var black = jQuery.Color( "black" ),
 		trans = black.alpha( 0.5 );
 
 	expect( 2 );
@@ -253,7 +253,7 @@ test( ".toRgbaString()", function() {
 });
 
 test( ".toHexString()", function() {
-	var almostBlack = $.Color( "black" ).red( 2 ).blue( 16 ),
+	var almostBlack = jQuery.Color( "black" ).red( 2 ).blue( 16 ),
 		trans = almostBlack.alpha( 0.5 );
 
 	expect( 2 );
@@ -263,8 +263,8 @@ test( ".toHexString()", function() {
 });
 
 test( "toString() methods keep alpha intact", function() {
-	var trans = $.Color( "transparent" ),
-		opaque = $.Color( "red" );
+	var trans = jQuery.Color( "transparent" ),
+		opaque = jQuery.Color( "red" );
 
 	expect( 4 );
 	trans.toRgbaString();
@@ -337,23 +337,23 @@ parseTest( jQuery.Color({ saturation: 0, alpha: 0 }), {
 
 test("HSLA Conversions", function() {
 	expect(9);
-	equals( $.Color( "#f00" ).toHslaString(), "hsl(0,100%,50%)", "HSLA value from #f00");
-	equals( $.Color( "#ff0" ).toHslaString(), "hsl(60,100%,50%)", "HSLA value from #ff0");
-	equals( $.Color( "#0f0" ).toHslaString(), "hsl(120,100%,50%)", "HSLA value from #0f0");
-	equals( $.Color( "#0ff" ).toHslaString(), "hsl(180,100%,50%)", "HSLA value from #0ff");
-	equals( $.Color( "#00f" ).toHslaString(), "hsl(240,100%,50%)", "HSLA value from #00f");
-	equals( $.Color( "#f0f" ).toHslaString(), "hsl(300,100%,50%)", "HSLA value from #f0f");
-	equals( $.Color( "#7f007f" ).toHslaString(), "hsl(300,100%,25%)", "HSLA value from #7f007f");
-	equals( $.Color( "#ff7fff" ).toHslaString(), "hsl(300,100%,75%)", "HSLA value from #ff7fff");
-	equals( $.Color( "rgba(127,127,127,0.1)" ).toHslaString(), "hsla(0,0%,50%,0.1)", "HSLA value from rgba(127,127,127,0)");
+	equals( jQuery.Color( "#f00" ).toHslaString(), "hsl(0,100%,50%)", "HSLA value from #f00");
+	equals( jQuery.Color( "#ff0" ).toHslaString(), "hsl(60,100%,50%)", "HSLA value from #ff0");
+	equals( jQuery.Color( "#0f0" ).toHslaString(), "hsl(120,100%,50%)", "HSLA value from #0f0");
+	equals( jQuery.Color( "#0ff" ).toHslaString(), "hsl(180,100%,50%)", "HSLA value from #0ff");
+	equals( jQuery.Color( "#00f" ).toHslaString(), "hsl(240,100%,50%)", "HSLA value from #00f");
+	equals( jQuery.Color( "#f0f" ).toHslaString(), "hsl(300,100%,50%)", "HSLA value from #f0f");
+	equals( jQuery.Color( "#7f007f" ).toHslaString(), "hsl(300,100%,25%)", "HSLA value from #7f007f");
+	equals( jQuery.Color( "#ff7fff" ).toHslaString(), "hsl(300,100%,75%)", "HSLA value from #ff7fff");
+	equals( jQuery.Color( "rgba(127,127,127,0.1)" ).toHslaString(), "hsla(0,0%,50%,0.1)", "HSLA value from rgba(127,127,127,0)");
 });
 
 test("HSLA Transitions", function() {
-	var red = $.Color("red"),
-		desaturate = red.transition( $.Color({ saturation: 0 }), 0.5 ),
-		hue10 = red.transition( $.Color({ hue: 10 }), 0.5),
-		hue350 = red.transition( $.Color({ hue: 350 }), 0.5),
-		hueWrapPos = $.Color({ hue: 350 }).transition( $.Color({ hue: 10 }));
+	var red = jQuery.Color("red"),
+		desaturate = red.transition( jQuery.Color({ saturation: 0 }), 0.5 ),
+		hue10 = red.transition( jQuery.Color({ hue: 10 }), 0.5),
+		hue350 = red.transition( jQuery.Color({ hue: 350 }), 0.5),
+		hueWrapPos = jQuery.Color({ hue: 350 }).transition( jQuery.Color({ hue: 10 }));
 	
 	testParts( desaturate, {
 		prefix: "red -> desaturatue 0.5",
@@ -389,9 +389,9 @@ test("HSLA Transitions", function() {
 
 test( "hue saturation lightness alpha Setters", function() {
 	var props = "hue saturation lightness alpha".split(" "),
-		color = $.Color( [0,0,0,0] );
+		color = jQuery.Color( [0,0,0,0] );
 	expect( 4 * props.length );
-	$.each( props, function( i, fn ) {
+	jQuery.each( props, function( i, fn ) {
 		var tv = fn === "hue" ? 359 : 0.5 ,
 			set = color[ fn ]( tv ),
 			clamp = fn === "hue" ? -360 : 1,
@@ -406,19 +406,19 @@ test( "hue saturation lightness alpha Setters", function() {
 });
 
 test( "alpha setter leaves space as hsla", function() {
-	var test = $.Color({hue: 0, saturation: 0, lightness: 0, alpha: 0}).alpha( 1 );
+	var test = jQuery.Color({hue: 0, saturation: 0, lightness: 0, alpha: 0}).alpha( 1 );
 	ok( test._hsla, "HSLA cache still exists after calling alpha setter" );
 });
 
 
 module( "animate" );
 test( "animated", function() {
-	var el = $( "<div>" ).appendTo( "body" ).css({ color: "#000000" });
+	var el = jQuery( "<div></div>" ).appendTo( "body" ).css({ color: "#000000" });
 
 	expect( 10 );
 	stop();
 	el.animate({ color: "#ffffff" }, 200, function() {
-		testParts( $.Color( el, "color" ), {
+		testParts( jQuery.Color( el, "color" ), {
 			prefix: "Post Animated Color finished properly",
 			red: 255,
 			green: 255,
@@ -428,14 +428,14 @@ test( "animated", function() {
 
 		el.animate({ color: "#00FF00" }, 1000);
 		setTimeout(function() {
-			var color = $.Color( el, "color" );
+			var color = jQuery.Color( el, "color" );
 
 			el.stop();
 			notEqual( color.red() , 255, "Stopped midway, not either endpoint" );
 			notEqual( color.red() , 0, "Stopped midway, not either endpoint" );
 
 			el.css('color', 'white').animate({ color: "#000000" }, 200).stop( true );
-			testParts( $.Color( el, "color" ), {
+			testParts( jQuery.Color( el, "color" ), {
 				prefix: "Immediately Stopped.. Animated Color didn't change",
 				red: 255,
 				green: 255,
@@ -446,5 +446,18 @@ test( "animated", function() {
 			el.remove();
 			start();
 		}, 500);
+	});
+});
+
+asyncTest( "animated documentFragment", function() {
+	var el = jQuery( "<div></div>" );
+	expect(1);
+	
+	el.animate({ color: "transparent" }, 200, function() {
+		testParts( jQuery.Color( el, "color" ), {
+			prefix: "Animation endpoint is transparent",
+			alpha: 0
+		});
+		start();
 	});
 });
