@@ -110,7 +110,7 @@ The `$.Color()` function allows you to create and manipulate color objects that 
 ###Working with other colors:
     transition( othercolor, distance ) // the color distance ( 0.0 - 1.0 ) of the way between this color and othercolor
     blend( othercolor ) // Will apply this color on top of the other color using alpha blending
-
+    is( othercolor ) // Will determine if this color is equal to all defined properties of othercolor
 
 ##jQuery.Color properties
 

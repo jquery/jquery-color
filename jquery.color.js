@@ -134,7 +134,10 @@
 		support = color.support = {},
 
 		// colors = jQuery.Color.names
-		colors;
+		colors,
+
+		// local aliases of functions called often
+		each = jQuery.each;
 
 	spaces.hsla.props.alpha = rgbaspace.alpha;
 
@@ -185,7 +188,7 @@
 
 			if ( type === "string" ) {
 				red = red.toLowerCase();
-				jQuery.each( stringParsers, function( i, parser ) {
+				each( stringParsers, function( i, parser ) {
 					var match = parser.re.exec( red ),
 						values = match && parser.parse( match ),
 						parsed,
@@ -200,7 +203,7 @@
 						}
 						rgba = inst._rgba = parsed._rgba;
 
-						// exit jQuery.each( stringParsers ) here because we found ours
+						// exit each( stringParsers ) here because we found ours
 						return false;
 					}
 				});
@@ -222,7 +225,7 @@
 			}
 
 			if ( type === "array" ) {
-				jQuery.each( rgbaspace, function( key, prop ) {
+				each( rgbaspace, function( key, prop ) {
 					rgba[ prop.idx ] = clamp( red[ prop.idx ], prop );
 				});
 				return this;
@@ -230,14 +233,14 @@
 
 			if ( type === "object" ) {
 				if ( red instanceof color ) {
-					jQuery.each( spaces, function( spaceName, space ) {
+					each( spaces, function( spaceName, space ) {
 						if ( red[ space.cache ] ) {
 							inst[ space.cache ] = red[ space.cache ].slice();
 						}
 					});
 				} else {
-					jQuery.each( spaces, function( spaceName, space ) {
-						jQuery.each( space.props, function( key, prop ) {
+					each( spaces, function( spaceName, space ) {
+						each( space.props, function( key, prop ) {
 							var cache = space.cache;
 							if ( !inst[ cache ] && key !== "alpha" && space.to ) {
 								inst[ cache ] = space.to( inst._rgba );
@@ -252,10 +255,31 @@
 				return this;
 			}
 		},
+		is: function( compare ) {
+			var is = color( compare ),
+				same = true,
+				that = this;
+
+			each( spaces, function( _, space ) {
+				var isCache = is[ space.cache ],
+					localCache;
+				if (isCache) {
+					localCache = that[ space.cache ] || space.to && space.to( that._rgba ) || [];
+					each( space.props, function( _, prop ) {
+						if ( isCache[ prop.idx ] != null ) {
+							same = ( isCache[ prop.idx ] == localCache[ prop.idx ] );
+							return same;
+						}
+					});
+				}
+				return same;
+			}); 
+			return same;
+		},
 		_space: function() {
 			var used = [],
 				inst = this;
-			jQuery.each( spaces, function( spaceName, space ) {
+			each( spaces, function( spaceName, space ) {
 				if ( inst[ space.cache ] ) {
 					used.push( spaceName );
 				}
@@ -269,7 +293,7 @@
 				end = other[ space.cache ],
 				arr = start.slice();
 
-			jQuery.each( space.props, function( key, prop ) {
+			each( space.props, function( key, prop ) {
 				var s = start[ prop.idx ],
 					e = end[ prop.idx ];
 
@@ -426,7 +450,7 @@
 	};
 
 
-	jQuery.each( spaces, function( spaceName, space ) {
+	each( spaces, function( spaceName, space ) {
 		var props = space.props,
 			cache = space.cache,
 			to = space.to,
@@ -448,7 +472,7 @@
 				local = this[ cache ].slice(),
 				ret;
 
-			jQuery.each( props, function( key, prop ) {
+			each( props, function( key, prop ) {
 				var val = arr[ type === "object" ? key : prop.idx ];
 				if ( val == null ) {
 					val = local[ prop.idx ];
@@ -466,7 +490,7 @@
 		};
 
 		// makes red() green() blue() alpha() hue() saturation() lightness()
-		jQuery.each( props, function( key, prop ) {
+		each( props, function( key, prop ) {
 			// alpha is included in more than one space
 			if ( color.fn[ key ] ) {
 				return;
@@ -502,7 +526,7 @@
 	});
 
 	// add .fx.step functions
-	jQuery.each( stepHooks, function( i, hook ) {
+	each( stepHooks, function( i, hook ) {
 		jQuery.cssHooks[ hook ] = {
 			set: function( elem, value ) {
 				value = color( value );
