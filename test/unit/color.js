@@ -14,7 +14,7 @@ function testParts( color, parts ) {
 			return;
 		}
 
-		equals( color[ key ](), value, prefix + "."+key+"() is "+value);
+		strictEqual( color[ key ](), value, prefix + "."+key+"() is "+value);
 	});
 }
 
@@ -63,6 +63,43 @@ parseTest( jQuery.Color({ red: 100 }), {
 	blue: null,
 	alpha: null
 }, "jQuery.Color({ red: 100 })" );
+
+
+test( "jQuery.Color({ blue: 100 })", function() {
+	var blue = jQuery.Color({ blue: 100 });
+	testParts( blue, {
+		red: null,
+		green: null,
+		blue: 100,
+		alpha: null
+	});
+	ok( !blue._hsla, "No HSLA cache");
+});
+
+test( "jQuery.Color({ alpha: 1 })", function() {
+	var blue = jQuery.Color({ alpha: 1 });
+	testParts( blue, {
+		red: null,
+		green: null,
+		blue: null,
+		alpha: 1
+	});
+	ok( !blue._hsla, "No HSLA cache");
+});
+
+test( "jQuery.Color({ alpha: 1, hue: 100 })", function() {
+	var blue = jQuery.Color({ alpha: 1, hue: 100 });
+	testParts( blue, {
+		red: null,
+		green: null,
+		blue: null,
+		alpha: 1,
+		hue: 100,
+		saturation: null,
+		lightness: null
+	});
+});
+
 
 parseTest( jQuery.Color( jQuery.Color( "red" ) ), {
 	expect: 4,
@@ -212,7 +249,7 @@ test( ".blend()", function() {
 	});
 });
 
-test( ".transition()", function() {
+test( ".transition() works with $.Colors", function() {
 	var black = jQuery.Color( "black" ),
 		whiteAlpha = jQuery.Color( "white" ).alpha( 0.5 ),
 		trans = jQuery.Color( "transparent" );
@@ -242,9 +279,41 @@ test( ".transition()", function() {
 	});
 });
 
+test( ".transtion() works with strings and objects", function() {
+	var black = jQuery.Color( "black" );
+
+	testParts( black.transition( "white", 0.5 ), {
+		prefix: "black -> 'white'",
+		red: 127,
+		green: 127,
+		blue: 127
+	});
+
+	testParts( black.transition( "red", 0.5 ), {
+		prefix: "black -> 'red'",
+		red: 127,
+		green: 0,
+		blue: 0
+	});
+	testParts( black.transition({ blue: 255 }, 0.5 ), {
+		prefix: "black -> { blue: 255 }",
+		red: 0,
+		green: 0,
+		blue: 127
+	});
+
+	testParts( black.transition([ 200, 200, 200 ], 0.5 ), {
+		prefix: "black -> [ 200, 200, 200 ]",
+		red: 100,
+		green: 100,
+		blue: 100
+	});
+	
+});
+
 test( ".is()", function() {
 	var red = jQuery.Color( "red" );
-	ok( red.is( red ), "Red is equal to itself");
+	ok( red.is( red ), "Red is itself");
 	ok( red.is({ red: 255 }), "Red is equal to { red: 255 }");
 	ok( red.is({ saturation: 1 }), "Red is equal to { saturation: 1 }");
 	ok( red.is([255,0,0]), "Red is equal to [255,0,0]");

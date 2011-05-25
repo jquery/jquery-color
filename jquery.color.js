@@ -242,7 +242,15 @@
 					each( spaces, function( spaceName, space ) {
 						each( space.props, function( key, prop ) {
 							var cache = space.cache;
-							if ( !inst[ cache ] && key !== "alpha" && space.to ) {
+
+							// if the cache doesn't exist, and we know how to convert
+							if ( !inst[ cache ] && space.to ) {
+
+								// if the value was null, we don't need to copy it
+								// if the key was alpha, we don't need to copy it either
+								if ( red[ key ] == null || key === "alpha") {
+									return;
+								}
 								inst[ cache ] = space.to( inst._rgba );
 							}
 
@@ -287,12 +295,13 @@
 			return used.pop();
 		},
 		transition: function( other, distance ) {
-			var spaceName = other._space(),
+			var end = color( other ),
+				spaceName = end._space(),
 				space = spaces[ spaceName ],
 				start = this[ space.cache ] || space.to( this._rgba ),
-				end = other[ space.cache ],
 				arr = start.slice();
 
+			end = end[ space.cache ];
 			each( space.props, function( key, prop ) {
 				var s = start[ prop.idx ],
 					e = end[ prop.idx ];
