@@ -98,6 +98,7 @@ test( "jQuery.Color({ alpha: 1, hue: 100 })", function() {
 		saturation: null,
 		lightness: null
 	});
+	deepEqual( blue._hsla, [ 100, null, null, 1 ], "HSLA cache has correct values");
 });
 
 
@@ -240,13 +241,22 @@ test( ".blend()", function() {
 		red = jQuery.Color( "red" ),
 		blend = halfwhite.blend( red );
 
+	expect( 8 );
+
 	testParts( blend, {
-		expect: 4,
 		red: 255,
 		green: 127,
 		blue: 127,
 		alpha: 1
 	});
+
+	testParts( halfwhite.blend("red"), {
+		red: 255,
+		green: 127,
+		blue: 127,
+		alpha: 1
+	});
+
 });
 
 test( ".transition() works with $.Colors", function() {

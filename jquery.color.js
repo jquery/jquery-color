@@ -334,7 +334,7 @@
 
 			var rgb = this._rgba.slice(),
 				a = rgb.pop(),
-				blend = opaque._rgba;
+				blend = color( opaque )._rgba;
 
 			return color( jQuery.map( rgb, function( v, i ) {
 				return ( 1 - a ) * blend[ i ] + a * v;
