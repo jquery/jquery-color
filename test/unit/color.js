@@ -244,6 +244,7 @@ test( ".blend()", function() {
 	expect( 8 );
 
 	testParts( blend, {
+		prefix: "Blending with color object: ",
 		red: 255,
 		green: 127,
 		blue: 127,
@@ -251,6 +252,7 @@ test( ".blend()", function() {
 	});
 
 	testParts( halfwhite.blend("red"), {
+		prefix: "Using string as color: ",
 		red: 255,
 		green: 127,
 		blue: 127,
