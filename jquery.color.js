@@ -4,7 +4,7 @@
  *
  * Copyright 2011 John Resig
  * Dual licensed under the MIT or GPL Version 2 licenses.
- * http://jqery.org/license
+ * http://jquery.org/license
  *
  * Date: @DATE
  */
