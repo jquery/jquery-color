@@ -125,7 +125,7 @@ A list of named colors is stored on the `$.Color.names` object.  The value they 
 There is also a named color `"_default"` which by default is white, this is used for situations where a color is unparseable.
 
 ###`"transparent"`
-A special note about the color `"transparent"` - It returns `null` for red greed and blue unless you specify colors for these values.
+A special note about the color `"transparent"` - It returns `null` for red green and blue unless you specify colors for these values.
 
     $.Color("#abcdef").transition("transparent", 0.5)
 
@@ -148,5 +148,5 @@ It is possible for you to add your own functions to the color object.  For insta
     };
     
     // usage examples:
-    $.Color("#bada55").contrastColor(); // "white"
+    $.Color("#bada55").contrastColor(); // "black"
     element.css( "color", $.Color( element, "backgroundColor" ).contrastColor() );
