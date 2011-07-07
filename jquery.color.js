@@ -548,9 +548,9 @@
 							break;
 						}
 
-					} while ( ( elem = elem.parentNode ) && elem.style );
+					} while ( ( curElem = curElem.parentNode ) && curElem.style );
 
-					value = value.blend( color( backgroundColor || "_default" ) );
+					value = value.blend( backgroundColor || "_default" );
 				}
 
 				value = value.toRgbaString();
