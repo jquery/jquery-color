@@ -76,30 +76,22 @@
 				props: {
 					red: {
 						idx: 0,
-						min: 0,
-						max: 255,
-						type: "int",
+						type: "byte",
 						empty: true
 					},
 					green: {
 						idx: 1,
-						min: 0,
-						max: 255,
-						type: "int",
+						type: "byte",
 						empty: true
 					},
 					blue: {
 						idx: 2,
-						min: 0,
-						max: 255,
-						type: "int",
+						type: "byte",
 						empty: true
 					},
 					alpha: {
 						idx: 3,
-						min: 0,
-						max: 1,
-						type: "float",
+						type: "percent",
 						def: 1
 					}
 				}
@@ -109,25 +101,35 @@
 				props: {
 					hue: {
 						idx: 0,
-						mod: 360,
-						type: "int",
+						type: "degrees",
 						empty: true
 					},
 					saturation: {
 						idx: 1,
-						min: 0,
-						max: 1,
-						type: "float",
+						type: "percent",
 						empty: true
 					},
 					lightness: {
 						idx: 2,
-						min: 0,
-						max: 1,
-						type: "float",
+						type: "percent",
 						empty: true
 					}
 				}
+			}
+		},
+		propTypes = {
+			"byte": {
+				floor: true,
+				min: 0,
+				max: 255
+			},
+			"percent": {
+				min: 0,
+				max: 1
+			},
+			"degrees": {
+				mod: 360,
+				floor: true
 			}
 		},
 		rgbaspace = spaces.rgba.props,
@@ -142,32 +144,38 @@
 	spaces.hsla.props.alpha = rgbaspace.alpha;
 
 	function clamp( value, prop, alwaysAllowEmpty ) {
-		if ( ( prop.empty || alwaysAllowEmpty ) && value == null ) {
+		var type = propTypes[ prop.type ] || {},
+			allowEmpty = prop.empty || alwaysAllowEmpty;
+			
+		if ( allowEmpty && value == null ) {
 			return null;
 		}
 		if ( prop.def && value == null ) {
 			return prop.def;
 		}
-		if ( prop.type === "int" ) {
+		if ( type.floor ) {
 			value = ~~value;
-		}
-		if ( prop.mod ) {
-			value = ( value < 0 ? value + prop.mod * ( 1 + ~~( -value / prop.mod ) ) : value ) % prop.mod;
-		}
-		if ( prop.type === "float" ) {
+		} else {
 			value = parseFloat( value );
 		}
 		if ( jQuery.isNaN( value ) ) {
-			value = prop.def;
+			return prop.def;
 		}
-		return prop.min > value ? prop.min : prop.max < value ? prop.max : value;
+		if ( type.mod ) {
+			value = value % type.mod;
+			// -10 -> 350 
+			return value < 0 ? type.mod + value : value;
+		}
+
+		// for now all property types without mod have min and max
+		return type.min > value ? type.min : type.max < value ? type.max : value;
 	}
 
 	color.fn = color.prototype = {
 		constructor: color,
 		parse: function( red, green, blue, alpha ) {
 			if ( red === undefined ) {
-				this._rgba = [null,null,null,null];
+				this._rgba = [ null, null, null, null ];
 				return this;
 			}
 			if ( red instanceof jQuery || red.nodeType ) {
@@ -198,12 +206,13 @@
 
 					if ( values ) {
 						parsed = inst[ spaceName ]( values );
-						if ( spaceName != "rgba" ) {
-							inst[ cache ] = parsed[ cache ];
-						}
+
+						// if this was an rgba parse the assignment might happen twice
+						// oh well....
+						inst[ cache ] = parsed[ cache ];
 						rgba = inst._rgba = parsed._rgba;
 
-						// exit each( stringParsers ) here because we found ours
+						// exit each( stringParsers ) here because we matched
 						return false;
 					}
 				});
@@ -299,32 +308,34 @@
 				spaceName = end._space(),
 				space = spaces[ spaceName ],
 				start = this[ space.cache ] || space.to( this._rgba ),
-				arr = start.slice();
+				result = start.slice();
 
 			end = end[ space.cache ];
 			each( space.props, function( key, prop ) {
-				var s = start[ prop.idx ],
-					e = end[ prop.idx ];
+				var index = prop.idx,
+					startValue = start[ index ],
+					endValue = end[ index ],
+					type = propTypes[ prop.type ] || {};
 
 				// if null, don't override start value
-				if ( e === null ) {
+				if ( endValue === null ) {
 					return;
 				}
 				// if null - use end
-				if ( s === null ) {
-					arr[ prop.idx ] = e;
+				if ( startValue === null ) {
+					result[ index ] = endValue;
 				} else {
-					if ( prop.mod ) {
-						if ( e - s > prop.mod / 2 ) {
-							s += prop.mod;
-						} else if ( s - e > prop.mod / 2 ) {
-							s -= prop.mod;
+					if ( type.mod ) {
+						if ( endValue - startValue > type.mod / 2 ) {
+							startValue += type.mod;
+						} else if ( startValue - endValue > type.mod / 2 ) {
+							startValue -= type.mod;
 						}
 					}
-					arr[ prop.idx ] = clamp( ( e - s ) * distance + s, prop );
+					result[ prop.idx ] = clamp( ( endValue - startValue ) * distance + startValue, prop );
 				}
 			});
-			return this[ spaceName ]( arr );
+			return this[ spaceName ]( result );
 		},
 		blend: function( opaque ) {
 			// if we are already opaque - return ourself
