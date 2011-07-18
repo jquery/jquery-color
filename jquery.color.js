@@ -275,13 +275,13 @@
 		is: function( compare ) {
 			var is = color( compare ),
 				same = true,
-				that = this;
+				myself = this;
 
 			each( spaces, function( _, space ) {
 				var isCache = is[ space.cache ],
 					localCache;
 				if (isCache) {
-					localCache = that[ space.cache ] || space.to && space.to( that._rgba ) || [];
+					localCache = myself[ space.cache ] || space.to && space.to( myself._rgba ) || [];
 					each( space.props, function( _, prop ) {
 						if ( isCache[ prop.idx ] != null ) {
 							same = ( isCache[ prop.idx ] == localCache[ prop.idx ] );
@@ -352,47 +352,55 @@
 			}));
 		},
 		toRgbaString: function() {
-			var rgba = jQuery.map( this._rgba, function( v, i ) {
-				return v == null ? ( i > 2 ? 1 : 0 ) : v;
-			});
+			var prefix = "rgba(",
+				rgba = jQuery.map( this._rgba, function( v, i ) {
+					return v == null ? ( i > 2 ? 1 : 0 ) : v;
+				});
 
 			if ( rgba[ 3 ] === 1 ) {
-				rgba.length = 3;
+				rgba.pop();
+				prefix = "rgb(";
 			}
 
-			return ( rgba.length === 3 ? "rgb(" : "rgba(" ) + rgba.join(",") + ")";
+			return prefix + rgba.join(",") + ")";
 		},
 		toHslaString: function() {
-			var hsla = jQuery.map( this.hsla(), function( v, i ) {
-				v = v == null ? ( i > 2 ? 1 : 0 ) : v;
-				if ( i === 1 || i === 2 ) {
-					v = Math.round( v * 100 ) + "%";
-				}
-				return v;
-			});
-			if ( hsla[ 3 ] === 1 ) {
-				hsla.length = 3;
+			var prefix = "hsla(",
+				hsla = jQuery.map( this.hsla(), function( v, i ) {
+					if ( v == null ) {
+						v = i > 2 ? 1 : 0;
+					}
+
+					// catch 1 and 2
+					if ( i && i < 3 ) {
+						v = Math.round( v * 100 ) + "%";
+					}
+					return v;
+				});
+
+			if ( hsla[ 3 ] == 1 ) {
+				hsla.pop();
+				prefix = "hsl(";
 			}
-			return ( hsla.length === 3 ? "hsl(" : "hsla(" ) + hsla.join(",") + ")";
+			return prefix + hsla.join(",") + ")";
 		},
 		toHexString: function( includeAlpha ) {
-			var rgba = this._rgba.slice();
-			if ( !includeAlpha ) {
-				rgba.length = 3;
+			var rgba = this._rgba.slice(),
+				alpha = rgba.pop();
+
+			if ( includeAlpha ) {
+				rgba.push( ~~( alpha * 255 ) );
 			}
 
 			return "#" + jQuery.map( rgba, function( v, i ) {
-				var fac = ( i === 3 ) ? 255 : 1,
-					hex = ( v * fac ).toString( 16 );
 
-				return hex.length === 1 ? "0" + hex : hex.substr(0, 2);
+				// default to 0 when nulls exist
+				v = v || 0;
+				return ("0" + v.toString( 16 ) ).substr(-2);
 			}).join("");
 		},
 		toString: function() {
-			if ( this._rgba[ 3 ] === 0 ) {
-				return "transparent";
-			}
-			return this.toRgbaString();
+			return this._rgba[ 3 ] === 0 ? "transparent" : this.toRgbaString();
 		}
 	};
 	color.fn.parse.prototype = color.fn;
@@ -551,15 +559,15 @@
 			set: function( elem, value ) {
 				value = color( value );
 				if ( !support.rgba && value._rgba[ 3 ] !== 1 ) {
-					var curElem = hook === "backgroundColor" ? elem.parentNode : elem,
-						backgroundColor;
+					var backgroundColor,
+						curElem = hook === "backgroundColor" ? elem.parentNode : elem;
 					do {
 						backgroundColor = jQuery.curCSS( curElem, "backgroundColor" );
-						if ( backgroundColor !== "" && backgroundColor !== "transparent" ) {
-							break;
-						}
-
-					} while ( ( curElem = curElem.parentNode ) && curElem.style );
+					} while (
+						( backgroundColor === "" || backgroundColor === "transparent" ) && 
+						( curElem = curElem.parentNode ) && 
+						curElem.style 
+					);
 
 					value = value.blend( backgroundColor || "_default" );
 				}
@@ -584,7 +592,7 @@
 		var div = document.createElement( "div" ),
 			div_style = div.style;
 
-		div_style.cssText = "background-color:rgba(150,255,150,.5)";
+		div_style.cssText = "background-color:rgba(1,1,1,.5)";
 		support.rgba = div_style.backgroundColor.indexOf( "rgba" ) > -1;
 	});
 
