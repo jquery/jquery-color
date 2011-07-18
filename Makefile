@@ -49,6 +49,8 @@ ${MIN}: ${MAX}
 		${COMPILER} ${MAX} > ${MIN}.tmp; \
 		${POST_COMPILER} ${MIN}.tmp > ${MIN}; \
 		rm -f ${MIN}.tmp; \
+		echo "gzipping ${MIN}.gz"; \
+		gzip -c9 ${MIN} > ${MIN}.gz; \
 	else \
 		echo "You must have NodeJS installed in order to minify jQuery."; \
 	fi
