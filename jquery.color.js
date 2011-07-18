@@ -223,7 +223,7 @@
 					// if this came from a parsed string, force "transparent" when alpha is 0
 					// chrome, (and maybe others) return "transparent" as rgba(0,0,0,0)
 					if ( Math.max.apply( Math, rgba ) === 0 ) {
-						$.extend( rgba, colors.transparent );
+						jQuery.extend( rgba, colors.transparent );
 					}
 					return this;
 				}
