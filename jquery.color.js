@@ -569,7 +569,9 @@
 						curElem.style 
 					);
 
-					value = value.blend( backgroundColor || "_default" );
+					value = value.blend( backgroundColor && backgroundColor !== "transparent" 
+						? backgroundColor
+						: "_default" );
 				}
 
 				value = value.toRgbaString();
