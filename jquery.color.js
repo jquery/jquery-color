@@ -146,7 +146,7 @@
 	function clamp( value, prop, alwaysAllowEmpty ) {
 		var type = propTypes[ prop.type ] || {},
 			allowEmpty = prop.empty || alwaysAllowEmpty;
-			
+
 		if ( allowEmpty && value == null ) {
 			return null;
 		}
@@ -158,12 +158,12 @@
 		} else {
 			value = parseFloat( value );
 		}
-		if ( jQuery.isNaN( value ) ) {
+		if ( value == null || isNaN( value ) ) {
 			return prop.def;
 		}
 		if ( type.mod ) {
 			value = value % type.mod;
-			// -10 -> 350 
+			// -10 -> 350
 			return value < 0 ? type.mod + value : value;
 		}
 
@@ -290,7 +290,7 @@
 					});
 				}
 				return same;
-			}); 
+			});
 			return same;
 		},
 		_space: function() {
@@ -564,14 +564,14 @@
 					do {
 						backgroundColor = jQuery.curCSS( curElem, "backgroundColor" );
 					} while (
-						( backgroundColor === "" || backgroundColor === "transparent" ) && 
-						( curElem = curElem.parentNode ) && 
-						curElem.style 
+						( backgroundColor === "" || backgroundColor === "transparent" ) &&
+						( curElem = curElem.parentNode ) &&
+						curElem.style
 					);
 
-					value = value.blend( backgroundColor && backgroundColor !== "transparent" 
-						? backgroundColor
-						: "_default" );
+					value = value.blend( backgroundColor && backgroundColor !== "transparent" ?
+						backgroundColor :
+						"_default" );
 				}
 
 				value = value.toRgbaString();
