@@ -1,2 +1,3 @@
+build/.sizecache.json
 dist/
 .DS_Store

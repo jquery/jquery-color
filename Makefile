@@ -20,7 +20,7 @@ SED_VER = sed "s/@VERSION/${COLOR_VER}/"
 
 all: update color
 
-color: max min lint
+color: max min lint size
 	@@echo "jQuery color build complete."
 
 ${DIST_DIR}:
@@ -39,6 +39,16 @@ lint: max
 		${JS_ENGINE} build/jslint-check.js; \
 	else \
 		echo "You must have NodeJS installed in order to test jQuery against JSLint."; \
+	fi
+
+size: max min
+	@@if test ! -z ${JS_ENGINE}; then \
+		gzip -c ${MIN} > ${MIN}.gz; \
+		echo "Size compared to last make"; \
+		wc -c ${MAX} ${MIN} ${MIN}.gz | ${JS_ENGINE} ${BUILD_DIR}/sizer.js; \
+		rm ${MIN}.gz; \
+	else \
+		echo "You must have NodeJS installed in order to size jQuery."; \
 	fi
 
 min: max ${MIN}
