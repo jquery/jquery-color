@@ -202,7 +202,7 @@ test( ".rgba()", function() {
 	var color = jQuery.Color( "black" ),
 		getter = color.rgba(),
 		set1 = color.rgba( null, 100, null, 0 ),
-		set2 = color.rgba([ null, null, 100, 0.5 ]);
+		set2 = color.rgba([ null, null, 100, 0.5 ]),
 		set3 = color.rgba({ red: 300, alpha: 2 });
 
 	expect( 14 );
@@ -264,7 +264,7 @@ test( ".blend()", function() {
 test( ".transition() works with $.Colors", function() {
 	var black = jQuery.Color( "black" ),
 		whiteAlpha = jQuery.Color( "white" ).alpha( 0.5 ),
-		trans = jQuery.Color( "transparent" );
+		trans = jQuery.Color( "transparent" ),
 		fifty = black.transition( whiteAlpha, 0.5 );
 
 	expect( 12 );
