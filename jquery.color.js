@@ -171,6 +171,50 @@
 		return type.min > value ? type.min : type.max < value ? type.max : value;
 	}
 
+	function stringParse( string ) {
+		var inst = color(),
+			rgba = inst._rgba = [];
+
+		string = string.toLowerCase();
+
+		each( stringParsers, function( i, parser ) {
+			var match = parser.re.exec( string ),
+				values = match && parser.parse( match ),
+				parsed,
+				spaceName = parser.space || "rgba",
+				cache = spaces[ spaceName ].cache;
+
+
+			if ( values ) {
+				parsed = inst[ spaceName ]( values );
+
+				// if this was an rgba parse the assignment might happen twice
+				// oh well....
+				inst[ cache ] = parsed[ cache ];
+				rgba = inst._rgba = parsed._rgba;
+
+				// exit each( stringParsers ) here because we matched
+				return false;
+			}
+		});
+
+		// Found a stringParser that handled it
+		if ( rgba.length !== 0 ) {
+
+			// if this came from a parsed string, force "transparent" when alpha is 0
+			// chrome, (and maybe others) return "transparent" as rgba(0,0,0,0)
+			if ( Math.max.apply( Math, rgba ) === 0 ) {
+				jQuery.extend( rgba, colors.transparent );
+			}
+			return inst;
+		}
+
+		// named colors / default - filter back through parse function
+		if ( string = colors[ string ] ) {
+			return string;
+		}
+	}
+
 	color.fn = color.prototype = {
 		constructor: color,
 		parse: function( red, green, blue, alpha ) {
@@ -195,42 +239,7 @@
 			}
 
 			if ( type === "string" ) {
-				red = red.toLowerCase();
-				each( stringParsers, function( i, parser ) {
-					var match = parser.re.exec( red ),
-						values = match && parser.parse( match ),
-						parsed,
-						spaceName = parser.space || "rgba",
-						cache = spaces[ spaceName ].cache;
-
-
-					if ( values ) {
-						parsed = inst[ spaceName ]( values );
-
-						// if this was an rgba parse the assignment might happen twice
-						// oh well....
-						inst[ cache ] = parsed[ cache ];
-						rgba = inst._rgba = parsed._rgba;
-
-						// exit each( stringParsers ) here because we matched
-						return false;
-					}
-				});
-
-				// Found a stringParser that handled it
-				if ( rgba.length !== 0 ) {
-
-					// if this came from a parsed string, force "transparent" when alpha is 0
-					// chrome, (and maybe others) return "transparent" as rgba(0,0,0,0)
-					if ( Math.max.apply( Math, rgba ) === 0 ) {
-						jQuery.extend( rgba, colors.transparent );
-					}
-					return this;
-				}
-
-				// named colors / default - filter back through parse function
-				red = colors[ red ] || colors._default;
-				return this.parse( red );
+				return this.parse( stringParse( red ) || colors._default );
 			}
 
 			if ( type === "array" ) {
@@ -557,25 +566,29 @@
 	each( stepHooks, function( i, hook ) {
 		jQuery.cssHooks[ hook ] = {
 			set: function( elem, value ) {
-				value = color( value );
-				if ( !support.rgba && value._rgba[ 3 ] !== 1 ) {
-					var backgroundColor,
-						curElem = hook === "backgroundColor" ? elem.parentNode : elem;
-					do {
-						backgroundColor = jQuery.curCSS( curElem, "backgroundColor" );
-					} while (
-						( backgroundColor === "" || backgroundColor === "transparent" ) &&
-						( curElem = curElem.parentNode ) &&
-						curElem.style
-					);
+				var parsed;
 
-					value = value.blend( backgroundColor && backgroundColor !== "transparent" ?
-						backgroundColor :
-						"_default" );
+				if ( jQuery.type( value ) !== 'string' || ( parsed = stringParse( value ) ) )
+				{
+					value = color( parsed || value );
+					if ( !support.rgba && value._rgba[ 3 ] !== 1 ) {
+						var backgroundColor,
+							curElem = hook === "backgroundColor" ? elem.parentNode : elem;
+						do {
+							backgroundColor = jQuery.curCSS( curElem, "backgroundColor" );
+						} while (
+							( backgroundColor === "" || backgroundColor === "transparent" ) &&
+							( curElem = curElem.parentNode ) &&
+							curElem.style
+						);
+
+						value = value.blend( backgroundColor && backgroundColor !== "transparent" ?
+							backgroundColor :
+							"_default" );
+					}
+
+					value = value.toRgbaString();
 				}
-
-				value = value.toRgbaString();
-
 				elem.style[ hook ] = value;
 			}
 		};

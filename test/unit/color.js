@@ -551,3 +551,15 @@ asyncTest( "animated documentFragment", function() {
 		start();
 	});
 });
+
+test( "Setting CSS to empty string / inherit", function() {
+	var el = jQuery( "<div></div>" ).appendTo( "body" ).css({ color: "#fff" });
+	expect( 2 );
+
+	el.css( "color", "" );
+	equal( el[0].style.color, "", "CSS was set to empty string" );
+
+	el.css( "color", "inherit" );
+	equal( el[0].style.color, "inherit", "CSS was set to inherit" );
+
+});
