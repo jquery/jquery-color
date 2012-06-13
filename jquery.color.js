@@ -293,7 +293,7 @@
 					localCache = myself[ space.cache ] || space.to && space.to( myself._rgba ) || [];
 					each( space.props, function( _, prop ) {
 						if ( isCache[ prop.idx ] != null ) {
-							same = ( isCache[ prop.idx ] == localCache[ prop.idx ] );
+							same = ( isCache[ prop.idx ] === localCache[ prop.idx ] );
 							return same;
 						}
 					});
@@ -387,7 +387,7 @@
 					return v;
 				});
 
-			if ( hsla[ 3 ] == 1 ) {
+			if ( hsla[ 3 ] === 1 ) {
 				hsla.pop();
 				prefix = "hsl(";
 			}
@@ -405,7 +405,7 @@
 
 				// default to 0 when nulls exist
 				v = ( v || 0 ).toString( 16 );
-				return v.length == 1 ? "0" + v : v;
+				return v.length === 1 ? "0" + v : v;
 			}).join("");
 		},
 		toString: function() {
@@ -566,14 +566,13 @@
 	each( stepHooks, function( i, hook ) {
 		jQuery.cssHooks[ hook ] = {
 			set: function( elem, value ) {
-				var parsed;
+				var parsed, backgroundColor, curElem;
 
 				if ( jQuery.type( value ) !== 'string' || ( parsed = stringParse( value ) ) )
 				{
 					value = color( parsed || value );
 					if ( !support.rgba && value._rgba[ 3 ] !== 1 ) {
-						var backgroundColor,
-							curElem = hook === "backgroundColor" ? elem.parentNode : elem;
+						curElem = hook === "backgroundColor" ? elem.parentNode : elem;
 						do {
 							backgroundColor = jQuery.curCSS( curElem, "backgroundColor" );
 						} while (
