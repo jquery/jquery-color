@@ -1,4 +1,4 @@
-/*
+/*!
  * jQuery Color Animations v@VERSION
  * http://jquery.org/
  *
