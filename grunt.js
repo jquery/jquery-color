@@ -91,6 +91,21 @@ grunt.registerTask( "max", function() {
 	});
 });
 
+grunt.registerTask( "testswarm", function( commit, configFile ) {
+	var testswarm = require( "testswarm" ),
+		config = grunt.file.readJSON( configFile ).jquerycolor;
+	config.jobName = 'jQuery Color commit #<a href="https://github.com/jquery/jquery-color/commit/' + commit + '">' + commit.substr( 0, 10 ) + '</a>';
+	config["runNames[]"] = "jQuery color";
+	config["runUrls[]"] = config.testUrl + commit + "/test/index.html";
+	config["browserSets[]"] = ["popular"];
+	testswarm({
+		url: config.swarmUrl,
+		pollInterval: 10000,
+		timeout: 1000 * 60 * 10,
+		done: this.async()
+	}, config);
+});
+
 grunt.registerTask( "default", "lint qunit" );
 grunt.registerTask( "build", "clean max min" );
 
