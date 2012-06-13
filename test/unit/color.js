@@ -191,10 +191,10 @@ test( "red green blue alpha Setters", function() {
 			clamped = color[ fn ]( clamp + 1 ),
 			plused = color[ fn ]( "+=1" );
 
-		equals( set[ fn ](), tv, "color."+fn+"("+tv+")."+fn+"()" );
-		equals( clamped[ fn ](), clamp, "color."+fn+"("+(clamp+1)+") clamped at "+clamp );
-		equals( color[ fn ](), 0, "color."+fn+"() still 0" );
-		equals( plused[ fn ](), 1, "color."+fn+"(\"+=1\")" );
+		equal( set[ fn ](), tv, "color."+fn+"("+tv+")."+fn+"()" );
+		equal( clamped[ fn ](), clamp, "color."+fn+"("+(clamp+1)+") clamped at "+clamp );
+		equal( color[ fn ](), 0, "color."+fn+"() still 0" );
+		equal( plused[ fn ](), 1, "color."+fn+"(\"+=1\")" );
 	});
 });
 
@@ -340,8 +340,8 @@ test( ".toRgbaString()", function() {
 		trans = black.alpha( 0.5 );
 
 	expect( 2 );
-	equals( black.toRgbaString(), "rgb(0,0,0)" );
-	equals( trans.toRgbaString(), "rgba(0,0,0,0.5)" );
+	equal( black.toRgbaString(), "rgb(0,0,0)" );
+	equal( trans.toRgbaString(), "rgba(0,0,0,0.5)" );
 
 });
 
@@ -350,8 +350,8 @@ test( ".toHexString()", function() {
 		trans = almostBlack.alpha( 0.5 );
 
 	expect( 2 );
-	equals( almostBlack.toHexString(), "#020010" , "to hex");
-	equals( trans.toHexString( true ), "#0200107f", "to hex with alpha" );
+	equal( almostBlack.toHexString(), "#020010" , "to hex");
+	equal( trans.toHexString( true ), "#0200107f", "to hex with alpha" );
 
 });
 
@@ -362,13 +362,13 @@ test( "toString() methods keep alpha intact", function() {
 	expect( 4 );
 	trans.toRgbaString();
 	opaque.toRgbaString();
-	equals( trans.alpha(), 0, "toRgbaString()" );
-	equals( opaque.alpha(), 1, "toRgbaString()" );
+	equal( trans.alpha(), 0, "toRgbaString()" );
+	equal( opaque.alpha(), 1, "toRgbaString()" );
 
 	trans.toHexString();
 	opaque.toHexString();
-	equals( trans.alpha(), 0, "toHexString()" );
-	equals( opaque.alpha(), 1, "toHexString()" );
+	equal( trans.alpha(), 0, "toHexString()" );
+	equal( opaque.alpha(), 1, "toHexString()" );
 });
 
 module( "hsla" );
@@ -430,15 +430,15 @@ parseTest( jQuery.Color({ saturation: 0, alpha: 0 }), {
 
 test("HSLA Conversions", function() {
 	expect(9);
-	equals( jQuery.Color( "#f00" ).toHslaString(), "hsl(0,100%,50%)", "HSLA value from #f00");
-	equals( jQuery.Color( "#ff0" ).toHslaString(), "hsl(60,100%,50%)", "HSLA value from #ff0");
-	equals( jQuery.Color( "#0f0" ).toHslaString(), "hsl(120,100%,50%)", "HSLA value from #0f0");
-	equals( jQuery.Color( "#0ff" ).toHslaString(), "hsl(180,100%,50%)", "HSLA value from #0ff");
-	equals( jQuery.Color( "#00f" ).toHslaString(), "hsl(240,100%,50%)", "HSLA value from #00f");
-	equals( jQuery.Color( "#f0f" ).toHslaString(), "hsl(300,100%,50%)", "HSLA value from #f0f");
-	equals( jQuery.Color( "#7f007f" ).toHslaString(), "hsl(300,100%,25%)", "HSLA value from #7f007f");
-	equals( jQuery.Color( "#ff7fff" ).toHslaString(), "hsl(300,100%,75%)", "HSLA value from #ff7fff");
-	equals( jQuery.Color( "rgba(127,127,127,0.1)" ).toHslaString(), "hsla(0,0%,50%,0.1)", "HSLA value from rgba(127,127,127,0)");
+	equal( jQuery.Color( "#f00" ).toHslaString(), "hsl(0,100%,50%)", "HSLA value from #f00");
+	equal( jQuery.Color( "#ff0" ).toHslaString(), "hsl(60,100%,50%)", "HSLA value from #ff0");
+	equal( jQuery.Color( "#0f0" ).toHslaString(), "hsl(120,100%,50%)", "HSLA value from #0f0");
+	equal( jQuery.Color( "#0ff" ).toHslaString(), "hsl(180,100%,50%)", "HSLA value from #0ff");
+	equal( jQuery.Color( "#00f" ).toHslaString(), "hsl(240,100%,50%)", "HSLA value from #00f");
+	equal( jQuery.Color( "#f0f" ).toHslaString(), "hsl(300,100%,50%)", "HSLA value from #f0f");
+	equal( jQuery.Color( "#7f007f" ).toHslaString(), "hsl(300,100%,25%)", "HSLA value from #7f007f");
+	equal( jQuery.Color( "#ff7fff" ).toHslaString(), "hsl(300,100%,75%)", "HSLA value from #ff7fff");
+	equal( jQuery.Color( "rgba(127,127,127,0.1)" ).toHslaString(), "hsla(0,0%,50%,0.1)", "HSLA value from rgba(127,127,127,0)");
 });
 
 test("HSLA Transitions", function() {
@@ -491,10 +491,10 @@ test( "hue saturation lightness alpha Setters", function() {
 			clamped = color[ fn ]( clamp + 1 ),
 			plused = color[ fn ]( "+=1" );
 
-		equals( set[ fn ](), tv, "color."+fn+"("+tv+")."+fn+"()" );
-		equals( clamped[ fn ](), 1, "color."+fn+"("+(clamp+1)+") clamped at 1" );
-		equals( color[ fn ](), 0, "color."+fn+"() still 0" );
-		equals( plused[ fn ](), 1, "color."+fn+"(\"+=1\")" );
+		equal( set[ fn ](), tv, "color."+fn+"("+tv+")."+fn+"()" );
+		equal( clamped[ fn ](), 1, "color."+fn+"("+(clamp+1)+") clamped at 1" );
+		equal( color[ fn ](), 0, "color."+fn+"() still 0" );
+		equal( plused[ fn ](), 1, "color."+fn+"(\"+=1\")" );
 	});
 });
 
