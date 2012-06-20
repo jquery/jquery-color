@@ -588,7 +588,11 @@
 
 					value = value.toRgbaString();
 				}
-				elem.style[ hook ] = value;
+				try {
+					elem.style[ hook ] = value;
+				} catch( value ) {
+					// wrapped to prevent IE from throwing errors on "invalid" values like 'auto' or 'inherit'
+				}
 			}
 		};
 		jQuery.fx.step[ hook ] = function( fx ) {
