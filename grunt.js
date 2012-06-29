@@ -106,7 +106,7 @@ grunt.registerTask( "testswarm", function( commit, configFile ) {
 	}, config);
 });
 
-grunt.registerTask( "default", "lint qunit" );
+grunt.registerTask( "default", "lint qunit build compare_size" );
 grunt.registerTask( "build", "clean max min" );
 
 };
