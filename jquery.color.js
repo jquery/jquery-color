@@ -570,7 +570,7 @@ each( stepHooks, function( i, hook ) {
 				if ( !support.rgba && value._rgba[ 3 ] !== 1 ) {
 					curElem = hook === "backgroundColor" ? elem.parentNode : elem;
 					do {
-						backgroundColor = jQuery.curCSS( curElem, "backgroundColor" );
+						backgroundColor = jQuery.css( curElem, "backgroundColor" );
 					} while (
 						( backgroundColor === "" || backgroundColor === "transparent" ) &&
 						( curElem = curElem.parentNode ) &&
