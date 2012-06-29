@@ -68,10 +68,6 @@ grunt.registerHelper( "git-date", function( fn ) {
 	});
 });
 
-grunt.registerTask( "clean", function() {
-	require( "rimraf" ).sync( "dist" );
-});
-
 grunt.registerTask( "max", function() {
 	var done = this.async();
 	grunt.helper( "git-date", function( error, date ) {
@@ -107,6 +103,6 @@ grunt.registerTask( "testswarm", function( commit, configFile ) {
 });
 
 grunt.registerTask( "default", "lint qunit build compare_size" );
-grunt.registerTask( "build", "clean max min" );
+grunt.registerTask( "build", "max min" );
 
 };
