@@ -68,6 +68,27 @@ grunt.registerHelper( "git-date", function( fn ) {
 	});
 });
 
+grunt.registerTask( "submodules", function() {
+	var done = this.async();
+
+	grunt.verbose.write( "Updating submodules..." );
+
+	grunt.utils.spawn({
+		cmd: "git",
+		args: [ "submodule", "update", "--init" ]
+	}, function( err, result ) {
+		if ( err ) {
+			grunt.verbose.error();
+			done( err );
+			return;
+		}
+
+		grunt.log.writeln( result );
+
+		done();
+	});
+});
+
 grunt.registerTask( "max", function() {
 	var done = this.async();
 	grunt.helper( "git-date", function( error, date ) {
@@ -102,7 +123,7 @@ grunt.registerTask( "testswarm", function( commit, configFile ) {
 	}, config);
 });
 
-grunt.registerTask( "default", "lint qunit build compare_size" );
+grunt.registerTask( "default", "lint submodules qunit build compare_size" );
 grunt.registerTask( "build", "max min" );
 
 };
