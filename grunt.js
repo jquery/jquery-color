@@ -49,6 +49,11 @@ grunt.initConfig({
 
 	min: minify,
 
+	watch: {
+		files: [ "<config:lint.src>", "<config:lint.test>" ],
+		tasks: "default"
+	},
+
 	compare_size: {
 		files: [ max, min ]
 	}
