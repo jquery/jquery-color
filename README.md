@@ -1,6 +1,8 @@
 #jQuery.Color()
 Check out [Color Library on jQuery UI Planning Wiki](http://wiki.jqueryui.com/w/page/12137744/Color-Library) for more information about the new API in this branch
 
+To run tests locally, run `make` to install submodules.
+
 ##Animated colors
 
 The main purpose of this plugin to animate color properties on elements using jQuery's [`.animate()`](http://api.jquery.com/animate)
@@ -97,10 +99,10 @@ The `$.Color()` function allows you to create and manipulate color objects that 
 
     hsla() // returns a HSL tuple [ hue, saturation, lightness, alpha ]
     // much like the rgb setter - returns a copy with any defined values set
-    hsla( hue, saturation, lightness, alpha ) 
-    hsla({ hue: hue, saturation: saturation, lightness: lightness, alpha: alpha ) 
-    hsla([ hue, saturation, lightness, alpha ]) 
-    
+    hsla( hue, saturation, lightness, alpha )
+    hsla({ hue: hue, saturation: saturation, lightness: lightness, alpha: alpha )
+    hsla([ hue, saturation, lightness, alpha ])
+
 
 ###String Methods:
     toRgbString() // returns a css string "rgba(255, 255, 255, 1)"
@@ -146,7 +148,7 @@ It is possible for you to add your own functions to the color object.  For insta
         var r = this._rgba[0], g = this._rgba[1], b = this._rgba[2];
         return (((r*299)+(g*587)+(b*144))/1000) >= 131.5 ? "black" : "white";
     };
-    
+
     // usage examples:
     $.Color("#bada55").contrastColor(); // "black"
     element.css( "color", $.Color( element, "backgroundColor" ).contrastColor() );
