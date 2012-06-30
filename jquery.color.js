@@ -36,7 +36,8 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 				];
 			}
 		}, {
-			re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/,
+			// this regex ignores A-F because it's compared against are already lowercased string
+			re: /#([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})/,
 			parse: function( execResult ) {
 				return [
 					parseInt( execResult[ 1 ], 16 ),
@@ -45,7 +46,8 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 				];
 			}
 		}, {
-			re: /#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/,
+			// this regex ignores A-F because it's compared against are already lowercased string
+			re: /#([a-f0-9])([a-f0-9])([a-f0-9])/,
 			parse: function( execResult ) {
 				return [
 					parseInt( execResult[ 1 ] + execResult[ 1 ], 16 ),
@@ -152,18 +154,17 @@ function clamp( value, prop, alwaysAllowEmpty ) {
 	if ( prop.def && value == null ) {
 		return prop.def;
 	}
-	if ( type.floor ) {
-		value = ~~value;
-	} else {
-		value = parseFloat( value );
-	}
+
+	// ~~ is an short way of doing floor for positive numbers
+	value = type.floor ? ~~value : parseFloat( value );
+
 	if ( value == null || isNaN( value ) ) {
 		return prop.def;
 	}
 	if ( type.mod ) {
-		value %= type.mod;
-		// -10 -> 350
-		return value < 0 ? type.mod + value : value;
+		// we add mod before modding to make sure that negatives values
+		// get converted properly: -10 -> 350
+		return (value + type.mod) % type.mod;
 	}
 
 	// for now all property types without mod have min and max
@@ -564,8 +565,7 @@ each( stepHooks, function( i, hook ) {
 		set: function( elem, value ) {
 			var parsed, backgroundColor, curElem;
 
-			if ( jQuery.type( value ) !== 'string' || ( parsed = stringParse( value ) ) )
-			{
+			if ( jQuery.type( value ) !== 'string' || ( parsed = stringParse( value ) ) ) {
 				value = color( parsed || value );
 				if ( !support.rgba && value._rgba[ 3 ] !== 1 ) {
 					curElem = hook === "backgroundColor" ? elem.parentNode : elem;
@@ -603,11 +603,10 @@ each( stepHooks, function( i, hook ) {
 
 // detect rgba support
 jQuery(function() {
-	var div = document.createElement( "div" ),
-		div_style = div.style;
+	var div = document.createElement( "div" );
 
-	div_style.cssText = "background-color:rgba(1,1,1,.5)";
-	support.rgba = div_style.backgroundColor.indexOf( "rgba" ) > -1;
+	div.style.cssText = "background-color:rgba(1,1,1,.5)";
+	support.rgba = div.style.backgroundColor.indexOf( "rgba" ) > -1;
 });
 
 // Some named colors to work with
