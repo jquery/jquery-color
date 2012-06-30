@@ -78,18 +78,15 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 			props: {
 				red: {
 					idx: 0,
-					type: "byte",
-					empty: true
+					type: "byte"
 				},
 				green: {
 					idx: 1,
-					type: "byte",
-					empty: true
+					type: "byte"
 				},
 				blue: {
 					idx: 2,
-					type: "byte",
-					empty: true
+					type: "byte"
 				},
 				alpha: {
 					idx: 3,
@@ -98,23 +95,21 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 				}
 			}
 		},
+
 		hsla: {
 			cache: "_hsla",
 			props: {
 				hue: {
 					idx: 0,
-					type: "degrees",
-					empty: true
+					type: "degrees"
 				},
 				saturation: {
 					idx: 1,
-					type: "percent",
-					empty: true
+					type: "percent"
 				},
 				lightness: {
 					idx: 2,
-					type: "percent",
-					empty: true
+					type: "percent"
 				}
 			}
 		}
@@ -146,7 +141,7 @@ spaces.hsla.props.alpha = spaces.rgba.props.alpha;
 
 function clamp( value, prop, alwaysAllowEmpty ) {
 	var type = propTypes[ prop.type ] || {},
-		allowEmpty = alwaysAllowEmpty || prop.empty;
+		allowEmpty = alwaysAllowEmpty || !prop.def;
 
 	if ( allowEmpty && value == null ) {
 		return null;
