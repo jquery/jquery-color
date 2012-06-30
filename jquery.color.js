@@ -87,11 +87,6 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 				blue: {
 					idx: 2,
 					type: "byte"
-				},
-				alpha: {
-					idx: 3,
-					type: "percent",
-					def: 1
 				}
 			}
 		},
@@ -135,7 +130,11 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 	// local aliases of functions called often
 	each = jQuery.each;
 
-spaces.hsla.props.alpha = spaces.rgba.props.alpha;
+spaces.hsla.props.alpha = spaces.rgba.props.alpha = {
+	idx: 3,
+	type: "percent",
+	def: 1
+};
 
 function clamp( value, prop, alwaysAllowEmpty ) {
 	var type = propTypes[ prop.type ] || {},
