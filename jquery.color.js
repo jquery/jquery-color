@@ -117,11 +117,9 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 	propTypes = {
 		"byte": {
 			floor: true,
-			min: 0,
 			max: 255
 		},
 		"percent": {
-			min: 0,
 			max: 1
 		},
 		"degrees": {
@@ -163,7 +161,7 @@ function clamp( value, prop, alwaysAllowEmpty ) {
 	}
 
 	// for now all property types without mod have min and max
-	return type.min > value ? type.min : type.max < value ? type.max : value;
+	return 0 > value ? 0 : type.max < value ? type.max : value;
 }
 
 function stringParse( string ) {
