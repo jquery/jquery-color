@@ -74,7 +74,6 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 	},
 	spaces = {
 		rgba: {
-			cache: "_rgba",
 			props: {
 				red: {
 					idx: 0,
@@ -92,7 +91,6 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 		},
 
 		hsla: {
-			cache: "_hsla",
 			props: {
 				hue: {
 					idx: 0,
@@ -130,11 +128,16 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 	// local aliases of functions called often
 	each = jQuery.each;
 
-spaces.hsla.props.alpha = spaces.rgba.props.alpha = {
-	idx: 3,
-	type: "percent",
-	def: 1
-};
+// define cache name and alpha properties
+// for rgba and hsla spaces
+each( spaces, function( spaceName, space ) {
+	space.cache = "_" + spaceName;
+	space.props.alpha = {
+		idx: 3,
+		type: "percent",
+		def: 1
+	};
+});
 
 function clamp( value, prop, alwaysAllowEmpty ) {
 	var type = propTypes[ prop.type ] || {},
