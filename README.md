@@ -1,7 +1,36 @@
 #jQuery.Color()
 Check out [Color Library on jQuery UI Planning Wiki](http://wiki.jqueryui.com/w/page/12137744/Color-Library) for more information about the new API in this branch
 
-To run tests locally, run `make` to install submodules.
+How to build and test jQuery Color
+----------------------------------
+
+First, get a copy of the git repo by running:
+
+```bash
+git clone git://github.com/jquery/jquery-color.git
+```
+
+Enter the directory and install the node dependencies:
+
+```bash
+cd jquery-color && npm install
+```
+
+Make sure you have `grunt` installed by testing:
+
+```bash
+grunt -version
+```
+
+If not, run:
+
+```bash
+npm install -g grunt
+```
+
+To run tests locally, run `grunt`, and this will run the tests in PhantomJS.
+
+You can also run the tests in a browser by navigating to the `test/` directory, but first run `grunt` to install submodules.
 
 ##Animated colors
 
