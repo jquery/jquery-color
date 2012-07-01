@@ -36,7 +36,8 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 				];
 			}
 		}, {
-			re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/,
+			// this regex ignores A-F because it's compared against are already lowercased string
+			re: /#([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})/,
 			parse: function( execResult ) {
 				return [
 					parseInt( execResult[ 1 ], 16 ),
@@ -45,7 +46,8 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 				];
 			}
 		}, {
-			re: /#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/,
+			// this regex ignores A-F because it's compared against are already lowercased string
+			re: /#([a-f0-9])([a-f0-9])([a-f0-9])/,
 			parse: function( execResult ) {
 				return [
 					parseInt( execResult[ 1 ] + execResult[ 1 ], 16 ),
@@ -72,47 +74,35 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 	},
 	spaces = {
 		rgba: {
-			cache: "_rgba",
 			props: {
 				red: {
 					idx: 0,
-					type: "byte",
-					empty: true
+					type: "byte"
 				},
 				green: {
 					idx: 1,
-					type: "byte",
-					empty: true
+					type: "byte"
 				},
 				blue: {
 					idx: 2,
-					type: "byte",
-					empty: true
-				},
-				alpha: {
-					idx: 3,
-					type: "percent",
-					def: 1
+					type: "byte"
 				}
 			}
 		},
+
 		hsla: {
-			cache: "_hsla",
 			props: {
 				hue: {
 					idx: 0,
-					type: "degrees",
-					empty: true
+					type: "degrees"
 				},
 				saturation: {
 					idx: 1,
-					type: "percent",
-					empty: true
+					type: "percent"
 				},
 				lightness: {
 					idx: 2,
-					type: "percent",
-					empty: true
+					type: "percent"
 				}
 			}
 		}
@@ -120,11 +110,9 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 	propTypes = {
 		"byte": {
 			floor: true,
-			min: 0,
 			max: 255
 		},
 		"percent": {
-			min: 0,
 			max: 1
 		},
 		"degrees": {
@@ -134,40 +122,49 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 	},
 	support = color.support = {},
 
+	// div for support tests
+	div = document.createElement( "div" ),
+
 	// colors = jQuery.Color.names
 	colors,
 
 	// local aliases of functions called often
 	each = jQuery.each;
 
-spaces.hsla.props.alpha = spaces.rgba.props.alpha;
+// determine rgba support immediately
+div.style.cssText = "background-color:rgba(1,1,1,.5)";
+support.rgba = div.style.backgroundColor.indexOf( "rgba" ) > -1;
+
+// define cache name and alpha properties
+// for rgba and hsla spaces
+each( spaces, function( spaceName, space ) {
+	space.cache = "_" + spaceName;
+	space.props.alpha = {
+		idx: 3,
+		type: "percent",
+		def: 1
+	};
+});
 
 function clamp( value, prop, alwaysAllowEmpty ) {
 	var type = propTypes[ prop.type ] || {},
-		allowEmpty = alwaysAllowEmpty || prop.empty;
+		allowEmpty = alwaysAllowEmpty || !prop.def;
 
-	if ( allowEmpty && value == null ) {
-		return null;
+	if ( value == null ) {
+		return allowEmpty ? null : prop.def;
 	}
-	if ( prop.def && value == null ) {
-		return prop.def;
-	}
-	if ( type.floor ) {
-		value = ~~value;
-	} else {
-		value = parseFloat( value );
-	}
-	if ( value == null || isNaN( value ) ) {
-		return prop.def;
-	}
+
+	// ~~ is an short way of doing floor for positive numbers
+	value = type.floor ? ~~value : parseFloat( value );
+
 	if ( type.mod ) {
-		value %= type.mod;
-		// -10 -> 350
-		return value < 0 ? type.mod + value : value;
+		// we add mod before modding to make sure that negatives values
+		// get converted properly: -10 -> 350
+		return (value + type.mod) % type.mod;
 	}
 
 	// for now all property types without mod have min and max
-	return type.min > value ? type.min : type.max < value ? type.max : value;
+	return 0 > value ? 0 : type.max < value ? type.max : value;
 }
 
 function stringParse( string ) {
@@ -411,7 +408,7 @@ color.fn = jQuery.extend( color.prototype, {
 color.fn.parse.prototype = color.fn;
 
 // hsla conversions adapted from:
-// http://www.google.com/codesearch/p#OAMlx_jo-ck/src/third_party/WebKit/Source/WebCore/inspector/front-end/Color.js&d=7&l=193
+// https://code.google.com/p/maashaack/source/browse/packages/graphics/trunk/src/graphics/colors/HUE2RGB.as?r=5021
 
 function hue2rgb( p, q, h ) {
 	h = ( h + 1 ) % 1;
@@ -564,8 +561,7 @@ each( stepHooks, function( i, hook ) {
 		set: function( elem, value ) {
 			var parsed, backgroundColor, curElem;
 
-			if ( jQuery.type( value ) !== 'string' || ( parsed = stringParse( value ) ) )
-			{
+			if ( jQuery.type( value ) !== 'string' || ( parsed = stringParse( value ) ) ) {
 				value = color( parsed || value );
 				if ( !support.rgba && value._rgba[ 3 ] !== 1 ) {
 					curElem = hook === "backgroundColor" ? elem.parentNode : elem;
@@ -599,15 +595,6 @@ each( stepHooks, function( i, hook ) {
 		}
 		jQuery.cssHooks[ hook ].set( fx.elem, fx.start.transition( fx.end, fx.pos ) );
 	};
-});
-
-// detect rgba support
-jQuery(function() {
-	var div = document.createElement( "div" ),
-		div_style = div.style;
-
-	div_style.cssText = "background-color:rgba(1,1,1,.5)";
-	support.rgba = div_style.backgroundColor.indexOf( "rgba" ) > -1;
 });
 
 // Some named colors to work with
