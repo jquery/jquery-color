@@ -157,9 +157,6 @@ function clamp( value, prop, alwaysAllowEmpty ) {
 	// ~~ is an short way of doing floor for positive numbers
 	value = type.floor ? ~~value : parseFloat( value );
 
-	if ( value == null || isNaN( value ) ) {
-		return prop.def;
-	}
 	if ( type.mod ) {
 		// we add mod before modding to make sure that negatives values
 		// get converted properly: -10 -> 350
