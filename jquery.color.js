@@ -150,11 +150,8 @@ function clamp( value, prop, alwaysAllowEmpty ) {
 	var type = propTypes[ prop.type ] || {},
 		allowEmpty = alwaysAllowEmpty || !prop.def;
 
-	if ( allowEmpty && value == null ) {
-		return null;
-	}
-	if ( prop.def && value == null ) {
-		return prop.def;
+	if ( value == null ) {
+		return allowEmpty ? null : prop.def;
 	}
 
 	// ~~ is an short way of doing floor for positive numbers
