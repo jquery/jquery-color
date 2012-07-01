@@ -122,11 +122,18 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 	},
 	support = color.support = {},
 
+	// div for support tests
+	div = document.createElement( "div" ),
+
 	// colors = jQuery.Color.names
 	colors,
 
 	// local aliases of functions called often
 	each = jQuery.each;
+
+// determine rgba support immediately
+div.style.cssText = "background-color:rgba(1,1,1,.5)";
+support.rgba = div.style.backgroundColor.indexOf( "rgba" ) > -1;
 
 // define cache name and alpha properties
 // for rgba and hsla spaces
@@ -594,14 +601,6 @@ each( stepHooks, function( i, hook ) {
 		}
 		jQuery.cssHooks[ hook ].set( fx.elem, fx.start.transition( fx.end, fx.pos ) );
 	};
-});
-
-// detect rgba support
-jQuery(function() {
-	var div = document.createElement( "div" );
-
-	div.style.cssText = "background-color:rgba(1,1,1,.5)";
-	support.rgba = div.style.backgroundColor.indexOf( "rgba" ) > -1;
 });
 
 // Some named colors to work with
