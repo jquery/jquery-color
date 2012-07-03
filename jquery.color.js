@@ -29,9 +29,9 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 			re: /rgba?\(\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
 			parse: function( execResult ) {
 				return [
-					2.55 * execResult[1],
-					2.55 * execResult[2],
-					2.55 * execResult[3],
+					execResult[ 1 ] * 2.55,
+					execResult[ 2 ] * 2.55,
+					execResult[ 3 ] * 2.55,
 					execResult[ 4 ]
 				];
 			}
@@ -60,10 +60,10 @@ var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightCo
 			space: "hsla",
 			parse: function( execResult ) {
 				return [
-					execResult[1],
-					execResult[2] / 100,
-					execResult[3] / 100,
-					execResult[4]
+					execResult[ 1 ],
+					execResult[ 2 ] / 100,
+					execResult[ 3 ] / 100,
+					execResult[ 4 ]
 				];
 			}
 		}],
@@ -146,12 +146,11 @@ each( spaces, function( spaceName, space ) {
 	};
 });
 
-function clamp( value, prop, alwaysAllowEmpty ) {
-	var type = propTypes[ prop.type ] || {},
-		allowEmpty = alwaysAllowEmpty || !prop.def;
+function clamp( value, prop, allowEmpty ) {
+	var type = propTypes[ prop.type ] || {};
 
 	if ( value == null ) {
-		return allowEmpty ? null : prop.def;
+		return (allowEmpty || !prop.def) ? null : prop.def;
 	}
 
 	// ~~ is an short way of doing floor for positive numbers
@@ -180,19 +179,17 @@ function stringParse( string ) {
 	string = string.toLowerCase();
 
 	each( stringParsers, function( i, parser ) {
-		var match = parser.re.exec( string ),
+		var parsed,
+			match = parser.re.exec( string ),
 			values = match && parser.parse( match ),
-			parsed,
-			spaceName = parser.space || "rgba",
-			cache = spaces[ spaceName ].cache;
-
+			spaceName = parser.space || "rgba";
 
 		if ( values ) {
 			parsed = inst[ spaceName ]( values );
 
 			// if this was an rgba parse the assignment might happen twice
 			// oh well....
-			inst[ cache ] = parsed[ cache ];
+			inst[ spaces[ spaceName ].cache ] = parsed[ spaces[ spaceName ].cache ];
 			rgba = inst._rgba = parsed._rgba;
 
 			// exit each( stringParsers ) here because we matched
@@ -201,11 +198,11 @@ function stringParse( string ) {
 	});
 
 	// Found a stringParser that handled it
-	if ( rgba.length !== 0 ) {
+	if ( rgba.length ) {
 
 		// if this came from a parsed string, force "transparent" when alpha is 0
 		// chrome, (and maybe others) return "transparent" as rgba(0,0,0,0)
-		if ( Math.max.apply( Math, rgba ) === 0 ) {
+		if ( rgba.join() === "0,0,0,0" ) {
 			jQuery.extend( rgba, colors.transparent );
 		}
 		return inst;
@@ -265,7 +262,7 @@ color.fn = jQuery.extend( color.prototype, {
 
 							// if the value was null, we don't need to copy it
 							// if the key was alpha, we don't need to copy it either
-							if ( red[ key ] == null || key === "alpha") {
+							if ( key === "alpha" || red[ key ] == null ) {
 								return;
 							}
 							inst[ cache ] = space.to( inst._rgba );
@@ -286,8 +283,8 @@ color.fn = jQuery.extend( color.prototype, {
 			inst = this;
 
 		each( spaces, function( _, space ) {
-			var isCache = is[ space.cache ],
-				localCache;
+			var localCache,
+				isCache = is[ space.cache ];
 			if (isCache) {
 				localCache = inst[ space.cache ] || space.to && space.to( inst._rgba ) || [];
 				each( space.props, function( _, prop ) {
@@ -370,7 +367,7 @@ color.fn = jQuery.extend( color.prototype, {
 			prefix = "rgb(";
 		}
 
-		return prefix + rgba.join(",") + ")";
+		return prefix + rgba.join() + ")";
 	},
 	toHslaString: function() {
 		var prefix = "hsla(",
@@ -390,7 +387,7 @@ color.fn = jQuery.extend( color.prototype, {
 			hsla.pop();
 			prefix = "hsl(";
 		}
-		return prefix + hsla.join(",") + ")";
+		return prefix + hsla.join() + ")";
 	},
 	toHexString: function( includeAlpha ) {
 		var rgba = this._rgba.slice(),
@@ -419,7 +416,7 @@ color.fn.parse.prototype = color.fn;
 function hue2rgb( p, q, h ) {
 	h = ( h + 1 ) % 1;
 	if ( h * 6 < 1 ) {
-		return p + (q - p) * 6 * h;
+		return p + (q - p) * h * 6;
 	}
 	if ( h * 2 < 1) {
 		return q;
@@ -503,10 +500,10 @@ each( spaces, function( spaceName, space ) {
 			return this[ cache ].slice();
 		}
 
-		var type = jQuery.type( value ),
+		var ret,
+			type = jQuery.type( value ),
 			arr = ( type === "array" || type === "object" ) ? value : arguments,
-			local = this[ cache ].slice(),
-			ret;
+			local = this[ cache ].slice();
 
 		each( props, function( key, prop ) {
 			var val = arr[ type === "object" ? key : prop.idx ];
