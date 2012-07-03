@@ -283,13 +283,13 @@ color.fn = jQuery.extend( color.prototype, {
 	is: function( compare ) {
 		var is = color( compare ),
 			same = true,
-			myself = this;
+			inst = this;
 
 		each( spaces, function( _, space ) {
 			var isCache = is[ space.cache ],
 				localCache;
 			if (isCache) {
-				localCache = myself[ space.cache ] || space.to && space.to( myself._rgba ) || [];
+				localCache = inst[ space.cache ] || space.to && space.to( inst._rgba ) || [];
 				each( space.props, function( _, prop ) {
 					if ( isCache[ prop.idx ] != null ) {
 						same = ( isCache[ prop.idx ] === localCache[ prop.idx ] );
