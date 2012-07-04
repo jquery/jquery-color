@@ -315,7 +315,8 @@ color.fn = jQuery.extend( color.prototype, {
 		var end = color( other ),
 			spaceName = end._space(),
 			space = spaces[ spaceName ],
-			start = this[ space.cache ] || space.to( this._rgba ),
+			startColor = this.alpha() === 0 ? color( "transparent" ) : this,
+			start = startColor[ space.cache ] || space.to( startColor._rgba ),
 			result = start.slice();
 
 		end = end[ space.cache ];

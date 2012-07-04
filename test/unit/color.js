@@ -267,7 +267,7 @@ test( ".transition() works with $.Colors", function() {
 		trans = jQuery.Color( "transparent" ),
 		fifty = black.transition( whiteAlpha, 0.5 );
 
-	expect( 12 );
+	expect( 16 );
 	testParts( fifty, {
 		prefix: "black -> whiteAlpha 0.5",
 		red: 127,
@@ -288,6 +288,15 @@ test( ".transition() works with $.Colors", function() {
 		green: 255,
 		blue: 255,
 		alpha: 0.25
+	});
+
+	// fixes issue #32
+	testParts( jQuery.Color( 255, 0, 0, 0 ).transition( black, 0.5 ), {
+		prefix: "transparent red -> black 0.5",
+		red: 0,
+		green: 0,
+		blue: 0,
+		alpha: 0.5
 	});
 });
 
