@@ -64,7 +64,9 @@ grunt.initConfig({
 	},
 
 	compare_size: {
-		files: [ max[0], min[0] ]
+		"color": [ max[0], min[0] ],
+		"svg-names": [ max[1], min[1] ],
+		"combined": [ combined, min[2] ]
 	}
 });
 
