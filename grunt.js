@@ -108,7 +108,12 @@ grunt.registerTask( "submodules", function() {
 });
 
 grunt.registerTask( "max", function() {
-	var done = this.async();
+	var done = this.async(),
+		version = grunt.config( "pkg.version" );
+
+	if ( process.env.COMMIT ) {
+		version += " " + process.env.COMMIT;
+	}
 	grunt.helper( "git-date", function( error, date ) {
 		if ( error ) {
 			return done( false );
@@ -118,7 +123,7 @@ grunt.registerTask( "max", function() {
 			grunt.file.copy( dist.replace( "dist/", "" ), dist, {
 				process: function( source ) {
 					return source
-						.replace( /@VERSION/g, grunt.config( "pkg.version" ) )
+						.replace( /@VERSION/g, version )
 						.replace( /@DATE/g, date );
 				}
 			});
