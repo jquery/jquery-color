@@ -1,11 +1,16 @@
 /*jshint node: true */
 module.exports = function( grunt ) {
 
-var max = "dist/jquery.color.js",
-	min = "dist/jquery.color.min.js",
-	minify = {};
+var max = [ "dist/jquery.color.js", "dist/jquery.color.svg-names.js" ],
+	min = [ "dist/jquery.color.min.js", "dist/jquery.color.svg-names.min.js", "dist/jquery.color.plus-names.min.js"],
+	combined = "dist/jquery.color.plus-names.js",
+	minify = {},
+	concat = {};
 
-minify[ min ] = [ "<banner>", max ];
+minify[ min[0] ] = [ "<banner>", max[0] ];
+minify[ min[1] ] = [ "<banner:meta.bannerSvg>", max[1] ];
+minify[ min[2] ] = [ "<banner:meta.bannerCombined>", combined ];
+concat[ combined ] = [ max[0], max[1] ];
 
 grunt.loadNpmTasks( "grunt-compare-size" );
 
@@ -13,7 +18,9 @@ grunt.initConfig({
 	pkg: "<json:package.json>",
 
 	meta: {
-		banner: "/*! jQuery Color v@<%= pkg.version %> http://github.com/jquery/jquery-color | jquery.org/license */"
+		banner: "/*! jQuery Color v@<%= pkg.version %> http://github.com/jquery/jquery-color | jquery.org/license */",
+		bannerSvg: "/*! jQuery Color v@<%= pkg.version %> SVG Color Names http://github.com/jquery/jquery-color | jquery.org/license */",
+		bannerCombined: "/*! jQuery Color v@<%= pkg.version %> with SVG Color Names http://github.com/jquery/jquery-color | jquery.org/license */"
 	},
 
 	lint: {
@@ -47,6 +54,8 @@ grunt.initConfig({
 		files: "test/index.html"
 	},
 
+	concat: concat,
+
 	min: minify,
 
 	watch: {
@@ -55,9 +64,11 @@ grunt.initConfig({
 	},
 
 	compare_size: {
-		files: [ max, min ]
+		files: [ max[0], min[0] ]
 	}
 });
+
+
 
 grunt.registerHelper( "git-date", function( fn ) {
 	grunt.utils.spawn({
@@ -101,13 +112,16 @@ grunt.registerTask( "max", function() {
 			return done( false );
 		}
 
-		grunt.file.copy( "jquery.color.js", max, {
-			process: function( source ) {
-				return source
-					.replace( /@VERSION/g, grunt.config( "pkg.version" ) )
-					.replace( /@DATE/g, date );
-			}
+		max.forEach( function( dist ) {
+			grunt.file.copy( dist.replace( "dist/", "" ), dist, {
+				process: function( source ) {
+					return source
+						.replace( /@VERSION/g, grunt.config( "pkg.version" ) )
+						.replace( /@DATE/g, date );
+				}
+			});
 		});
+
 
 		done();
 	});
@@ -129,6 +143,6 @@ grunt.registerTask( "testswarm", function( commit, configFile ) {
 });
 
 grunt.registerTask( "default", "lint submodules qunit build compare_size" );
-grunt.registerTask( "build", "max min" );
+grunt.registerTask( "build", "max concat min" );
 
 };
