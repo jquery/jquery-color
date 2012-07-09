@@ -13,6 +13,7 @@ minify[ min[2] ] = [ "<banner:meta.bannerCombined>", combined ];
 concat[ combined ] = [ max[0], max[1] ];
 
 grunt.loadNpmTasks( "grunt-compare-size" );
+grunt.loadNpmTasks( "grunt-git-authors" );
 
 grunt.initConfig({
 	pkg: "<json:package.json>",
