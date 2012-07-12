@@ -5,15 +5,21 @@
   "version": "2.0.0pre",
   "homepage": "https://github.com/jquery/jquery-color",
   "author": {
-    "name": "jQuery Team"
+    "name": "jQuery Foundation and other contributors",
+    "url": "http://jqueryui.com"
   },
+  "maintainers": [
+    {
+      "name": "Corey Frang",
+      "email": "gnarf37@gmail.com",
+      "url": "http://gnarf.net"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/jquery/jquery-color.git"
   },
-  "bugs": {
-    "url": "https://github.com/jquery/jquery-color/issues"
-  },
+  "bugs": "https://github.com/jquery/jquery-color/issues",
   "licenses": [
     {
       "type": "MIT",

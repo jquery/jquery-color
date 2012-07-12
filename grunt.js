@@ -150,6 +150,26 @@ grunt.registerTask( "testswarm", function( commit, configFile ) {
 	}, config);
 });
 
+grunt.registerTask( "manifest", function() {
+	var pkg = grunt.config( "pkg" );
+	grunt.file.write( "color.jquery.json", JSON.stringify({
+		name: "color",
+		title: pkg.title,
+		description: pkg.description,
+		keywords: pkg.keywords,
+		version: pkg.version,
+		author: pkg.author,
+		maintainers: pkg.maintainers,
+		licenses: pkg.licenses,
+		bugs: pkg.bugs,
+		homepage: pkg.homepage,
+		docs: pkg.homepage,
+		dependencies: {
+			jquery: ">=1.5"
+		}
+	}, null, "\t" ) );
+});
+
 grunt.registerTask( "default", "lint submodules qunit build compare_size" );
 grunt.registerTask( "build", "max concat min" );
 
