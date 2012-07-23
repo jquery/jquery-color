@@ -519,7 +519,7 @@ test( "animated", function() {
 
 	expect( 10 );
 	stop();
-	el.animate({ color: "#ffffff" }, 200, function() {
+	el.animate({ color: "#ffffff" }, 1, function() {
 		testParts( jQuery.Color( el, "color" ), {
 			prefix: "Post Animated Color finished properly",
 			red: 255,
@@ -528,26 +528,32 @@ test( "animated", function() {
 			alpha: 1
 		});
 
-		el.animate({ color: "#00FF00" }, 1000);
-		setTimeout(function() {
-			var color = jQuery.Color( el, "color" );
+		var tickCount = 0;
 
-			el.stop();
-			notEqual( color.red() , 255, "Stopped midway, not either endpoint" );
-			notEqual( color.red() , 0, "Stopped midway, not either endpoint" );
+		el.animate({ color: "#00FF00" }, {
+			duration:5000,
+			step: function() {
+				if ( tickCount++ > 2) {
+					var color = jQuery.Color( el, "color" );
 
-			el.css('color', 'white').animate({ color: "#000000" }, 200).stop( true );
-			testParts( jQuery.Color( el, "color" ), {
-				prefix: "Immediately Stopped.. Animated Color didn't change",
-				red: 255,
-				green: 255,
-				blue: 255,
-				alpha: 1
-			});
+					el.stop();
+					notEqual( color.red() , 255, "Stopped midway, not either endpoint" );
+					notEqual( color.red() , 0, "Stopped midway, not either endpoint" );
 
-			el.remove();
-			start();
-		}, 500);
+					el.css('color', 'white').animate({ color: "#000000" }, 200).stop( true );
+					testParts( jQuery.Color( el, "color" ), {
+						prefix: "Immediately Stopped.. Animated Color didn't change",
+						red: 255,
+						green: 255,
+						blue: 255,
+						alpha: 1
+					});
+
+					el.remove();
+					start();
+				}
+			}
+		});
 	});
 });
 
