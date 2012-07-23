@@ -517,7 +517,7 @@ module( "animate" );
 test( "animated", function() {
 	var el = jQuery( "<div></div>" ).appendTo( "body" ).css({ color: "#000000" });
 
-	expect( 10 );
+	expect( 8 );
 	stop();
 	el.animate({ color: "#ffffff" }, 1, function() {
 		testParts( jQuery.Color( el, "color" ), {
@@ -528,32 +528,17 @@ test( "animated", function() {
 			alpha: 1
 		});
 
-		var tickCount = 0;
-
-		el.animate({ color: "#00FF00" }, {
-			duration:5000,
-			step: function() {
-				if ( tickCount++ > 2) {
-					var color = jQuery.Color( el, "color" );
-
-					el.stop();
-					notEqual( color.red() , 255, "Stopped midway, not either endpoint" );
-					notEqual( color.red() , 0, "Stopped midway, not either endpoint" );
-
-					el.css('color', 'white').animate({ color: "#000000" }, 200).stop( true );
-					testParts( jQuery.Color( el, "color" ), {
-						prefix: "Immediately Stopped.. Animated Color didn't change",
-						red: 255,
-						green: 255,
-						blue: 255,
-						alpha: 1
-					});
-
-					el.remove();
-					start();
-				}
-			}
+		el.css('color', 'white').animate({ color: "#000000" }, 200).stop( true );
+		testParts( jQuery.Color( el, "color" ), {
+			prefix: "Immediately Stopped.. Animated Color didn't change",
+			red: 255,
+			green: 255,
+			blue: 255,
+			alpha: 1
 		});
+
+		el.remove();
+		start();
 	});
 });
 
