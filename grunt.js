@@ -145,7 +145,7 @@ grunt.registerTask( "testswarm", function( commit, configFile ) {
 	testswarm({
 		url: config.swarmUrl,
 		pollInterval: 10000,
-		timeout: 1000 * 60 * 10,
+		timeout: 1000 * 60 * 30,
 		done: this.async()
 	}, config);
 });
