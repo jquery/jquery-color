@@ -563,23 +563,23 @@ each( spaces, function( spaceName, space ) {
 each( stepHooks, function( i, hook ) {
 	jQuery.cssHooks[ hook ] = {
 		set: function( elem, value ) {
-			var parsed, backgroundColor, curElem;
+			var parsed, curElem,
+				backgroundColor = "";
 
 			if ( jQuery.type( value ) !== "string" || ( parsed = stringParse( value ) ) ) {
 				value = color( parsed || value );
 				if ( !support.rgba && value._rgba[ 3 ] !== 1 ) {
 					curElem = hook === "backgroundColor" ? elem.parentNode : elem;
-					do {
+					while (
+						(backgroundColor === "" || backgroundColor === "transparent") &&
+						curElem.style
+					) {
 						try {
 							backgroundColor = jQuery.css( curElem, "backgroundColor" );
+							curElem = curElem.parentNode;
 						} catch ( e ) {
-							backgroundColor = "";
 						}
-					} while (
-						( backgroundColor === "" || backgroundColor === "transparent" ) &&
-						( curElem = curElem.parentNode ) &&
-						curElem.style
-					);
+					}
 
 					value = value.blend( backgroundColor && backgroundColor !== "transparent" ?
 						backgroundColor :
