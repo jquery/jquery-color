@@ -101,6 +101,21 @@ test( "jQuery.Color({ alpha: 1, hue: 100 })", function() {
 	deepEqual( blue._hsla, [ 100, null, null, 1 ], "HSLA cache has correct values");
 });
 
+test( "jQuery.Color({ hue: 100, saturation: 1, lightness: 0.5 })", function() {
+	var blue = jQuery.Color({ hue: 100, saturation: 1, lightness: 0.5 });
+	testParts( blue, {
+		red: 85,
+		green: 255,
+		blue: 0,
+		alpha: 1,
+		hue: 100,
+		saturation: 1,
+		lightness: 0.5
+	});
+	deepEqual( blue._rgba, [ 85, 255, 0, 1 ], "RGBA cache has correct values");
+	deepEqual( blue._hsla, [ 100, 1, 0.5, 1 ], "HSLA cache has correct values");
+});
+
 
 parseTest( jQuery.Color( jQuery.Color( "red" ) ), {
 	expect: 4,
@@ -561,5 +576,4 @@ test( "Setting CSS to empty string / inherit", function() {
 
 	el.css( "color", "inherit" );
 	ok( el[0].style.color === "" || el[0].style.color === "inherit", "Setting CSS to inherit didn't throw error" );
-
 });

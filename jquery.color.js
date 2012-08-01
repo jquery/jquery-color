@@ -254,8 +254,8 @@ color.fn = jQuery.extend( color.prototype, {
 				});
 			} else {
 				each( spaces, function( spaceName, space ) {
+					var cache = space.cache;
 					each( space.props, function( key, prop ) {
-						var cache = space.cache;
 
 						// if the cache doesn't exist, and we know how to convert
 						if ( !inst[ cache ] && space.to ) {
@@ -272,6 +272,15 @@ color.fn = jQuery.extend( color.prototype, {
 						// call clamp with alwaysAllowEmpty
 						inst[ cache ][ prop.idx ] = clamp( red[ key ], prop, true );
 					});
+
+					// everything defined but alpha?
+					if ( inst[ cache ] && $.inArray( null, inst[ cache ].slice( 0, 3 ) ) < 0 ) {
+						// use the default of 1
+						inst[ cache ][ 3 ] = 1;
+						if ( space.from ) {
+							inst._rgba = space.from( inst[ cache ] );
+						}
+					}
 				});
 			}
 			return this;
