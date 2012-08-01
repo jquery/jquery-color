@@ -1,7 +1,7 @@
 {
   "name": "jquery-color",
   "title": "jQuery Color",
-  "description": "A jQuery plugin that adds color animation support.",
+  "description": "jQuery plugin for color manipulation and animation support.",
   "version": "2.0.0pre",
   "homepage": "https://github.com/jquery/jquery-color",
   "author": {
