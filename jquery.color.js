@@ -572,7 +572,7 @@ each( stepHooks, function( i, hook ) {
 					curElem = hook === "backgroundColor" ? elem.parentNode : elem;
 					while (
 						(backgroundColor === "" || backgroundColor === "transparent") &&
-						curElem.style
+						curElem && curElem.style
 					) {
 						try {
 							backgroundColor = jQuery.css( curElem, "backgroundColor" );
