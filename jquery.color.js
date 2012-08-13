@@ -614,6 +614,17 @@ each( stepHooks, function( i, hook ) {
 	};
 });
 
+jQuery.cssHooks.borderColor = {
+	expand: function( value ) {
+		var expanded = {};
+
+		each( [ "Top", "Right", "Bottom", "Left" ], function( i, part ) {
+			expanded[ "border" + part + "Color" ] = value;
+		});
+		return expanded;
+	}
+};
+
 // Basic color names only.
 // Usage of any of the other color names requires adding yourself or including
 // jquery.color.svg-names.js.

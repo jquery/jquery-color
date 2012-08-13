@@ -344,7 +344,7 @@ test( ".transtion() works with strings and objects", function() {
 		green: 100,
 		blue: 100
 	});
-	
+
 });
 
 test( ".is()", function() {
@@ -471,7 +471,7 @@ test("HSLA Transitions", function() {
 		hue10 = red.transition( jQuery.Color({ hue: 10 }), 0.5),
 		hue350 = red.transition( jQuery.Color({ hue: 350 }), 0.5),
 		hueWrapPos = jQuery.Color({ hue: 350 }).transition( jQuery.Color({ hue: 10 }));
-	
+
 	testParts( desaturate, {
 		prefix: "red -> desaturatue 0.5",
 		hue: 0,
@@ -500,7 +500,7 @@ test("HSLA Transitions", function() {
 		lightness: null,
 		alpha: 1
 	});
-	
+
 });
 
 
@@ -564,6 +564,23 @@ asyncTest( "animated documentFragment", function() {
 	el.animate({ color: "red" }, 200, function() {
 		ok( true, "Animation of color on documentFragment did not fail" );
 		start();
+	});
+});
+
+test( "animate borderColor", function() {
+	var el = jQuery( "<div style='border: 1px solid blue;'></div>" ).appendTo( "body" );
+	stop();
+	el.animate({ borderColor: "#00f" }, {
+		step: function( value, tween ) {
+			testParts( jQuery.Color( el, "borderTopColor" ), {
+				red: 0,
+				green: 0,
+				blue: 255,
+				alpha: 1
+			});
+			el.stop().remove();
+			start();
+		}
 	});
 });
 
