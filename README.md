@@ -139,8 +139,8 @@ hsla([ hue, saturation, lightness, alpha ])
 ### String Methods:
 
 ```javascript
-toRgbString() // returns a css string "rgba(255, 255, 255, 1)"
-toHslString() // returns a css string "hsla(330, 75%, 25%, 1)"
+toRgbaString() // returns a css string "rgba(255, 255, 255, 1)"
+toHslaString() // returns a css string "hsla(330, 75%, 25%, 1)"
 toHexString( includeAlpha ) // returns a css string "#abcdef", with "includeAlpha" uses "#rrggbbaa" (alpha *= 255)
 ```
 ###Working with other colors:
