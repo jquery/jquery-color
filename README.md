@@ -139,11 +139,13 @@ hsla([ hue, saturation, lightness, alpha ])
 ### String Methods:
 
 ```javascript
-toRgbaString() // returns a css string "rgba(255, 255, 255, 1)"
-toHslaString() // returns a css string "hsla(330, 75%, 25%, 1)"
+toRgbaString() // returns a css string "rgba(255, 255, 255, 0.4)"
+toHslaString() // returns a css string "hsla(330, 75%, 25%, 0.4)"
 toHexString( includeAlpha ) // returns a css string "#abcdef", with "includeAlpha" uses "#rrggbbaa" (alpha *= 255)
 ```
-###Working with other colors:
+
+The `toRgbaString` and `toHslaString` methods will only include the alpha channel if it is not `1`. They will return `rgb(...)` and `hsl(...)` strings if the alpha is set to `1`. 
+### Working with other colors:
 
 ```javascript
 transition( othercolor, distance ) // the color distance ( 0.0 - 1.0 ) of the way between this color and othercolor
