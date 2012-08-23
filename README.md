@@ -37,7 +37,7 @@ This plugins installs a [`cssHook`](http://api.jquery.com/jQuery.cssHooks/) whic
 
 Supported Properties
 -------
-`backgroundColor`, `borderBottomColor`, `borderLeftColor`, `borderRightColor`, `borderTopColor`, `color`, `columnRuleColor`, `outlineColor`, `textDecorationColor`, `textEmphasisColor`
+`backgroundColor`, `borderBottomColor`, `borderLeftColor`, `borderRightColor`, `borderTopColor`, `color`, `columnRuleColor`, `outlineColor`, `textDecorationColor`, `textEmphasisColor`, `fill`
 
 Example Use
 -------
