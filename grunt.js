@@ -34,7 +34,7 @@ grunt.initConfig({
 			var rc = grunt.file.readJSON( (path || "") + ".jshintrc" ),
 				settings = {
 					options: rc,
-					globals: {}
+					globals: rc.globals || {}
 				};
 
 			(rc.predef || []).forEach(function( prop ) {
