@@ -594,3 +594,15 @@ test( "Setting CSS to empty string / inherit", function() {
 	el.css( "color", "inherit" );
 	ok( el[0].style.color === "" || el[0].style.color === "inherit", "Setting CSS to inherit didn't throw error" );
 });
+
+test( "jQuery.Color.hook() - Create new hooks for color properties", 2, function() {
+
+	// these shouldn't be there, but just in case....
+	delete jQuery.cssHooks.testy;
+	delete jQuery.fx.step.testy;
+	jQuery.Color.hook( "testy" );
+	ok( jQuery.cssHooks.testy, "testy cssHook created" );
+	ok( jQuery.fx.step.testy, "fx.step testy hook created" );
+	delete jQuery.cssHooks.testy;
+	delete jQuery.fx.step.testy;
+});
