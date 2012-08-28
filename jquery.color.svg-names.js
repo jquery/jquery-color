@@ -1,6 +1,6 @@
 /*!
  * jQuery Color Animations v@VERSION - SVG Color Names
- * http://jquery.org/
+ * https://github.com/jquery/jquery-color
  *
  * Remaining HTML/CSS color names per W3C's CSS Color Module Level 3.
  * http://www.w3.org/TR/css3-color/#svg-color
