@@ -247,10 +247,10 @@ color.fn = jQuery.extend( color.prototype, {
 
 		//binary color without alpha
 		if ( type === "number" ) {
-			source=red;
-			red = Math.floor( source / 65536 );
-			green = Math.floor( ( source - ( red * 65536 ) ) / 256 );
-			blue = source - ( red * 65536 ) - ( green * 256 );
+			source = red;
+			red = Math.floor( source / 0x10000 );
+			green = Math.floor( ( source - ( red * 0x10000 ) ) / 0x100 );
+			blue = source - ( red * 0x10000 ) - ( green * 0x100 );
 			return this.parse( [ red , green , blue ] );
 		}
 
@@ -425,7 +425,7 @@ color.fn = jQuery.extend( color.prototype, {
 	},
 	toNumber: function() {
 		var r = this._rgba[0], g = this._rgba[1], b = this._rgba[2];
-		return r * 65536 + g * 256 + b;
+		return r * 0x10000 + g * 0x100 + b;
 	},
 	toString: function() {
 		return this._rgba[ 3 ] === 0 ? "transparent" : this.toRgbaString();
