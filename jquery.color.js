@@ -245,6 +245,15 @@ color.fn = jQuery.extend( color.prototype, {
 			return this;
 		}
 
+		//binary color without alpha
+		if ( type === "number" ) {
+			source=red;
+			red = Math.floor( source / 65536 );
+			green = Math.floor( ( source - ( red * 65536 ) ) / 256 );
+			blue = source - ( red * 65536 ) - ( green * 256 );
+			return this.parse( [ red , green , blue ] );
+		}
+
 		if ( type === "object" ) {
 			if ( red instanceof color ) {
 				each( spaces, function( spaceName, space ) {
@@ -413,6 +422,10 @@ color.fn = jQuery.extend( color.prototype, {
 			v = ( v || 0 ).toString( 16 );
 			return v.length === 1 ? "0" + v : v;
 		}).join("");
+	},
+	toNumber: function() {
+		var r = this._rgba[0], g = this._rgba[1], b = this._rgba[2];
+		return r * 65536 + g * 256 + b;
 	},
 	toString: function() {
 		return this._rgba[ 3 ] === 0 ? "transparent" : this.toRgbaString();
