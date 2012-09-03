@@ -606,3 +606,21 @@ test( "jQuery.Color.hook() - Create new hooks for color properties", 2, function
 	delete jQuery.cssHooks.testy;
 	delete jQuery.fx.step.testy;
 });
+
+test( "jQuery.Color( 0xff0102 )", function() {
+	expect( 4 );
+	testParts( jQuery.Color( 0xff0102 ), {
+		expect: 4,
+		red: 255,
+		green: 1,
+		blue: 2,
+		alpha: 1
+	});
+});
+
+test( ".toNumber()", function() {
+	var almostBlack = jQuery.Color( "black" ).red( 2 ).blue( 16 );
+	expect( 1 );
+	equal( almostBlack.toNumber(), 0x020010, "to number");
+
+});
