@@ -126,11 +126,11 @@ blue( val )       // returns a copy of the color object with the blue set to val
 alpha()           // returns the "alpha" component of the color from ( Float from 0.0 - 1.0 )
 alpha( val )      // returns a copy of the color object with the alpha set to val
 hue()             // returns the "hue" component of the color ( Integer from 0 - 359 )
-hue( val )        // returns a copy of the color objec with the hue set to val
-saturation()      // returns the "hue" component of the color ( Float from 0.0 - 1.0 )
-saturation( val ) // returns a copy of the color objec with the hue set to val
-lightness()       // returns the "hue" component of the color ( Float from 0.0 - 1.0 )
-lightness( val )  // returns a copy of the color objec with the hue set to val
+hue( val )        // returns a copy of the color object with the hue set to val
+saturation()      // returns the "saturation" component of the color ( Float from 0.0 - 1.0 )
+saturation( val ) // returns a copy of the color object with the saturation set to val
+lightness()       // returns the "lightness" component of the color ( Float from 0.0 - 1.0 )
+lightness( val )  // returns a copy of the color object with the lightness set to val
 // all of the above values can also take strings in the format of "+=100" or "-=100"
 
 rgba() // returns a rgba "tuple" [ red, green, blue, alpha ]
