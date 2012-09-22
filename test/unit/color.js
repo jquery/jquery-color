@@ -168,6 +168,8 @@ parseTest( "rgb(127,127,127)", fiftypercent );
 parseTest( "rgb(50%,50%,50%)", fiftypercent );
 parseTest( "rgba(127,127,127,0.5)", fiftypercentalpha );
 parseTest( "rgba(50%,50%,50%,0.5)", fiftypercentalpha );
+parseTest( "rgba(127, 127, 127, .5)", fiftypercentalpha );
+parseTest( "rgba(50%, 50%, 50%, .5)", fiftypercentalpha );
 parseTest( "rgba(0, 0, 0, 0)", {
 	expect: 4,
 	red: null,
@@ -397,6 +399,17 @@ test( "toString() methods keep alpha intact", function() {
 
 module( "hsla" );
 parseTest("hsla(180,50%,50%,0.5)", {
+	expect: 7,
+	hue: 180,
+	saturation: 0.5,
+	lightness: 0.5,
+	red: 64,
+	green: 191,
+	blue: 191,
+	alpha: 0.5
+});
+
+parseTest("hsla(180, 50%, 50%, .5)", {
 	expect: 7,
 	hue: 180,
 	saturation: 0.5,
