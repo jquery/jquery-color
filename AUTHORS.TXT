@@ -10,3 +10,5 @@ Jörn Zaefferer <joern.zaefferer@gmail.com>
 Mike Sherov <mike.sherov@gmail.com>
 Brendan Byrd <GitHub@ResonatorSoft.org>
 Christoffer Sawicki <christoffer.sawicki@gmail.com>
+Dmitry <df.creative@gmail.com>
+
