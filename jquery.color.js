@@ -462,8 +462,10 @@ spaces.hsla.to = function ( rgba ) {
 		h = ( 60 * ( r - g ) / diff ) + 240;
 	}
 
-	if ( l === 0 || l === 1 ) {
-		s = l;
+	// chroma (diff) == 0 means greyscale which, by definition, saturation = 0%
+	// otherwise, saturation is based on the ratio of chroma (diff) to lightness (add)
+	if ( diff === 0 ) {
+		s = 0;
 	} else if ( l <= 0.5 ) {
 		s = diff / add;
 	} else {
