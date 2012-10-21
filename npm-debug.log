@@ -1,0 +1,560 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@1.1.59
+3 info using node@v0.8.8
+4 verbose read json /mnt/share/source/bseth99/jquery-color/package.json
+5 verbose readDependencies using package.json deps
+6 verbose install where, deps [ '/mnt/share/source/bseth99/jquery-color',
+6 verbose install   [ 'grunt',
+6 verbose install     'grunt-compare-size',
+6 verbose install     'grunt-git-authors',
+6 verbose install     'testswarm' ] ]
+7 verbose from cache /mnt/share/source/bseth99/jquery-color/package.json
+8 info preinstall jquery-color@2.1.1pre
+9 verbose from cache /mnt/share/source/bseth99/jquery-color/package.json
+10 verbose readDependencies using package.json deps
+11 verbose cache add [ 'grunt@~0.3.9', null ]
+12 silly cache add name=undefined spec="grunt@~0.3.9" args=["grunt@~0.3.9",null]
+13 verbose parsed url { pathname: 'grunt@~0.3.9',
+13 verbose parsed url   path: 'grunt@~0.3.9',
+13 verbose parsed url   href: 'grunt@~0.3.9' }
+14 silly cache add name="grunt" spec="~0.3.9" args=["grunt","~0.3.9"]
+15 verbose parsed url { pathname: '~0.3.9', path: '~0.3.9', href: '~0.3.9' }
+16 verbose addNamed [ 'grunt', '~0.3.9' ]
+17 verbose addNamed [ null, '>=0.3.9- <0.4.0-' ]
+18 verbose cache add [ 'grunt-compare-size@>=0.1.4', null ]
+19 silly cache add name=undefined spec="grunt-compare-size@>=0.1.4" args=["grunt-compare-size@>=0.1.4",null]
+20 verbose parsed url { pathname: 'grunt-compare-size@%3E=0.1.4',
+20 verbose parsed url   path: 'grunt-compare-size@%3E=0.1.4',
+20 verbose parsed url   href: 'grunt-compare-size@%3E=0.1.4' }
+21 silly cache add name="grunt-compare-size" spec=">=0.1.4" args=["grunt-compare-size",">=0.1.4"]
+22 verbose parsed url { pathname: '%3E=0.1.4', path: '%3E=0.1.4', href: '%3E=0.1.4' }
+23 verbose addNamed [ 'grunt-compare-size', '>=0.1.4' ]
+24 verbose addNamed [ null, '>=0.1.4' ]
+25 verbose cache add [ 'grunt-git-authors@1.0.0', null ]
+26 silly cache add name=undefined spec="grunt-git-authors@1.0.0" args=["grunt-git-authors@1.0.0",null]
+27 verbose parsed url { pathname: 'grunt-git-authors@1.0.0',
+27 verbose parsed url   path: 'grunt-git-authors@1.0.0',
+27 verbose parsed url   href: 'grunt-git-authors@1.0.0' }
+28 silly cache add name="grunt-git-authors" spec="1.0.0" args=["grunt-git-authors","1.0.0"]
+29 verbose parsed url { pathname: '1.0.0', path: '1.0.0', href: '1.0.0' }
+30 verbose addNamed [ 'grunt-git-authors', '1.0.0' ]
+31 verbose addNamed [ '1.0.0', '1.0.0' ]
+32 verbose cache add [ 'testswarm@0.2.2', null ]
+33 silly cache add name=undefined spec="testswarm@0.2.2" args=["testswarm@0.2.2",null]
+34 verbose parsed url { pathname: 'testswarm@0.2.2',
+34 verbose parsed url   path: 'testswarm@0.2.2',
+34 verbose parsed url   href: 'testswarm@0.2.2' }
+35 silly cache add name="testswarm" spec="0.2.2" args=["testswarm","0.2.2"]
+36 verbose parsed url { pathname: '0.2.2', path: '0.2.2', href: '0.2.2' }
+37 verbose addNamed [ 'testswarm', '0.2.2' ]
+38 verbose addNamed [ '0.2.2', '0.2.2' ]
+39 silly lockFile 6cb55e7d-grunt-0-3-9 grunt@~0.3.9
+40 verbose lock grunt@~0.3.9 /home/vmuser/.npm/6cb55e7d-grunt-0-3-9.lock
+41 silly lockFile 1d876b5e-grunt-compare-size-0-1-4 grunt-compare-size@>=0.1.4
+42 verbose lock grunt-compare-size@>=0.1.4 /home/vmuser/.npm/1d876b5e-grunt-compare-size-0-1-4.lock
+43 silly lockFile de44e1df-grunt-git-authors-1-0-0 grunt-git-authors@1.0.0
+44 verbose lock grunt-git-authors@1.0.0 /home/vmuser/.npm/de44e1df-grunt-git-authors-1-0-0.lock
+45 silly lockFile c331086c-testswarm-0-2-2 testswarm@0.2.2
+46 verbose lock testswarm@0.2.2 /home/vmuser/.npm/c331086c-testswarm-0-2-2.lock
+47 silly addNameRange { name: 'grunt', range: '>=0.3.9- <0.4.0-', hasData: false }
+48 silly addNameRange { name: 'grunt-compare-size', range: '>=0.1.4', hasData: false }
+49 verbose url raw grunt
+50 verbose url resolving [ 'https://registry.npmjs.org/', './grunt' ]
+51 verbose url resolved https://registry.npmjs.org/grunt
+52 info retry registry request attempt 1 at 08:12:58
+53 verbose etag "AR0WNU9HPIW1XPQRAO3L3LV36"
+54 http GET https://registry.npmjs.org/grunt
+55 verbose url raw grunt-compare-size
+56 verbose url resolving [ 'https://registry.npmjs.org/', './grunt-compare-size' ]
+57 verbose url resolved https://registry.npmjs.org/grunt-compare-size
+58 info retry registry request attempt 1 at 08:12:58
+59 verbose etag "DWCSKEDHWR3CQLZWWCAEUB36F"
+60 http GET https://registry.npmjs.org/grunt-compare-size
+61 verbose url raw testswarm/0.2.2
+62 verbose url resolving [ 'https://registry.npmjs.org/', './testswarm/0.2.2' ]
+63 verbose url resolved https://registry.npmjs.org/testswarm/0.2.2
+64 info retry registry request attempt 1 at 08:12:58
+65 verbose etag "AN2H7WXIOBWDXIR2JHHWHXJRC"
+66 http GET https://registry.npmjs.org/testswarm/0.2.2
+67 verbose url raw grunt-git-authors/1.0.0
+68 verbose url resolving [ 'https://registry.npmjs.org/', './grunt-git-authors/1.0.0' ]
+69 verbose url resolved https://registry.npmjs.org/grunt-git-authors/1.0.0
+70 info retry registry request attempt 1 at 08:12:58
+71 verbose etag "ASJ7XRIJS1NFO6ER10RA44XUK"
+72 http GET https://registry.npmjs.org/grunt-git-authors/1.0.0
+73 http 304 https://registry.npmjs.org/grunt-compare-size
+74 silly registry.get cb [ 304,
+74 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+74 silly registry.get     etag: '"DWCSKEDHWR3CQLZWWCAEUB36F"',
+74 silly registry.get     date: 'Fri, 19 Oct 2012 12:12:58 GMT',
+74 silly registry.get     'content-length': '0' } ]
+75 verbose etag grunt-compare-size from cache
+76 http 304 https://registry.npmjs.org/grunt
+77 silly registry.get cb [ 304,
+77 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+77 silly registry.get     etag: '"AR0WNU9HPIW1XPQRAO3L3LV36"',
+77 silly registry.get     date: 'Fri, 19 Oct 2012 12:12:58 GMT',
+77 silly registry.get     'content-length': '0' } ]
+78 verbose etag grunt from cache
+79 silly addNameRange number 2 { name: 'grunt-compare-size', range: '>=0.1.4', hasData: true }
+80 silly addNameRange versions [ 'grunt-compare-size',
+80 silly addNameRange   [ '0.1.0',
+80 silly addNameRange     '0.1.1',
+80 silly addNameRange     '0.1.2',
+80 silly addNameRange     '0.1.3',
+80 silly addNameRange     '0.1.4',
+80 silly addNameRange     '0.1.5',
+80 silly addNameRange     '0.1.6',
+80 silly addNameRange     '0.1.7',
+80 silly addNameRange     '0.2.0' ] ]
+81 verbose addNamed [ 'grunt-compare-size', '0.2.0' ]
+82 verbose addNamed [ '0.2.0', '0.2.0' ]
+83 silly lockFile df3b5768-grunt-compare-size-0-2-0 grunt-compare-size@0.2.0
+84 verbose lock grunt-compare-size@0.2.0 /home/vmuser/.npm/df3b5768-grunt-compare-size-0-2-0.lock
+85 verbose read json /home/vmuser/.npm/grunt-compare-size/0.2.0/package/package.json
+86 silly addNameRange number 2 { name: 'grunt', range: '>=0.3.9- <0.4.0-', hasData: true }
+87 silly addNameRange versions [ 'grunt',
+87 silly addNameRange   [ '0.1.0',
+87 silly addNameRange     '0.1.1',
+87 silly addNameRange     '0.1.2',
+87 silly addNameRange     '0.2.0',
+87 silly addNameRange     '0.2.1',
+87 silly addNameRange     '0.2.2',
+87 silly addNameRange     '0.2.3',
+87 silly addNameRange     '0.2.4',
+87 silly addNameRange     '0.2.5',
+87 silly addNameRange     '0.2.6',
+87 silly addNameRange     '0.2.7',
+87 silly addNameRange     '0.2.8',
+87 silly addNameRange     '0.2.9',
+87 silly addNameRange     '0.2.10',
+87 silly addNameRange     '0.2.11',
+87 silly addNameRange     '0.2.12',
+87 silly addNameRange     '0.2.13',
+87 silly addNameRange     '0.2.14',
+87 silly addNameRange     '0.2.15',
+87 silly addNameRange     '0.3.0',
+87 silly addNameRange     '0.3.1',
+87 silly addNameRange     '0.3.2',
+87 silly addNameRange     '0.3.3',
+87 silly addNameRange     '0.3.4',
+87 silly addNameRange     '0.3.5',
+87 silly addNameRange     '0.3.6',
+87 silly addNameRange     '0.3.7',
+87 silly addNameRange     '0.3.8',
+87 silly addNameRange     '0.3.9',
+87 silly addNameRange     '0.3.10',
+87 silly addNameRange     '0.3.11',
+87 silly addNameRange     '0.3.12',
+87 silly addNameRange     '0.3.13a',
+87 silly addNameRange     '0.3.13',
+87 silly addNameRange     '0.3.14',
+87 silly addNameRange     '0.3.15',
+87 silly addNameRange     '0.3.16',
+87 silly addNameRange     '0.3.17',
+87 silly addNameRange     '0.4.0a' ] ]
+88 verbose addNamed [ 'grunt', '0.3.17' ]
+89 verbose addNamed [ '0.3.17', '0.3.17' ]
+90 silly lockFile b40ea710-grunt-0-3-17 grunt@0.3.17
+91 verbose lock grunt@0.3.17 /home/vmuser/.npm/b40ea710-grunt-0-3-17.lock
+92 verbose read json /home/vmuser/.npm/grunt/0.3.17/package/package.json
+93 silly lockFile df3b5768-grunt-compare-size-0-2-0 grunt-compare-size@0.2.0
+94 silly lockFile 1d876b5e-grunt-compare-size-0-1-4 grunt-compare-size@>=0.1.4
+95 silly lockFile b40ea710-grunt-0-3-17 grunt@0.3.17
+96 silly lockFile 6cb55e7d-grunt-0-3-9 grunt@~0.3.9
+97 http 304 https://registry.npmjs.org/testswarm/0.2.2
+98 silly registry.get cb [ 304,
+98 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+98 silly registry.get     etag: '"AN2H7WXIOBWDXIR2JHHWHXJRC"',
+98 silly registry.get     date: 'Fri, 19 Oct 2012 12:12:58 GMT',
+98 silly registry.get     'content-length': '0' } ]
+99 verbose etag testswarm/0.2.2 from cache
+100 http 304 https://registry.npmjs.org/grunt-git-authors/1.0.0
+101 silly registry.get cb [ 304,
+101 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+101 silly registry.get     etag: '"ASJ7XRIJS1NFO6ER10RA44XUK"',
+101 silly registry.get     date: 'Fri, 19 Oct 2012 12:12:58 GMT',
+101 silly registry.get     'content-length': '0' } ]
+102 verbose etag grunt-git-authors/1.0.0 from cache
+103 verbose read json /home/vmuser/.npm/testswarm/0.2.2/package/package.json
+104 verbose read json /home/vmuser/.npm/grunt-git-authors/1.0.0/package/package.json
+105 silly lockFile de44e1df-grunt-git-authors-1-0-0 grunt-git-authors@1.0.0
+106 silly lockFile c331086c-testswarm-0-2-2 testswarm@0.2.2
+107 silly resolved [ { name: 'grunt-compare-size',
+107 silly resolved     description: 'Compare file sizes on this branch to master',
+107 silly resolved     version: '0.2.0',
+107 silly resolved     homepage: 'https://github.com/rwldrn/grunt-compare-size',
+107 silly resolved     author: { name: 'Rick Waldron', email: 'waldron.rick@gmail.com' },
+107 silly resolved     repository:
+107 silly resolved      { type: 'git',
+107 silly resolved        url: 'git://github.com/rwldrn/grunt-compare-size.git' },
+107 silly resolved     bugs: { url: 'https://github.com/rwldrn/grunt-compare-size/issues' },
+107 silly resolved     licenses: [ [Object] ],
+107 silly resolved     main: 'grunt.js',
+107 silly resolved     bin: { 'grunt-compare-size': 'bin/grunt-compare-size' },
+107 silly resolved     engines: { node: '*' },
+107 silly resolved     scripts: { test: 'grunt test' },
+107 silly resolved     dependencies: { grunt: '~0.3.5' },
+107 silly resolved     devDependencies: { grunt: '~0.3.5' },
+107 silly resolved     keywords: [],
+107 silly resolved     readme: '# grunt-compare-size\n\nCompare file sizes on this branch to master\n\n## Getting Started\n\nInstall this grunt plugin with: `npm install -g grunt-compare-size`\n\nThen add this to your project\'s `grunt.js` gruntfile:\n\n```javascript\ntask.loadNpmTasks(\'grunt-compare-size\');\n```\n\n## Documentation\n\n - `grunt compare_size_add:<label>:...`\n - `grunt compare_size_remove:<label>:...`\n - `grunt compare_size_list`\n - `grunt compare_size_empty`\n\n\n## Testing\n\nRun tests like:\n\n``` bash\n\n# local grunt install\n$ npm install grunt\n\n$ ./node_modules/.bin/grunt test\n\n```\n\n\n\n\n## License\nCopyright (c) 2012 Rick Waldron <waldron.rick@gmail.com>, Corey Frang <gnarf@gnarf.net>, Richard Gibson <richard.gibson@gmail.com>\nLicensed under the MIT license.\n',
+107 silly resolved     _id: 'grunt-compare-size@0.2.0',
+107 silly resolved     _from: 'grunt-compare-size@>=0.1.4' },
+107 silly resolved   { name: 'grunt',
+107 silly resolved     description: 'A task-based command line build tool for JavaScript projects.',
+107 silly resolved     version: '0.3.17',
+107 silly resolved     author: { name: '"Cowboy" Ben Alman', url: 'http://benalman.com/' },
+107 silly resolved     homepage: 'http://github.com/gruntjs/grunt',
+107 silly resolved     repository: { type: 'git', url: 'git://github.com/gruntjs/grunt.git' },
+107 silly resolved     bugs: { url: 'http://github.com/gruntjs/grunt/issues' },
+107 silly resolved     licenses: [ [Object] ],
+107 silly resolved     main: 'lib/grunt',
+107 silly resolved     bin: { grunt: 'bin/grunt' },
+107 silly resolved     scripts: { test: 'grunt test' },
+107 silly resolved     engines: { node: '>= 0.6.0' },
+107 silly resolved     preferGlobal: true,
+107 silly resolved     keywords:
+107 silly resolved      [ 'async',
+107 silly resolved        'cli',
+107 silly resolved        'minify',
+107 silly resolved        'uglify',
+107 silly resolved        'build',
+107 silly resolved        'underscore',
+107 silly resolved        'unit',
+107 silly resolved        'test',
+107 silly resolved        'qunit',
+107 silly resolved        'nodeunit',
+107 silly resolved        'server',
+107 silly resolved        'init',
+107 silly resolved        'scaffold',
+107 silly resolved        'make',
+107 silly resolved        'jake',
+107 silly resolved        'tool' ],
+107 silly resolved     dependencies:
+107 silly resolved      { async: '~0.1.18',
+107 silly resolved        colors: '~0.6.0',
+107 silly resolved        connect: '~2.4.4',
+107 silly resolved        dateformat: '1.0.2-1.2.3',
+107 silly resolved        'glob-whatev': '~0.1.4',
+107 silly resolved        hooker: '~0.2.3',
+107 silly resolved        jshint: '~0.9.1',
+107 silly resolved        nodeunit: '~0.7.4',
+107 silly resolved        nopt: '~1.0.10',
+107 silly resolved        prompt: '~0.1.12',
+107 silly resolved        semver: '~1.0.13',
+107 silly resolved        'uglify-js': '~1.3.3',
+107 silly resolved        underscore: '~1.2.4',
+107 silly resolved        'underscore.string': '~2.1.1',
+107 silly resolved        temporary: '~0.0.4',
+107 silly resolved        'gzip-js': '~0.3.1' },
+107 silly resolved     devDependencies: {},
+107 silly resolved     readme: '# grunt\nGrunt is a task-based command line build tool for JavaScript projects.\n\n_Grunt is currently in beta. While I\'m already using it on multiple projects, it might have a minor issue or two. And things might change before its final release, based on your feedback. Please try it out in a project, and [make suggestions][issues] or [report bugs][issues]!_\n\n## Getting started\nBe sure to read the [getting started guide](/gruntjs/grunt/blob/master/docs/getting_started.md), which is a complete guide to configuring grunt for your project. In addition, check out the [example gruntfiles](/gruntjs/grunt/blob/master/docs/example_gruntfiles.md) which highlight a number of fairly common configurations.\n\n## Built-in tasks\nAs of now, grunt has the following predefined tasks that you can use in your project:\n\n* [concat](/gruntjs/grunt/blob/master/docs/task_concat.md) - Concatenate files.\n* [init](/gruntjs/grunt/blob/master/docs/task_init.md) - Generate project scaffolding from a predefined template.\n* [lint](/gruntjs/grunt/blob/master/docs/task_lint.md) - Validate files with [JSHint][jshint].\n* [min](/gruntjs/grunt/blob/master/docs/task_min.md) - Minify files with [UglifyJS][uglify].\n* [qunit](/gruntjs/grunt/blob/master/docs/task_qunit.md) - Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.\n* [server](/gruntjs/grunt/blob/master/docs/task_server.md) - Start a static web server.\n* test - Run unit tests with [nodeunit][nodeunit].\n* watch - Run predefined tasks whenever watched files change.\n\n_(More documentation forthcoming)_\n\n## Custom tasks\nIn addition to the built-in tasks, you can create your own tasks. Don\'t like a built-in task\'s default behavior? Override it. Check out the [grunt API documentation](/gruntjs/grunt/blob/master/docs/api.md) and the [built-in tasks source](/gruntjs/grunt/blob/master/tasks) for everything you need to know about creating custom tasks.\n\n## Documentation\nTake a look at the [documentation table of contents][docs] for all the things.\n\n## Why does grunt exist?\nDoing all this stuff manually is a total pain, and building all this stuff into a gigantic Makefile / Jakefile / Cakefile / Rakefile / ?akefile that\'s maintained across all my projects was also becoming a total pain. Since I always found myself performing the same tasks over and over again, for every project, it made sense to build a task-based build tool.\n\nBeing primarily a JavaScript developer, I decided to use [Node.js][node] and [npm][npm] because the dependencies I most care about ([JSHint][jshint] and [UglifyJS][uglify]) were already npm modules. That being said, while Node.js was designed to support highly-concurrent asynchronous-IO-driven web servers, it was clearly NOT designed to make command-line build tools. But none of that matters, because grunt works. Just install it and see.\n\n## Installing grunt\n\nGrunt is available as an [npm][npm] module. If you install grunt globally via `npm install -g grunt`, it will be available for use in all of your projects. Once grunt has been installed, you can type `grunt --help` at the command line for more information. And if you want to see grunt "grunt" itself, cd into grunt\'s directory and type `grunt`\n\n_Note: in Windows, you may need to run grunt as `grunt.cmd`. See the [FAQ](/gruntjs/grunt/blob/master/docs/faq.md) for more Windows-specific information._\n\nFor projects already using grunt, you\'re done. Otherwise, if you\'re adding grunt to an existing project or starting from scratch, check out the [getting started guide](/gruntjs/grunt/blob/master/docs/getting_started.md), which is a complete guide to configuring grunt for your project.\n\n## Release History\n_(Until v1.0.0, this will only be updated when major or breaking changes are made)_\n\n* 2012/10/15 - v0.3.17 - Updating JSHint to 0.9.1. Better stack traces. And a few QUnit task fixes.\n* 2012/10/01 - v0.3.16 - Updated URLs to reflect new website and source location. Tweaks to the "jquery" and "commonjs" init templates. Fixed an issue when exiting due to warning or fatal error.\n* 2012/09/04 - v0.3.15 - Fixing a minor problem with renaming multi tasks.\n* 2012/08/29 - v0.3.14 - Grunt plugins lacking package.json keywords should work again.\n* 2012/08/27 - v0.3.13 - Fixed Node.js 0.8.x path.existsSync warning. Updated connect, nodeunit, uglify-js deps to latest. Updated docs. Grunt plugins generated with init:gruntplugin no longer include grunt as a dependency. Added preliminary support for "collection" plugins.\n* 2012/07/30 - v0.3.12 - Fixing a bug in node 0.8.x where utils.spawn would terminate before receiving all child stdout.\n* 2012/06/25 - v0.3.10 - Updating a few dependencies to work with node 0.8.x (0.6.x should still work).\n* 2012/04/18 - v0.3.9 - The min task (via the uglify helper) now appends a semicolon to the end of the generated source.\n* 2012/04/06 - v0.3.8 - Init template tweaks. Anchor links added to docs, along with grunt-internal docs task to generate them. The watch task now supports multiple targets with separate wildcards and tasks. Locally-installed grunt will override global grunt even when run from global "grunt" script.\n* 2012/04/01 - v0.3.7 - Tweaked the behavior of the init template `exports.warnOn` property and added more init template documentation. Fixed duplicate PhantomJS debug output in qunit task. Added useful nodeunit and qunit comments into init template generated test .js files.\n* 2012/03/28 - v0.3.6 - Fixed a `--help` screen issue, a few grunt plugin related issues, and attempted to improve the overall grunt plugin docs and API.\n* 2012/03/27 - v0.3.5 - Fixed a handful of weird Windows issues. Changed default m/d/yyyy dates to yyyy-mm-dd ISO 8601. Fixed some init task bugs, docs errata, and added a lot more content to the init task docs.\n* 2012/03/26 - v0.3.3 - Added a "gruntfile" init template. Create a basic gruntfile in seconds with `grunt init:gruntfile`. A few other minor fixes.\n* 2012/03/25 - v0.3.2 - Init tasks can now specify a file matching wildcard for the initial "files exist" warning. The jQuery init template now has jQuery 1.7.2. Fixed a bug in the `task.expand*` methods.\n* 2012/03/25 - v0.3.1 - Added a few methods. Substantially reworked the init task and templates.\n* 2012/03/23 - v0.3.0 - Too many changes to list. But in brief: completely reorganized the API, removed all globals, added docs and examples for nearly everything, built a preliminary plugin system (that still needs to be tested). PLEASE RTFM OK? THX U.\n* 2012/02/03 - v0.2.14 - Added a server task (which starts a static webserver for your tasks). The qunit task now uses PhantomJS instead of Zombie.js (4768 of 4971 jQuery unit test pass, neat), and supports both file wildcards as well as http:// or https:// urls. (static webserver, anyone?). Grunt should no longer "hang" when done.\n* 2012/01/29 - v0.2.5 - Added a "qunit" task as well as an init "jquery" template (as of now, there are also "node" and "commonjs" init templates).\n* 2012/01/22 - v0.2.1 - Removed handlebars, templates are universally handled by underscore now. Changed init task template tags from <% %> to {% %}. Banners beginning with /*! will no longer be stripped.\n* 2012/01/22 - v0.2.0 - Added "init" task with a sample template, reworked a lot of code. Hopefully it\'s backwards-compatible.\n* 2012/01/11 - v0.1.0 - Initial release.\n\n## License\nCopyright (c) 2012 "Cowboy" Ben Alman  \nLicensed under the MIT license.  \n<https://github.com/gruntjs/grunt/blob/master/LICENSE-MIT>\n\n\n[docs]: /gruntjs/grunt/blob/master/docs/toc.md\n[docs-init]: /gruntjs/grunt/blob/master/docs/task_init.md\n[issues]: /gruntjs/grunt/issues\n\n[node]: http://nodejs.org/\n[npm]: http://npmjs.org/\n[jshint]: http://www.jshint.com/\n[uglify]: https://github.com/mishoo/UglifyJS/\n[nodeunit]: https://github.com/caolan/nodeunit\n[qunit]: http://docs.jquery.com/QUnit\n[phantom]: http://www.phantomjs.org/\n',
+107 silly resolved     _id: 'grunt@0.3.17',
+107 silly resolved     _from: 'grunt@~0.3.9' },
+107 silly resolved   { name: 'grunt-git-authors',
+107 silly resolved     description: 'Generate a list of authors from the git history.',
+107 silly resolved     version: '1.0.0',
+107 silly resolved     homepage: 'https://github.com/scottgonzalez/grunt-git-authors',
+107 silly resolved     author:
+107 silly resolved      { name: 'Scott González',
+107 silly resolved        email: 'scott.gonzalez@gmail.com',
+107 silly resolved        url: 'http://scottgonzalez.com' },
+107 silly resolved     repository:
+107 silly resolved      { type: 'git',
+107 silly resolved        url: 'git://github.com/scottgonzalez/grunt-git-authors.git' },
+107 silly resolved     bugs: { url: 'https://github.com/scottgonzalez/grunt-git-authors/issues' },
+107 silly resolved     licenses: [ [Object] ],
+107 silly resolved     main: 'grunt.js',
+107 silly resolved     engines: { node: '*' },
+107 silly resolved     dependencies: { grunt: '~0.3.11' },
+107 silly resolved     keywords: [ 'gruntplugin' ],
+107 silly resolved     readme: '# grunt-git-authors\n\nA [grunt](https://github.com/cowboy/grunt) plugin for generating a list of authors from the git history.\n\n## API\n\n### Tasks\n\n#### authors\n\nGenerates a list of authors in the form "Name &lt;email>" in order of first contribution.\n\n## License\nCopyright (c) 2012 Scott González\n\nLicensed under the MIT license.\n',
+107 silly resolved     _id: 'grunt-git-authors@1.0.0',
+107 silly resolved     _from: 'grunt-git-authors@1.0.0' },
+107 silly resolved   { name: 'testswarm',
+107 silly resolved     description: 'Nodejs module for interacting with TestSwarm',
+107 silly resolved     version: '0.2.2',
+107 silly resolved     homepage: 'https://github.com/jzaefferer/node-testswarm',
+107 silly resolved     author: { name: 'Jörn Zaefferer', email: 'joern.zaefferer@gmail.com' },
+107 silly resolved     repository:
+107 silly resolved      { type: 'git',
+107 silly resolved        url: 'git://github.com/jzaefferer/node-testswarm.git' },
+107 silly resolved     bugs: { url: 'https://github.com/jzaefferer/node-testswarm/issues' },
+107 silly resolved     licenses: [ [Object] ],
+107 silly resolved     main: 'testswarm',
+107 silly resolved     engines: { node: '*' },
+107 silly resolved     scripts: { test: 'grunt test' },
+107 silly resolved     dependencies: { request: 'latest' },
+107 silly resolved     devDependencies: { grunt: '~0.3.9' },
+107 silly resolved     keywords: [],
+107 silly resolved     readme: '# testswarm\n\nNodejs module for interacting with TestSwarm\n\n## Getting Started\nInstall the module with: `npm install testswarm`.\n\nSee [addjob README](https://github.com/jquery/testswarm/tree/master/scripts/addjob#fields) in the TestSwarm repository for what parameters the addjob API takes.\n\n```javascript\nvar testswarm = require(\'testswarm\');\nvar myCode = "http://localhost/jquery-ui-checkout";\ntestswarm( {\n\t// base url for testswarm server\n\turl: "http://localhost/testswarm/",\n\t// how often to job status (in milliseconds)\n\tpollInterval: 1000,\n\t// time out (in milliseconds)\n\ttimeout: 1000 * 60 * 15, // 15 minutes\n\tdone: function( passed ) {\n\t\tprocess.exit( passed ? 0 : 1 );\n\t}\n}, {\n\tauthUsername: "swarmuser",\n\tauthToken: "yourauthtoken",\n\tjobName: "node-testswarm test job",\n\trunMax: 4,\n\t"runNames[]": ["Accordion", "Autocomplete"],\n\t"runUrls[]": [ myCode + "/tests/unit/accordion/accordion.html", myCode + "/tests/unit/autocomplete/autocomplete.html" ],\n\t"browserSets[]": ["popular"]\n});\n```\n\nFor local testing, make a copy of `test.js`, name it `local-test.js` (in .gitignore) and modify to match your local TestSwarm setup.\n\n## Release History\n* 0.2.0 Global timeout, check all uaRuns, proper URLs back to TestSwarm, some additional error handling\n* 0.1.1 fix engine property in package.json\n* 0.1.0 first release\n\n## License\nCopyright (c) 2012 Jörn Zaefferer\nLicensed under the MIT license.\n',
+107 silly resolved     _id: 'testswarm@0.2.2',
+107 silly resolved     _from: 'testswarm@0.2.2' } ]
+108 info install grunt-compare-size@0.2.0 into /mnt/share/source/bseth99/jquery-color
+109 info install grunt@0.3.17 into /mnt/share/source/bseth99/jquery-color
+110 info install grunt-git-authors@1.0.0 into /mnt/share/source/bseth99/jquery-color
+111 info install testswarm@0.2.2 into /mnt/share/source/bseth99/jquery-color
+112 info installOne grunt-compare-size@0.2.0
+113 info installOne grunt@0.3.17
+114 info installOne grunt-git-authors@1.0.0
+115 info installOne testswarm@0.2.2
+116 verbose from cache /home/vmuser/.npm/grunt-compare-size/0.2.0/package/package.json
+117 verbose from cache /home/vmuser/.npm/grunt/0.3.17/package/package.json
+118 verbose from cache /home/vmuser/.npm/grunt-git-authors/1.0.0/package/package.json
+119 verbose from cache /home/vmuser/.npm/testswarm/0.2.2/package/package.json
+120 info /mnt/share/source/bseth99/jquery-color/node_modules/grunt-compare-size unbuild
+121 verbose read json /mnt/share/source/bseth99/jquery-color/node_modules/grunt-compare-size/package.json
+122 info /mnt/share/source/bseth99/jquery-color/node_modules/grunt unbuild
+123 verbose read json /mnt/share/source/bseth99/jquery-color/node_modules/grunt/package.json
+124 info /mnt/share/source/bseth99/jquery-color/node_modules/grunt-git-authors unbuild
+125 verbose read json /mnt/share/source/bseth99/jquery-color/node_modules/grunt-git-authors/package.json
+126 info /mnt/share/source/bseth99/jquery-color/node_modules/testswarm unbuild
+127 verbose read json /mnt/share/source/bseth99/jquery-color/node_modules/testswarm/package.json
+128 verbose tar unpack /home/vmuser/.npm/grunt-compare-size/0.2.0/package.tgz
+129 verbose tar unpack /home/vmuser/.npm/grunt/0.3.17/package.tgz
+130 verbose tar unpack /home/vmuser/.npm/grunt-git-authors/1.0.0/package.tgz
+131 verbose tar unpack /home/vmuser/.npm/testswarm/0.2.2/package.tgz
+132 silly lockFile f3219637--node-modules-grunt-compare-size /mnt/share/source/bseth99/jquery-color/node_modules/grunt-compare-size
+133 verbose lock /mnt/share/source/bseth99/jquery-color/node_modules/grunt-compare-size /home/vmuser/.npm/f3219637--node-modules-grunt-compare-size.lock
+134 silly lockFile a84bc671--jquery-color-node-modules-grunt /mnt/share/source/bseth99/jquery-color/node_modules/grunt
+135 verbose lock /mnt/share/source/bseth99/jquery-color/node_modules/grunt /home/vmuser/.npm/a84bc671--jquery-color-node-modules-grunt.lock
+136 silly lockFile 6ceba306-r-node-modules-grunt-git-authors /mnt/share/source/bseth99/jquery-color/node_modules/grunt-git-authors
+137 verbose lock /mnt/share/source/bseth99/jquery-color/node_modules/grunt-git-authors /home/vmuser/.npm/6ceba306-r-node-modules-grunt-git-authors.lock
+138 silly lockFile 58cc48f5-ery-color-node-modules-testswarm /mnt/share/source/bseth99/jquery-color/node_modules/testswarm
+139 verbose lock /mnt/share/source/bseth99/jquery-color/node_modules/testswarm /home/vmuser/.npm/58cc48f5-ery-color-node-modules-testswarm.lock
+140 silly gunzTarPerm modes [ '777', '666' ]
+141 silly gunzTarPerm modes [ '777', '666' ]
+142 silly gunzTarPerm modes [ '777', '666' ]
+143 silly gunzTarPerm modes [ '777', '666' ]
+144 silly gunzTarPerm extractEntry package.json
+145 silly gunzTarPerm extractEntry package.json
+146 silly gunzTarPerm extractEntry package.json
+147 silly gunzTarPerm extractEntry package.json
+148 silly gunzTarPerm extractEntry .npmignore
+149 silly gunzTarPerm extractEntry README.md
+150 silly gunzTarPerm extractEntry .npmignore
+151 silly gunzTarPerm extractEntry README.md
+152 silly gunzTarPerm extractEntry .npmignore
+153 silly gunzTarPerm extractEntry README.md
+154 silly gunzTarPerm extractEntry grunt.js
+155 silly gunzTarPerm extractEntry .npmignore
+156 silly gunzTarPerm extractEntry README.md
+157 silly gunzTarPerm extractEntry grunt.js
+158 silly gunzTarPerm extractEntry dist/source.js
+159 silly gunzTarPerm extractEntry grunt.js
+160 silly gunzTarPerm extractEntry tasks/git-authors.js
+161 silly gunzTarPerm extractEntry bin/grunt
+162 silly gunzTarPerm extractEntry tasks/init.js
+163 silly gunzTarPerm extractEntry local-test.js
+164 silly gunzTarPerm extractEntry test.js
+165 silly gunzTarPerm extractEntry dist/source.min.js
+166 silly gunzTarPerm extractEntry dist/.sizecache.json
+167 silly gunzTarPerm extractEntry LICENSE-MIT
+168 silly gunzTarPerm extractEntry tasks/test.js
+169 silly gunzTarPerm extractEntry tasks/lint.js
+170 silly gunzTarPerm extractEntry testswarm.js
+171 silly gunzTarPerm extractEntry grunt.js
+172 silly gunzTarPerm extractEntry tasks/server.js
+173 silly gunzTarPerm extractEntry tasks/watch.js
+174 silly gunzTarPerm extractEntry LICENSE-MIT
+175 silly gunzTarPerm extractEntry tasks/min.js
+176 silly gunzTarPerm extractEntry tasks/qunit.js
+177 silly gunzTarPerm extractEntry tasks/misc.js
+178 silly gunzTarPerm extractEntry tasks/compare-size.js
+179 silly gunzTarPerm extractEntry bin/grunt-compare-size
+180 silly gunzTarPerm extractEntry tasks/concat.js
+181 silly gunzTarPerm extractEntry tasks/qunit/phantom.js
+182 silly gunzTarPerm extractEntry tasks/qunit/qunit.js
+183 silly gunzTarPerm extractEntry tasks/qunit/phantom.json
+184 silly gunzTarPerm extractEntry tasks/init/gruntplugin.js
+185 silly gunzTarPerm extractEntry tasks/init/gruntfile.js
+186 silly gunzTarPerm extractEntry tasks/init/node.js
+187 silly gunzTarPerm extractEntry tasks/init/jquery.js
+188 silly gunzTarPerm extractEntry tasks/init/commonjs.js
+189 silly gunzTarPerm extractEntry test/compare-size_test.js
+190 silly gunzTarPerm extractEntry harness/harness.js
+191 silly gunzTarPerm extractEntry LICENSE-MIT
+192 silly gunzTarPerm extractEntry tasks/init/gruntplugin/rename.json
+193 silly gunzTarPerm extractEntry tasks/init/gruntplugin/root/.npmignore
+194 silly gunzTarPerm extractEntry tasks/init/gruntplugin/root/README.md
+195 silly gunzTarPerm extractEntry tasks/init/gruntplugin/root/grunt.js
+196 verbose read json /mnt/share/source/bseth99/jquery-color/node_modules/grunt-git-authors/package.json
+197 silly gunzTarPerm extractEntry tasks/init/gruntplugin/root/tasks/name.js
+198 silly gunzTarPerm extractEntry tasks/init/gruntplugin/root/bin/name
+199 silly gunzTarPerm extractEntry tasks/init/gruntplugin/root/test/name_test.js
+200 silly lockFile 6ceba306-r-node-modules-grunt-git-authors /mnt/share/source/bseth99/jquery-color/node_modules/grunt-git-authors
+201 silly gunzTarPerm extractEntry tasks/init/node/rename.json
+202 silly gunzTarPerm extractEntry tasks/init/node/root/.npmignore
+203 silly gunzTarPerm extractEntry tasks/init/node/root/README.md
+204 silly gunzTarPerm extractEntry tasks/init/node/root/grunt.js
+205 silly gunzTarPerm extractEntry tasks/init/node/root/test/name_test.js
+206 info preinstall grunt-git-authors@1.0.0
+207 silly gunzTarPerm extractEntry tasks/init/node/root/lib/name.js
+208 silly gunzTarPerm extractEntry tasks/init/jquery/rename.json
+209 verbose from cache /mnt/share/source/bseth99/jquery-color/node_modules/grunt-git-authors/package.json
+210 silly gunzTarPerm extractEntry tasks/init/jquery/root/README.md
+211 silly gunzTarPerm extractEntry tasks/init/jquery/root/grunt.js
+212 silly gunzTarPerm extractEntry tasks/init/jquery/root/libs/jquery-loader.js
+213 silly gunzTarPerm extractEntry tasks/init/jquery/root/libs/jquery/jquery.js
+214 verbose read json /mnt/share/source/bseth99/jquery-color/node_modules/testswarm/package.json
+215 silly gunzTarPerm extractEntry tasks/init/jquery/root/libs/qunit/qunit.js
+216 silly lockFile 58cc48f5-ery-color-node-modules-testswarm /mnt/share/source/bseth99/jquery-color/node_modules/testswarm
+217 silly gunzTarPerm extractEntry tasks/init/jquery/root/libs/qunit/qunit.css
+218 silly gunzTarPerm extractEntry tasks/init/jquery/root/test/name_test.js
+219 silly gunzTarPerm extractEntry tasks/init/jquery/root/test/name.html
+220 silly gunzTarPerm extractEntry tasks/init/jquery/root/CONTRIBUTING.md
+221 silly gunzTarPerm extractEntry tasks/init/jquery/root/src/name.js
+222 info preinstall testswarm@0.2.2
+223 silly gunzTarPerm extractEntry tasks/init/misc/placeholder
+224 silly gunzTarPerm extractEntry tasks/init/gruntfile/root/grunt.js
+225 verbose from cache /mnt/share/source/bseth99/jquery-color/node_modules/testswarm/package.json
+226 silly gunzTarPerm extractEntry tasks/init/licenses/LICENSE-GPL
+227 verbose readDependencies using package.json deps
+228 verbose from cache /mnt/share/source/bseth99/jquery-color/node_modules/grunt-git-authors/package.json
+229 verbose readDependencies using package.json deps
+230 verbose from cache /mnt/share/source/bseth99/jquery-color/node_modules/testswarm/package.json
+231 silly gunzTarPerm extractEntry tasks/init/licenses/LICENSE-MIT
+232 silly gunzTarPerm extractEntry tasks/init/commonjs/rename.json
+233 silly gunzTarPerm extractEntry tasks/init/commonjs/root/.npmignore
+234 silly gunzTarPerm extractEntry tasks/init/commonjs/root/README.md
+235 silly gunzTarPerm extractEntry tasks/init/commonjs/root/grunt.js
+236 silly gunzTarPerm extractEntry tasks/init/commonjs/root/test/name_test.js
+237 silly gunzTarPerm extractEntry tasks/init/commonjs/root/lib/name.js
+238 silly gunzTarPerm extractEntry docs/README.md
+239 silly gunzTarPerm extractEntry docs/contributing.md
+240 silly gunzTarPerm extractEntry docs/api_fail.md
+241 silly gunzTarPerm extractEntry docs/task_server.md
+242 silly gunzTarPerm extractEntry docs/task_lint.md
+243 silly gunzTarPerm extractEntry docs/task_min.md
+244 silly gunzTarPerm extractEntry docs/api_task.md
+245 silly gunzTarPerm extractEntry docs/helpers_directives.md
+246 silly gunzTarPerm extractEntry docs/toc.md
+247 silly gunzTarPerm extractEntry docs/api_template.md
+248 silly gunzTarPerm extractEntry docs/getting_started.md
+249 silly gunzTarPerm extractEntry docs/api_log.md
+250 silly gunzTarPerm extractEntry docs/plugins.md
+251 silly gunzTarPerm extractEntry docs/faq.md
+252 silly gunzTarPerm extractEntry docs/api_file.md
+253 silly gunzTarPerm extractEntry docs/example_gruntfiles.md
+254 silly gunzTarPerm extractEntry docs/types_of_tasks.md
+255 silly gunzTarPerm extractEntry docs/task_concat.md
+256 silly gunzTarPerm extractEntry docs/task_qunit.md
+257 silly gunzTarPerm extractEntry docs/exit_codes.md
+258 silly gunzTarPerm extractEntry docs/api_utils.md
+259 silly gunzTarPerm extractEntry docs/api.md
+260 silly gunzTarPerm extractEntry docs/api_config.md
+261 silly gunzTarPerm extractEntry docs/task_init.md
+262 silly gunzTarPerm extractEntry test/grunt/template_test.js
+263 silly gunzTarPerm extractEntry test/grunt/utils_test.js
+264 silly gunzTarPerm extractEntry test/grunt/file_test.js
+265 silly gunzTarPerm extractEntry test/tasks/misc_test.js
+266 silly gunzTarPerm extractEntry test/tasks/concat_test.js
+267 verbose read json /mnt/share/source/bseth99/jquery-color/node_modules/grunt-compare-size/package.json
+268 silly gunzTarPerm extractEntry test/tasks/lint_test.js
+269 silly gunzTarPerm extractEntry test/tasks/init_test.js
+270 silly gunzTarPerm extractEntry test/fixtures/banner2.js
+271 silly gunzTarPerm extractEntry test/fixtures/b.js
+272 silly gunzTarPerm extractEntry test/fixtures/banner3.js
+273 silly gunzTarPerm extractEntry test/fixtures/banner.js
+274 silly gunzTarPerm extractEntry test/fixtures/a.js
+275 silly gunzTarPerm extractEntry test/fixtures/lintTest.js
+276 silly gunzTarPerm extractEntry test/fixtures/test.json
+277 silly lockFile f3219637--node-modules-grunt-compare-size /mnt/share/source/bseth99/jquery-color/node_modules/grunt-compare-size
+278 info preinstall grunt-compare-size@0.2.0
+279 verbose from cache /mnt/share/source/bseth99/jquery-color/node_modules/grunt-compare-size/package.json
+280 silly gunzTarPerm extractEntry test/fixtures/template.txt
+281 silly gunzTarPerm extractEntry test/fixtures/octocat.png
+282 silly gunzTarPerm extractEntry test/util/task_test.js
+283 silly gunzTarPerm extractEntry test/util/namespace_test.js
+284 silly gunzTarPerm extractEntry dev/init.exp
+285 silly gunzTarPerm extractEntry LICENSE-MIT
+286 silly gunzTarPerm extractEntry lib/grunt.js
+287 verbose readDependencies using package.json deps
+288 silly resolved []
+289 verbose about to build /mnt/share/source/bseth99/jquery-color/node_modules/grunt-git-authors
+290 info build /mnt/share/source/bseth99/jquery-color/node_modules/grunt-git-authors
+291 verbose from cache /mnt/share/source/bseth99/jquery-color/node_modules/grunt-git-authors/package.json
+292 verbose readDependencies using package.json deps
+293 verbose readDependencies using package.json deps
+294 verbose from cache /mnt/share/source/bseth99/jquery-color/node_modules/grunt-compare-size/package.json
+295 verbose linkStuff [ false,
+295 verbose linkStuff   false,
+295 verbose linkStuff   false,
+295 verbose linkStuff   '/mnt/share/source/bseth99/jquery-color/node_modules' ]
+296 info linkStuff grunt-git-authors@1.0.0
+297 verbose linkBins grunt-git-authors@1.0.0
+298 verbose linkMans grunt-git-authors@1.0.0
+299 verbose rebuildBundles grunt-git-authors@1.0.0
+300 verbose cache add [ 'request@latest', null ]
+301 silly cache add name=undefined spec="request@latest" args=["request@latest",null]
+302 verbose parsed url { pathname: 'request@latest',
+302 verbose parsed url   path: 'request@latest',
+302 verbose parsed url   href: 'request@latest' }
+303 silly cache add name="request" spec="latest" args=["request","latest"]
+304 verbose parsed url { pathname: 'latest', path: 'latest', href: 'latest' }
+305 verbose addNamed [ 'request', 'latest' ]
+306 verbose addNamed [ null, null ]
+307 silly lockFile 5da6dfb1-request-latest request@latest
+308 verbose lock request@latest /home/vmuser/.npm/5da6dfb1-request-latest.lock
+309 info install grunt-git-authors@1.0.0
+310 verbose readDependencies using package.json deps
+311 silly resolved []
+312 verbose about to build /mnt/share/source/bseth99/jquery-color/node_modules/grunt-compare-size
+313 info build /mnt/share/source/bseth99/jquery-color/node_modules/grunt-compare-size
+314 verbose from cache /mnt/share/source/bseth99/jquery-color/node_modules/grunt-compare-size/package.json
+315 info addNameTag [ 'request', 'latest' ]
+316 info postinstall grunt-git-authors@1.0.0
+317 verbose linkStuff [ false,
+317 verbose linkStuff   false,
+317 verbose linkStuff   false,
+317 verbose linkStuff   '/mnt/share/source/bseth99/jquery-color/node_modules' ]
+318 info linkStuff grunt-compare-size@0.2.0
+319 verbose linkBins grunt-compare-size@0.2.0
+320 verbose link bins [ { 'grunt-compare-size': 'bin/grunt-compare-size' },
+320 verbose link bins   '/mnt/share/source/bseth99/jquery-color/node_modules/.bin',
+320 verbose link bins   false ]
+321 verbose linkMans grunt-compare-size@0.2.0
+322 verbose rebuildBundles grunt-compare-size@0.2.0
+323 silly gunzTarPerm extractEntry lib/grunt/option.js
+324 silly gunzTarPerm extractEntry lib/grunt/utils.js
+325 silly gunzTarPerm extractEntry lib/grunt/file.js
+326 silly gunzTarPerm extractEntry lib/grunt/config.js
+327 silly gunzTarPerm extractEntry lib/grunt/template.js
+328 info /mnt/share/source/bseth99/jquery-color/node_modules/grunt-compare-size unbuild
+329 verbose from cache /mnt/share/source/bseth99/jquery-color/node_modules/grunt-compare-size/package.json
+330 silly gunzTarPerm extractEntry lib/grunt/log.js
+331 verbose url raw request
+332 verbose url resolving [ 'https://registry.npmjs.org/', './request' ]
+333 verbose url resolved https://registry.npmjs.org/request
+334 info retry registry request attempt 1 at 08:13:02
+335 verbose etag "EA6HO4ARNQMO1OQMLYGRA6WLG"
+336 http GET https://registry.npmjs.org/request
+337 silly gunzTarPerm extractEntry lib/grunt/help.js
+338 silly gunzTarPerm extractEntry lib/grunt/fail.js
+339 info preuninstall grunt-compare-size@0.2.0
+340 silly gunzTarPerm extractEntry lib/grunt/cli.js
+341 silly gunzTarPerm extractEntry lib/grunt/task.js
+342 silly gunzTarPerm extractEntry lib/util/namespace.js
+343 info uninstall grunt-compare-size@0.2.0
+344 silly gunzTarPerm extractEntry lib/util/findup.js
+345 silly gunzTarPerm extractEntry lib/util/task.js
+346 verbose true,/mnt/share/source/bseth99/jquery-color/node_modules,/mnt/share/source/bseth99/jquery-color/node_modules unbuild grunt-compare-size@0.2.0
+347 verbose /mnt/share/source/bseth99/jquery-color/node_modules/.bin,[object Object] binRoot
+348 info postuninstall grunt-compare-size@0.2.0
+349 error Error: EPERM, symlink '../grunt-compare-size/bin/grunt-compare-size'
+349 error  { [Error: EPERM, symlink '../grunt-compare-size/bin/grunt-compare-size']
+349 error   errno: 50,
+349 error   code: 'EPERM',
+349 error   path: '../grunt-compare-size/bin/grunt-compare-size' }
+350 error Please try running this command again as root/Administrator.
+351 error System Linux 2.6.32-5-686
+352 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install"
+353 error cwd /mnt/share/source/bseth99/jquery-color
+354 error node -v v0.8.8
+355 error npm -v 1.1.59
+356 error path ../grunt-compare-size/bin/grunt-compare-size
+357 error code EPERM
+358 error errno 50
+359 error stack Error: EPERM, symlink '../grunt-compare-size/bin/grunt-compare-size'
+360 verbose exit [ 50, true ]
