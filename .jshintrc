@@ -4,13 +4,11 @@
 	"eqnull": true,
 	"eqeqeq": true,
 	"expr": true,
-	"latedef": true,
+	"jquery": true,
 	"noarg": true,
 	"onevar": true,
-	"smarttabs": true,
+	"quotmark": "double",
 	"trailing": true,
 	"undef": true,
-	"globals": {
-		"jQuery": true
-	}
+	"unused": true
 }

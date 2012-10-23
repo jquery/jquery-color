@@ -572,7 +572,7 @@ test( "animated", function() {
 			alpha: 1
 		});
 
-		el.css('color', 'white').animate({ color: "#000000" }, 200).stop( true );
+		el.css( "color", "white" ).animate({ color: "#000000" }, 200).stop( true );
 		testParts( jQuery.Color( el, "color" ), {
 			prefix: "Immediately Stopped.. Animated Color didn't change",
 			red: 255,
@@ -600,7 +600,7 @@ test( "animate borderColor", function() {
 	var el = jQuery( "<div style='border: 1px solid blue;'></div>" ).appendTo( "body" );
 	stop();
 	el.animate({ borderColor: "#00f" }, {
-		step: function( value, tween ) {
+		step: function() {
 			testParts( jQuery.Color( el, "borderTopColor" ), {
 				red: 0,
 				green: 0,
