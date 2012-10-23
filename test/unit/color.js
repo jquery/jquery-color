@@ -480,7 +480,9 @@ parseTest( jQuery.Color({ saturation: 0, alpha: 0 }), {
 
 
 test("HSLA Conversions", function() {
-	expect(9);
+	expect(11);
+	equal( jQuery.Color( "#000" ).toHslaString(), "hsl(0,0%,0%)", "HSLA value from #000");
+	equal( jQuery.Color( "#fff" ).toHslaString(), "hsl(0,0%,100%)", "HSLA value from #fff");
 	equal( jQuery.Color( "#f00" ).toHslaString(), "hsl(0,100%,50%)", "HSLA value from #f00");
 	equal( jQuery.Color( "#ff0" ).toHslaString(), "hsl(60,100%,50%)", "HSLA value from #ff0");
 	equal( jQuery.Color( "#0f0" ).toHslaString(), "hsl(120,100%,50%)", "HSLA value from #0f0");
