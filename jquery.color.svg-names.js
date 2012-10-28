@@ -142,5 +142,5 @@ jQuery.extend( jQuery.Color.names, {
 	violet: "#ee82ee",
 	wheat: "#f5deb3",
 	whitesmoke: "#f5f5f5",
-	yellowgreen: "#9acd32",
+	yellowgreen: "#9acd32"
 });
