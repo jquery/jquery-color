@@ -1,6 +1,8 @@
 /*jshint node: true */
 module.exports = function( grunt ) {
 
+"use strict";
+
 var max = [ "dist/jquery.color.js", "dist/jquery.color.svg-names.js" ],
 	min = [ "dist/jquery.color.min.js", "dist/jquery.color.svg-names.min.js", "dist/jquery.color.plus-names.min.js"],
 	combined = "dist/jquery.color.plus-names.js",
@@ -25,7 +27,8 @@ grunt.initConfig({
 	},
 
 	lint: {
-		src: "jquery.color.js",
+		src: [ "jquery.color.js", "jquery.color.svg-names.js" ],
+		grunt: "grunt.js",
 		test: "test/unit/**"
 	},
 
@@ -47,6 +50,7 @@ grunt.initConfig({
 
 		return {
 			src: parserc(),
+			grunt: parserc(),
 			test: parserc( "test/unit/" )
 		};
 	})(),
@@ -60,7 +64,7 @@ grunt.initConfig({
 	min: minify,
 
 	watch: {
-		files: [ "<config:lint.src>", "<config:lint.test>" ],
+		files: [ "<config:lint.src>", "<config:lint.test>", "<config:lint.grunt>" ],
 		tasks: "default"
 	},
 
@@ -138,7 +142,7 @@ grunt.registerTask( "max", function() {
 grunt.registerTask( "testswarm", function( commit, configFile ) {
 	var testswarm = require( "testswarm" ),
 		config = grunt.file.readJSON( configFile ).jquerycolor;
-	config.jobName = 'jQuery Color commit #<a href="https://github.com/jquery/jquery-color/commit/' + commit + '">' + commit.substr( 0, 10 ) + '</a>';
+	config.jobName = "jQuery Color commit #<a href='https://github.com/jquery/jquery-color/commit/" + commit + "'>" + commit.substr( 0, 10 ) + "</a>";
 	config["runNames[]"] = "jQuery color";
 	config["runUrls[]"] = config.testUrl + commit + "/test/index.html";
 	config["browserSets[]"] = ["popular"];
