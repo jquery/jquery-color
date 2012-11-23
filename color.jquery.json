@@ -1,0 +1,30 @@
+{
+	"name": "color",
+	"title": "jQuery Color",
+	"description": "jQuery plugin for color manipulation and animation support.",
+	"keywords": [
+		"color",
+		"animation"
+	],
+	"version": "2.1.1",
+	"author": {
+		"name": "jQuery Foundation and other contributors",
+		"url": "https://github.com/jquery/jquery-color/blob/2.1.1/AUTHORS.txt"
+	},
+	"maintainers": [
+		{
+			"name": "Corey Frang",
+			"email": "gnarf37@gmail.com",
+			"url": "http://gnarf.net"
+		}
+	],
+	"licenses": [
+		"https://github.com/jquery/jquery-color/blob/2.1.1/MIT-LICENSE.txt"
+	],
+	"bugs": "https://github.com/jquery/jquery-color/issues",
+	"homepage": "https://github.com/jquery/jquery-color",
+	"docs": "https://github.com/jquery/jquery-color",
+	"dependencies": {
+		"jquery": ">=1.5"
+	}
+}
