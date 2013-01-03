@@ -624,6 +624,16 @@ test( "Setting CSS to empty string / inherit", function() {
 	ok( el[0].style.color === "" || el[0].style.color === "inherit", "Setting CSS to inherit didn't throw error" );
 });
 
+test( "Setting CSS to transparent", function() {
+	expect( 1 );
+
+	var parentEl = jQuery("<div></div>").appendTo("body").css({ backgroundColor: "blue" }),
+		el = jQuery("<div></div>").appendTo( parentEl );
+
+	el.css( "backgroundColor", "transparent" );
+	equal( jQuery.Color( el[ 0 ].style.backgroundColor ).alpha(), 0, "CSS was set to transparent" );
+});
+
 test( "jQuery.Color.hook() - Create new hooks for color properties", 2, function() {
 
 	// these shouldn't be there, but just in case....
