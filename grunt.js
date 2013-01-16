@@ -174,6 +174,7 @@ grunt.registerTask( "manifest", function() {
 		bugs: pkg.bugs,
 		homepage: pkg.homepage,
 		docs: pkg.homepage,
+		download: "http://code.jquery.com/#color",
 		dependencies: {
 			jquery: ">=1.5"
 		}
