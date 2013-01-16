@@ -168,7 +168,8 @@ grunt.registerTask( "manifest", function() {
 		},
 		maintainers: pkg.maintainers,
 		licenses: pkg.licenses.map(function( license ) {
-			return license.url.replace( "master", pkg.version );
+			license.url = license.url.replace( "master", pkg.version );
+			return license;
 		}),
 		bugs: pkg.bugs,
 		homepage: pkg.homepage,
