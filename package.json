@@ -28,8 +28,8 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "grunt": "~0.3.17",
-    "grunt-compare-size": ">=0.1.4",
+    "grunt": "0.3.17",
+    "grunt-compare-size": "0.1.4",
     "grunt-git-authors": "1.0.0",
     "testswarm": "0.2.2"
   },
