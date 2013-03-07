@@ -1,17 +1,17 @@
-# jQuery.Color()
+[![Build Status](http://swarm.jquery.org:8080/job/jQuery%20Color/badge/icon)](http://swarm.jquery.org:8080/job/jQuery%20Color/)
 
-Using jQuery Color in Production
---------------------------------
+# jQuery Color
+
+## Using jQuery Color in Production
 We release jQuery Color by itself, or in a bundle.  The extended names can be inclided as a jQuery Color plugin, or you can download the version of jQuery Color that includes the names.  Choose your build from the following list:
 
-Current Version: 2.1.1
+**Current version: 2.1.1**
 
 * jQuery Color [Compressed](http://code.jquery.com/color/jquery.color-2.1.1.min.js) [Uncompressed](http://code.jquery.com/color/jquery.color-2.1.1.js)
 * jQuery Color Extended Names [Compressed](http://code.jquery.com/color/jquery.color.svg-names-2.1.1.min.js) [Uncompressed](http://code.jquery.com/color/jquery.color.svg-names-2.1.1.js)
 * jQuery Color & Extended Names(previous two combined) [Compressed](http://code.jquery.com/color/jquery.color.plus-names-2.1.1.min.js) [Uncompressed](http://code.jquery.com/color/jquery.color.plus-names-2.1.1.js)
 
-How to build and test jQuery Color
-----------------------------------
+## How to build and test jQuery Color
 
 First, get a copy of the git repo by running:
 
@@ -45,22 +45,20 @@ You can also run the tests in a browser by navigating to the `test/` directory, 
 
 This plugins installs a [`cssHook`](http://api.jquery.com/jQuery.cssHooks/) which allows jQuery's [`.animate()`](http://api.jquery.com/animate) to animate between two colors.
 
-Supported Properties
--------
+## Supported properties
 `backgroundColor`, `borderBottomColor`, `borderLeftColor`, `borderRightColor`, `borderTopColor`, `color`, `columnRuleColor`, `outlineColor`, `textDecorationColor`, `textEmphasisColor`
 
-Example Use
--------
+## Example use
 
 ```html
 <!DOCTYPE html>
 <html>
 <head>
-  <style>
+<style>
 div {
-background-color:#bada55;
-width:100px;
-border:1px solid green;
+  background-color: #bada55;
+  width: 100px;
+  border: 1px solid green;
 }
 </style>
 <script src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
@@ -69,7 +67,7 @@ border:1px solid green;
 <body>
 <button id="go">Simple</button>
 <button id="sat">Desaturate</button>
-  <div id="block">Hello!</div>
+<div id="block">Hello!</div>
 <script>
 jQuery("#go").click(function(){
   jQuery("#block").animate({
@@ -89,8 +87,7 @@ jQuery("#sat").click(function(){
 ## Supporting other properties
 The `jQuery.Color.hook()` function can be called to support additional css properties as colors, and allow them to be animated.
 
-Example Use
------------
+## Example use
 ```javascript
 // we want to animate SVG fill and stroke properties
 jQuery.Color.hook( "fill stroke" );
@@ -156,7 +153,7 @@ hsla({ hue: hue, saturation: saturation, lightness: lightness, alpha: alpha )
 hsla([ hue, saturation, lightness, alpha ])
 ```
 
-### String Methods:
+### String methods
 
 ```javascript
 toRgbaString() // returns a css string "rgba(255, 255, 255, 0.4)"
@@ -180,13 +177,13 @@ is( othercolor ) // Will determine if this color is equal to all defined propert
 * Internally, RGBA values are stored as `color._rgba[0] = red, color._rgba[1] = green, color._rgba[2] = blue, color._rgba[3] = alpha`.  However, please remember there are nice convenient setters and getters for each of these properties.
 * `undefined`/`null` values for colors indicate non-existence. This signals the `transition()` function to keep whatever value was set in the other end of the transition. For example, animating to `jQuery.Color([ 255, null, null, 1 ])` would only animate the red and alpha values of the color.
 
-###`jQuery.Color.names`
+### `jQuery.Color.names`
 
 A list of named colors is stored on the `jQuery.Color.names` object.  The value they contain should be parseable by `jQuery.Color()`. All names on this object should be lowercased.  I.E. `jQuery.Color("Red")` is the same as doing `jQuery.Color( jQuery.Color.names["red"] );`
 
 There is also a named color `"_default"` which by default is white, this is used for situations where a color is unparseable.
 
-###`"transparent"`
+### `"transparent"`
 
 A special note about the color `"transparent"` - It returns `null` for red green and blue unless you specify colors for these values.
 
@@ -196,13 +193,13 @@ jQuery.Color("#abcdef").transition("transparent", 0.5)
 
 Animating to or from the value `"transparent"` will still use "#abcdef" for red green and blue.
 
-##HSLA Support
+## HSLA Support
 
 If a color is created using any of the HSLA functions or parsers, it will keep the `_rgba` array up to date as well as having a `_hsla` array.  Once an RGBA operation is performed on HSLA, however, the `_hsla` cache is removed and all operations will continue based off of rgb (unless you go back into HSLA). The `._hsla` array follows the same format as `._rbga`, `[hue, saturation, lightness, alpha ]`.  If you need to build an HSLA color from an HSLA array, `jQuery.Color().hsla( array )` works for that purpose.
 
 **Colors with 0 saturation, or 100%/0% lightness will be stored with a hue of 0**
 
-##Extensibility
+## Extensibility
 
 It is possible for you to add your own functions to the color object.  For instance, this function will tell you if its better to use black or white on a given background color.
 
