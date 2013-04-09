@@ -11,8 +11,8 @@
 	"smarttabs": true,
 	"trailing": true,
 	"undef": true,
-	"unused": true
+	"unused": true,
 
 	"browser": true,
-	"jquery": true,
+	"jquery": true
 }
