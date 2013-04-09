@@ -660,4 +660,4 @@ colors = jQuery.Color.names = {
 	_default: "#ffffff"
 };
 
-})( jQuery );
+}( jQuery ));

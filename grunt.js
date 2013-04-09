@@ -53,7 +53,7 @@ grunt.initConfig({
 			grunt: parserc(),
 			test: parserc( "test/unit/" )
 		};
-	})(),
+	}()),
 
 	qunit: {
 		files: "test/index.html"

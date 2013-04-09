@@ -1,14 +1,18 @@
 {
-	"browser": true,
+	"boss": true,
 	"curly": true,
-	"eqnull": true,
 	"eqeqeq": true,
+	"eqnull": true,
 	"expr": true,
-	"jquery": true,
+	"immed": true,
 	"noarg": true,
 	"onevar": true,
 	"quotmark": "double",
+	"smarttabs": true,
 	"trailing": true,
 	"undef": true,
 	"unused": true
+
+	"browser": true,
+	"jquery": true,
 }
