@@ -5,11 +5,11 @@
 ## Using jQuery Color in Production
 We release jQuery Color by itself, or in a bundle.  The extended names can be inclided as a jQuery Color plugin, or you can download the version of jQuery Color that includes the names.  Choose your build from the following list:
 
-**Current version: 2.1.1**
+**Current version: 2.1.2**
 
-* jQuery Color [Compressed](http://code.jquery.com/color/jquery.color-2.1.1.min.js) [Uncompressed](http://code.jquery.com/color/jquery.color-2.1.1.js)
-* jQuery Color Extended Names [Compressed](http://code.jquery.com/color/jquery.color.svg-names-2.1.1.min.js) [Uncompressed](http://code.jquery.com/color/jquery.color.svg-names-2.1.1.js)
-* jQuery Color & Extended Names(previous two combined) [Compressed](http://code.jquery.com/color/jquery.color.plus-names-2.1.1.min.js) [Uncompressed](http://code.jquery.com/color/jquery.color.plus-names-2.1.1.js)
+* jQuery Color [Compressed](http://code.jquery.com/color/jquery.color-2.1.2.min.js) [Uncompressed](http://code.jquery.com/color/jquery.color-2.1.2.js)
+* jQuery Color Extended Names [Compressed](http://code.jquery.com/color/jquery.color.svg-names-2.1.2.min.js) [Uncompressed](http://code.jquery.com/color/jquery.color.svg-names-2.1.2.js)
+* jQuery Color & Extended Names(previous two combined) [Compressed](http://code.jquery.com/color/jquery.color.plus-names-2.1.2.min.js) [Uncompressed](http://code.jquery.com/color/jquery.color.plus-names-2.1.2.js)
 
 ## How to build and test jQuery Color
 
