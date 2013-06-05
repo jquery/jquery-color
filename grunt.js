@@ -141,17 +141,33 @@ grunt.registerTask( "max", function() {
 
 grunt.registerTask( "testswarm", function( commit, configFile ) {
 	var testswarm = require( "testswarm" ),
-		config = grunt.file.readJSON( configFile ).jquerycolor;
-	config.jobName = "jQuery Color commit #<a href='https://github.com/jquery/jquery-color/commit/" + commit + "'>" + commit.substr( 0, 10 ) + "</a>";
-	config["runNames[]"] = "jQuery color";
-	config["runUrls[]"] = config.testUrl + commit + "/test/index.html";
-	config["browserSets[]"] = ["popular"];
-	testswarm({
+		config = grunt.file.readJSON( configFile ).jquerycolor,
+		done = this.async();
+	testswarm.createClient( {
 		url: config.swarmUrl,
 		pollInterval: 10000,
-		timeout: 1000 * 60 * 30,
-		done: this.async()
-	}, config);
+		timeout: 1000 * 60 * 30
+	} )
+	.addReporter( testswarm.reporters.cli )
+	.auth( {
+		id: config.authUsername,
+		token: config.authToken
+	})
+	.addjob(
+		{
+			name: "jQuery Color commit #<a href='https://github.com/jquery/jquery-color/commit/" + commit + "'>" + commit.substr( 0, 10 ) + "</a>",
+			runs: {
+				"jQuery color": config.testUrl + commit + "/test/index.html"
+			},
+			runMax: config.runMax,
+			browserSets: ["popular"]
+		}, function( err, passed ) {
+			if ( err ) {
+				grunt.log.error( err );
+			}
+			done( passed );
+		}
+	);
 });
 
 grunt.registerTask( "manifest", function() {
