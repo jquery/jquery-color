@@ -155,7 +155,7 @@ grunt.registerTask( "testswarm", function( commit, configFile ) {
 	})
 	.addjob(
 		{
-			name: "jQuery Color commit #<a href='https://github.com/jquery/jquery-color/commit/" + commit + "'>" + commit.substr( 0, 10 ) + "</a>",
+			name: "Commit <a href='https://github.com/jquery/jquery-color/commit/" + commit + "'>" + commit.substr( 0, 10 ) + "</a>",
 			runs: {
 				"jQuery color": config.testUrl + commit + "/test/index.html"
 			},
