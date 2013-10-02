@@ -1,4 +1,4 @@
-[![Build Status](http://swarm.jquery.org:8080/job/jQuery%20Color/badge/icon)](http://swarm.jquery.org:8080/job/jQuery%20Color/)
+[![Build Status](http://jenkins.jquery.com/job/jQuery%20Color/badge/icon)](http://jenkins.jquery.com/job/jQuery%20Color/)
 
 # jQuery Color
 
