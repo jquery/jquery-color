@@ -3,7 +3,7 @@
 # jQuery Color
 
 ## Using jQuery Color in Production
-We release jQuery Color by itself, or in a bundle.  The extended names can be inclided as a jQuery Color plugin, or you can download the version of jQuery Color that includes the names.  Choose your build from the following list:
+We release jQuery Color by itself, or in a bundle.  The extended names can be included as a jQuery Color plugin, or you can download the version of jQuery Color that includes the names.  Choose your build from the following list:
 
 **Current version: 2.1.2**
 
