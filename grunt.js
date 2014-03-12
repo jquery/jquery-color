@@ -144,9 +144,7 @@ grunt.registerTask( "testswarm", function( commit, configFile ) {
 		config = grunt.file.readJSON( configFile ).jquerycolor,
 		done = this.async();
 	testswarm.createClient( {
-		url: config.swarmUrl,
-		pollInterval: 10000,
-		timeout: 1000 * 60 * 30
+		url: config.swarmUrl
 	} )
 	.addReporter( testswarm.reporters.cli )
 	.auth( {
