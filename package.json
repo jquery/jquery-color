@@ -23,7 +23,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/jquery/jquery-color/blob/master/MIT-LICENSE.txt"
+      "url": "https://github.com/jquery/jquery-color/blob/master/LICENSE.txt"
     }
   ],
   "dependencies": {},
