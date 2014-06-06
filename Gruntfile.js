@@ -6,54 +6,51 @@ module.exports = function( grunt ) {
 var max = [ "dist/jquery.color.js", "dist/jquery.color.svg-names.js" ],
 	min = [ "dist/jquery.color.min.js", "dist/jquery.color.svg-names.min.js", "dist/jquery.color.plus-names.min.js"],
 	combined = "dist/jquery.color.plus-names.js",
-	minify = {},
+	minify = {
+		main: {
+			options: {
+				banner: "/*! jQuery Color v@<%= pkg.version %> http://github.com/jquery/jquery-color | jquery.org/license */\n"
+			},
+			files: {}
+		},
+		svg: {
+			options: {
+				banner: "/*! jQuery Color v@<%= pkg.version %> SVG Color Names http://github.com/jquery/jquery-color | jquery.org/license */\n"
+			},
+			files: {}
+		},
+		combined: {
+			options: {
+				banner: "/*! jQuery Color v@<%= pkg.version %> with SVG Color Names http://github.com/jquery/jquery-color | jquery.org/license */\n"
+			},
+			files: {}
+		}
+	},
 	concat = {};
 
-minify[ min[0] ] = [ "<banner>", max[0] ];
-minify[ min[1] ] = [ "<banner:meta.bannerSvg>", max[1] ];
-minify[ min[2] ] = [ "<banner:meta.bannerCombined>", combined ];
-concat[ combined ] = [ max[0], max[1] ];
+minify.main.files[ min[ 0 ] ] = [ max[ 0 ] ];
+minify.svg.files[ min[ 1 ] ] = [ max[ 1 ] ];
+minify.combined.files[ min[ 2 ] ] = [ combined ];
+concat[ combined ] = [ max[ 0 ], max[ 1 ] ];
 
 grunt.loadNpmTasks( "grunt-compare-size" );
+grunt.loadNpmTasks( "grunt-contrib-concat" );
+grunt.loadNpmTasks( "grunt-contrib-jshint" );
+grunt.loadNpmTasks( "grunt-contrib-qunit" );
+grunt.loadNpmTasks( "grunt-contrib-uglify" );
 grunt.loadNpmTasks( "grunt-git-authors" );
 
 grunt.initConfig({
-	pkg: "<json:package.json>",
+	pkg: grunt.file.readJSON( "package.json" ),
 
-	meta: {
-		banner: "/*! jQuery Color v@<%= pkg.version %> http://github.com/jquery/jquery-color | jquery.org/license */",
-		bannerSvg: "/*! jQuery Color v@<%= pkg.version %> SVG Color Names http://github.com/jquery/jquery-color | jquery.org/license */",
-		bannerCombined: "/*! jQuery Color v@<%= pkg.version %> with SVG Color Names http://github.com/jquery/jquery-color | jquery.org/license */"
-	},
-
-	lint: {
+	jshint: {
+		options: {
+			jshintrc: true
+		},
 		src: [ "jquery.color.js", "jquery.color.svg-names.js" ],
 		grunt: "grunt.js",
 		test: "test/unit/**"
 	},
-
-	jshint: (function() {
-		function parserc( path ) {
-			var rc = grunt.file.readJSON( (path || "") + ".jshintrc" ),
-				settings = {
-					options: rc,
-					globals: rc.globals || {}
-				};
-
-			(rc.predef || []).forEach(function( prop ) {
-				settings.globals[ prop ] = true;
-			});
-			delete rc.predef;
-
-			return settings;
-		}
-
-		return {
-			src: parserc(),
-			grunt: parserc(),
-			test: parserc( "test/unit/" )
-		};
-	}()),
 
 	qunit: {
 		files: "test/index.html"
@@ -61,24 +58,19 @@ grunt.initConfig({
 
 	concat: concat,
 
-	min: minify,
-
-	watch: {
-		files: [ "<config:lint.src>", "<config:lint.test>", "<config:lint.grunt>" ],
-		tasks: "default"
-	},
+	uglify: minify,
 
 	compare_size: {
-		"color": [ max[0], min[0] ],
-		"svg-names": [ max[1], min[1] ],
-		"combined": [ combined, min[2] ]
+		"color": [ max[ 0 ], min[ 0 ] ],
+		"svg-names": [ max[ 1 ], min[ 1 ] ],
+		"combined": [ combined, min[ 2 ] ]
 	}
 });
 
 
 
-grunt.registerHelper( "git-date", function( fn ) {
-	grunt.utils.spawn({
+function gitDate( fn ) {
+	grunt.util.spawn({
 		cmd: "git",
 		args: [ "log", "-1", "--pretty=format:%ad" ]
 	}, function( error, result ) {
@@ -89,28 +81,7 @@ grunt.registerHelper( "git-date", function( fn ) {
 
 		fn( null, result );
 	});
-});
-
-grunt.registerTask( "submodules", function() {
-	var done = this.async();
-
-	grunt.verbose.write( "Updating submodules..." );
-
-	grunt.utils.spawn({
-		cmd: "git",
-		args: [ "submodule", "update", "--init" ]
-	}, function( err, result ) {
-		if ( err ) {
-			grunt.verbose.error();
-			done( err );
-			return;
-		}
-
-		grunt.log.writeln( result );
-
-		done();
-	});
-});
+}
 
 grunt.registerTask( "max", function() {
 	var done = this.async(),
@@ -119,7 +90,7 @@ grunt.registerTask( "max", function() {
 	if ( process.env.COMMIT ) {
 		version += " " + process.env.COMMIT;
 	}
-	grunt.helper( "git-date", function( error, date ) {
+	gitDate(function( error, date ) {
 		if ( error ) {
 			return done( false );
 		}
@@ -195,7 +166,7 @@ grunt.registerTask( "manifest", function() {
 	}, null, "\t" ) );
 });
 
-grunt.registerTask( "default", "lint submodules qunit build compare_size" );
-grunt.registerTask( "build", "max concat min" );
+grunt.registerTask( "default", [ "jshint", "qunit", "build", "compare_size" ] );
+grunt.registerTask( "build", [ "max", "concat", "uglify" ] );
 
 };
