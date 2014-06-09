@@ -39,7 +39,7 @@ npm install -g grunt
 
 To run tests locally, run `grunt`, and this will run the tests in PhantomJS.
 
-You can also run the tests in a browser by navigating to the `test/` directory, but first run `grunt` to install submodules.
+You can also run the tests in a browser by navigating to the `test/` directory.
 
 ## Animated colors
 
@@ -56,12 +56,12 @@ This plugins installs a [`cssHook`](http://api.jquery.com/jQuery.cssHooks/) whic
 <head>
 <style>
 div {
-  background-color: #bada55;
-  width: 100px;
-  border: 1px solid green;
+	background-color: #bada55;
+	width: 100px;
+	border: 1px solid green;
 }
 </style>
-<script src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="jquery.color.min.js"></script>
 </head>
 <body>
@@ -70,14 +70,14 @@ div {
 <div id="block">Hello!</div>
 <script>
 jQuery("#go").click(function(){
-  jQuery("#block").animate({
-      backgroundColor: "#abcdef"
-  }, 1500 );
+	jQuery("#block").animate({
+			backgroundColor: "#abcdef"
+	}, 1500 );
 });
 jQuery("#sat").click(function(){
-  jQuery("#block").animate({
-      backgroundColor: jQuery.Color({ saturation: 0 })
-  }, 1500 );
+	jQuery("#block").animate({
+			backgroundColor: jQuery.Color({ saturation: 0 })
+	}, 1500 );
 });
 </script>
 </body>
@@ -207,8 +207,8 @@ It is possible for you to add your own functions to the color object.  For insta
 ```javascript
 // method taken from https://gist.github.com/960189
 jQuery.Color.fn.contrastColor = function() {
-    var r = this._rgba[0], g = this._rgba[1], b = this._rgba[2];
-    return (((r*299)+(g*587)+(b*144))/1000) >= 131.5 ? "black" : "white";
+	var r = this._rgba[0], g = this._rgba[1], b = this._rgba[2];
+	return (((r*299)+(g*587)+(b*144))/1000) >= 131.5 ? "black" : "white";
 };
 
 // usage examples:
