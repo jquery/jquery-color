@@ -33,6 +33,7 @@ minify.svg.files[ min[ 1 ] ] = [ max[ 1 ] ];
 minify.combined.files[ min[ 2 ] ] = [ combined ];
 concat[ combined ] = [ max[ 0 ], max[ 1 ] ];
 
+grunt.loadNpmTasks( "grunt-bowercopy" );
 grunt.loadNpmTasks( "grunt-compare-size" );
 grunt.loadNpmTasks( "grunt-contrib-concat" );
 grunt.loadNpmTasks( "grunt-contrib-jshint" );
@@ -42,6 +43,18 @@ grunt.loadNpmTasks( "grunt-git-authors" );
 
 grunt.initConfig({
 	pkg: grunt.file.readJSON( "package.json" ),
+
+	bowercopy: {
+		all: {
+			options: {
+				destPrefix: "external"
+			},
+			files: {
+				"qunit/qunit.js": "qunit/qunit/qunit.js",
+				"qunit/qunit.css": "qunit/qunit/qunit.css"
+			}
+		}
+	},
 
 	jshint: {
 		options: {
