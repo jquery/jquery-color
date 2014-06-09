@@ -61,7 +61,7 @@ grunt.initConfig({
 			jshintrc: true
 		},
 		src: [ "jquery.color.js", "jquery.color.svg-names.js" ],
-		grunt: "grunt.js",
+		grunt: "Gruntfile.js",
 		test: "test/unit/**"
 	},
 
