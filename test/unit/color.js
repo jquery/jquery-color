@@ -597,21 +597,21 @@ asyncTest( "animated documentFragment", function() {
 });
 
 // test( "animate borderColor", function() {
-// 	var el = jQuery( "<div style='border: 1px solid blue;'></div>" ).appendTo( "body" );
-// 	stop();
-// 	el.animate({ borderColor: "#00f" }, {
-// 		step: function() {
-// 			testParts( jQuery.Color( el, "borderTopColor" ), {
-// 				red: 0,
-// 				green: 0,
-// 				blue: 255,
-// 				alpha: 1
-// 			});
-// 			el.stop().remove();
-// 			start();
-// 		}
-// 	});
-// });
+//	var el = jQuery( "<div style='border: 1px solid blue;'></div>" ).appendTo( "body" );
+//	stop();
+//	el.animate({ borderColor: "#00f" }, {
+//		step: function() {
+//			testParts( jQuery.Color( el, "borderTopColor" ), {
+//				red: 0,
+//				green: 0,
+//				blue: 255,
+//				alpha: 1
+//			});
+//			el.stop().remove();
+//			start();
+//		}
+//	});
+//});
 
 test( "Setting CSS to empty string / inherit", function() {
 	var el = jQuery( "<div></div>" ).appendTo( "body" ).css({ color: "#fff" });
