@@ -1,5 +1,6 @@
 {
 	"name": "jquery-color",
+	"main": "jquery.color.js",
 	"devDependencies": {
 		"qunit": "1.14.0",
 		"jquery-1.5.0": "jquery#1.5.0",
