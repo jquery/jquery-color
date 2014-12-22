@@ -5,7 +5,7 @@
  * Remaining HTML/CSS color names per W3C's CSS Color Module Level 3.
  * http://www.w3.org/TR/css3-color/#svg-color
  *
- * Copyright 2013 jQuery Foundation and other contributors
+ * Copyright jQuery Foundation and other contributors
  * Released under the MIT license.
  * http://jquery.org/license
  *
