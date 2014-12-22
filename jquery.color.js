@@ -660,4 +660,11 @@ colors = jQuery.Color.names = {
 	_default: "#ffffff"
 };
 
-}( jQuery ));
+}( (function () {
+
+	if (typeof require === 'function') {
+		return require('jquery');
+	}
+	return window.jQuery;
+
+})() ));
