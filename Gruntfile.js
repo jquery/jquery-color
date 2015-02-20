@@ -227,7 +227,7 @@ grunt.registerTask( "testswarm", function( commit, configFile ) {
 				"jQuery color": config.testUrl + commit + "/test/index.html"
 			},
 			runMax: config.runMax,
-			browserSets: ["popular"]
+			browserSets: config.browserSets
 		}, function( err, passed ) {
 			if ( err ) {
 				grunt.log.error( err );
