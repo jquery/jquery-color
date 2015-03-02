@@ -61,7 +61,7 @@ div {
 	border: 1px solid green;
 }
 </style>
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script src="jquery.color.min.js"></script>
 </head>
 <body>
