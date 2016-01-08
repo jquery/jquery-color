@@ -6,6 +6,7 @@
 	],
 	"moduleType": [
 		"amd",
+		"node",
 		"globals"
 	],
 	"ignore": [
