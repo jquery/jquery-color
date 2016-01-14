@@ -2,6 +2,10 @@
 
 # jQuery Color
 
+## Browser Support
+
+jQuery color is tested on the same browsers a jQuery Core 1.x versions. [Check it](http://swarm.jquery.org/project/jquerycolor)
+
 ## Using jQuery Color in Production
 We release jQuery Color by itself, or in a bundle.  The extended names can be included as a jQuery Color plugin, or you can download the version of jQuery Color that includes the names.  Choose your build from the following list:
 
