@@ -14,5 +14,10 @@
 	"unused": true,
 
 	"browser": true,
-	"jquery": true
+	"jquery": true,
+	"globals": {
+		"define": true,
+		"require": true,
+		"module": true
+	}
 }

@@ -9,16 +9,17 @@
  * Date: @DATE
  */
 
-(function(root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['jquery'], factory);
-    } else if (typeof exports === 'object') {
-    	module.exports = factory(require('jquery'));
-    } else {
-        factory(root.jQuery);
-    }
-})(this, function( jQuery, undefined ) {
+(function( root, factory ) {
+	if ( typeof define === "function" && define.amd) {
+
+		// AMD. Register as an anonymous module.
+		define( [ "jquery" ], factory);
+	} else if ( typeof exports === "object" ) {
+		module.exports = factory( require( "jquery" ) );
+	} else {
+		factory( root.jQuery );
+	}
+})( this, function( jQuery, undefined ) {
 
 	var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightColor borderTopColor color columnRuleColor outlineColor textDecorationColor textEmphasisColor",
 
