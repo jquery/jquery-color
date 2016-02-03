@@ -266,5 +266,6 @@ grunt.registerTask( "manifest", function() {
 
 grunt.registerTask( "default", [ "jshint", "qunit", "build", "compare_size" ] );
 grunt.registerTask( "build", [ "max", "concat", "uglify" ] );
+grunt.registerTask( "ci", [ "jshint", "qunit" ] );
 
 };
