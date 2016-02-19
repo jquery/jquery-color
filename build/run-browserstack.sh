@@ -1,7 +1,7 @@
 #!/bin/bash
 
 for run in \
-	"./build/browserstack-current.json" 
+	"./build/browserstack-current.json" \
 	"./build/browserstack-legacy.json"
 do
 	export BROWSERSTACK_JSON=$run
