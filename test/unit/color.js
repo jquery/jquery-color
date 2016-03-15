@@ -1,5 +1,3 @@
-/*global QUnit:true*/
-
 QUnit.module( "parse" );
 
 function testParts( color, parts, assert ) {
@@ -74,7 +72,7 @@ QUnit.test( "jQuery.Color({ blue: 100 })", function( assert ) {
 		blue: 100,
 		alpha: null
 	}, assert );
-	ok( !blue._hsla, "No HSLA cache");
+	assert.ok( !blue._hsla, "No HSLA cache");
 });
 
 QUnit.test( "jQuery.Color({ alpha: 1 })", function( assert ) {
@@ -85,7 +83,7 @@ QUnit.test( "jQuery.Color({ alpha: 1 })", function( assert ) {
 		blue: null,
 		alpha: 1
 	}, assert );
-	ok( !blue._hsla, "No HSLA cache");
+	assert.ok( !blue._hsla, "No HSLA cache");
 });
 
 QUnit.test( "jQuery.Color({ alpha: 1, hue: 100 })", function( assert ) {
@@ -99,7 +97,7 @@ QUnit.test( "jQuery.Color({ alpha: 1, hue: 100 })", function( assert ) {
 		saturation: null,
 		lightness: null
 	}, assert );
-	deepEqual( blue._hsla, [ 100, null, null, 1 ], "HSLA cache has correct values");
+	assert.deepEqual( blue._hsla, [ 100, null, null, 1 ], "HSLA cache has correct values");
 });
 
 QUnit.test( "jQuery.Color({ hue: 100, saturation: 1, lightness: 0.5 })", function( assert ) {
