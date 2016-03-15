@@ -52,7 +52,7 @@ grunt.initConfig({
 			files: {
 				"qunit/qunit.js": "qunit/qunit/qunit.js",
 				"qunit/qunit.css": "qunit/qunit/qunit.css",
-				"qunit/MIT-LICENSE.txt": "qunit/MIT-LICENSE.txt",
+				"qunit/LICENSE.txt": "qunit/LICENSE.txt",
 
 				"jquery-1.5.0/jquery.js": "jquery-1.5.0/jquery.js",
 				"jquery-1.5.0/MIT-LICENSE.txt": "jquery-1.5.0/MIT-LICENSE.txt",
@@ -164,7 +164,6 @@ grunt.initConfig({
 		"combined": [ combined, min[ 2 ] ]
 	}
 });
-
 
 
 function gitDate( fn ) {

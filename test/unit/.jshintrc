@@ -13,17 +13,7 @@
 	"trailing": true,
 	"undef": true,
 	"unused": true,
-	"predef": [
-		"asyncTest",
-		"deepEqual",
-		"equal",
-		"expect",
-		"module",
-		"notEqual",
-		"ok",
-		"start",
-		"stop",
-		"strictEqual",
-		"test"
-	]
+	"globals": {
+		"QUnit": true
+	}
 }
