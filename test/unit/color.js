@@ -1,3 +1,5 @@
+/*global QUnit:true*/
+
 QUnit.module( "parse" );
 
 function testParts( color, parts ) {
