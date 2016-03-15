@@ -2,7 +2,7 @@
 
 QUnit.module( "parse" );
 
-function testParts( color, parts ) {
+function testParts( color, parts, assert ) {
 	var prefix = parts.prefix || "";
 
 	if ( parts.expect ) {
@@ -16,18 +16,18 @@ function testParts( color, parts ) {
 			return;
 		}
 
-		strictEqual( color[ key ](), value, prefix + "."+key+"() is "+value );
+		assert.strictEqual( color[ key ](), value, prefix + "."+key+"() is "+value );
 	});
 }
 
 function parseTest( str, results, descr ) {
-	QUnit.test( descr || "jQuery.Color( \""+str+"\" )", function() {
+	QUnit.test( descr || "jQuery.Color( \""+str+"\" )", function( assert ) {
 		var color = descr ? str : jQuery.Color( str );
-		testParts( color, results );
+		testParts( color, results, assert );
 	});
 }
 
-QUnit.test( "jQuery.Color( 255, 255, 255 )", function() {
+QUnit.test( "jQuery.Color( 255, 255, 255 )", function( assert ) {
 	QUnit.expect( 4 );
 	testParts( jQuery.Color( 255, 255, 255 ), {
 		expect: 4,
@@ -35,10 +35,10 @@ QUnit.test( "jQuery.Color( 255, 255, 255 )", function() {
 		green: 255,
 		blue: 255,
 		alpha: 1
-	});
+	}, assert );
 });
 
-QUnit.test( "jQuery.Color( element, \"color\" )", function() {
+QUnit.test( "jQuery.Color( element, \"color\" )", function( assert ) {
 	var $div = jQuery( "<div>" ).appendTo( "body" ).css( "color", "#fff" );
 	QUnit.expect( 8 );
 	testParts( jQuery.Color( $div, "color" ), {
@@ -47,14 +47,14 @@ QUnit.test( "jQuery.Color( element, \"color\" )", function() {
 		green: 255,
 		blue: 255,
 		alpha: 1
-	});
+	}, assert );
 	testParts( jQuery.Color( $div[ 0 ], "color" ), {
 		prefix: "<div>: ",
 		red: 255,
 		green: 255,
 		blue: 255,
 		alpha: 1
-	});
+	}, assert );
 	$div.remove();
 });
 
@@ -66,30 +66,29 @@ parseTest( jQuery.Color({ red: 100 }), {
 	alpha: null
 }, "jQuery.Color({ red: 100 })" );
 
-
-QUnit.test( "jQuery.Color({ blue: 100 })", function() {
+QUnit.test( "jQuery.Color({ blue: 100 })", function( assert ) {
 	var blue = jQuery.Color({ blue: 100 });
 	testParts( blue, {
 		red: null,
 		green: null,
 		blue: 100,
 		alpha: null
-	});
+	}, assert );
 	ok( !blue._hsla, "No HSLA cache");
 });
 
-QUnit.test( "jQuery.Color({ alpha: 1 })", function() {
+QUnit.test( "jQuery.Color({ alpha: 1 })", function( assert ) {
 	var blue = jQuery.Color({ alpha: 1 });
 	testParts( blue, {
 		red: null,
 		green: null,
 		blue: null,
 		alpha: 1
-	});
+	}, assert );
 	ok( !blue._hsla, "No HSLA cache");
 });
 
-QUnit.test( "jQuery.Color({ alpha: 1, hue: 100 })", function() {
+QUnit.test( "jQuery.Color({ alpha: 1, hue: 100 })", function( assert ) {
 	var blue = jQuery.Color({ alpha: 1, hue: 100 });
 	testParts( blue, {
 		red: null,
@@ -99,11 +98,11 @@ QUnit.test( "jQuery.Color({ alpha: 1, hue: 100 })", function() {
 		hue: 100,
 		saturation: null,
 		lightness: null
-	});
+	}, assert );
 	deepEqual( blue._hsla, [ 100, null, null, 1 ], "HSLA cache has correct values");
 });
 
-QUnit.test( "jQuery.Color({ hue: 100, saturation: 1, lightness: 0.5 })", function() {
+QUnit.test( "jQuery.Color({ hue: 100, saturation: 1, lightness: 0.5 })", function( assert ) {
 	var blue = jQuery.Color({ hue: 100, saturation: 1, lightness: 0.5 });
 	testParts( blue, {
 		red: 85,
@@ -113,11 +112,10 @@ QUnit.test( "jQuery.Color({ hue: 100, saturation: 1, lightness: 0.5 })", functio
 		hue: 100,
 		saturation: 1,
 		lightness: 0.5
-	});
-	deepEqual( blue._rgba, [ 85, 255, 0, 1 ], "RGBA cache has correct values");
-	deepEqual( blue._hsla, [ 100, 1, 0.5, 1 ], "HSLA cache has correct values");
+	}, assert );
+	assert.deepEqual( blue._rgba, [ 85, 255, 0, 1 ], "RGBA cache has correct values");
+	assert.deepEqual( blue._hsla, [ 100, 1, 0.5, 1 ], "HSLA cache has correct values");
 });
-
 
 parseTest( jQuery.Color( jQuery.Color( "red" ) ), {
 	expect: 4,
@@ -237,7 +235,7 @@ QUnit.test( ".rgba()", function( assert ) {
 		green: 100,
 		blue: 0,
 		alpha: 0
-	});
+	}, assert );
 
 	testParts( set2, {
 		prefix: ".rgba([ null, null, 100, 0 ])",
@@ -245,7 +243,7 @@ QUnit.test( ".rgba()", function( assert ) {
 		green: 0,
 		blue: 100,
 		alpha: 0.5
-	});
+	}, assert );
 
 	testParts( set3, {
 		prefix: ".rgba({ red: 300, alpha: 2 })",
@@ -253,11 +251,10 @@ QUnit.test( ".rgba()", function( assert ) {
 		green: 0,
 		blue: 0,
 		alpha: 1
-	});
-
+	}, assert );
 });
 
-QUnit.test( ".blend()", function() {
+QUnit.test( ".blend()", function( assert ) {
 	var halfwhite = jQuery.Color( "white" ).alpha( 0.5 ),
 		red = jQuery.Color( "red" ),
 		blend = halfwhite.blend( red );
@@ -270,7 +267,7 @@ QUnit.test( ".blend()", function() {
 		green: 127,
 		blue: 127,
 		alpha: 1
-	});
+	}, assert );
 
 	testParts( halfwhite.blend("red"), {
 		prefix: "Using string as color: ",
@@ -278,11 +275,10 @@ QUnit.test( ".blend()", function() {
 		green: 127,
 		blue: 127,
 		alpha: 1
-	});
-
+	}, assert );
 });
 
-QUnit.test( ".transition() works with $.Colors", function() {
+QUnit.test( ".transition() works with $.Colors", function( assert ) {
 	var black = jQuery.Color( "black" ),
 		whiteAlpha = jQuery.Color( "white" ).alpha( 0.5 ),
 		trans = jQuery.Color( "transparent" ),
@@ -295,21 +291,21 @@ QUnit.test( ".transition() works with $.Colors", function() {
 		green: 127,
 		blue: 127,
 		alpha: 0.75
-	});
+	}, assert );
 	testParts( black.transition( trans, 0.5 ), {
 		prefix: "black -> transparent 0.5 ",
 		red: 0,
 		green: 0,
 		blue: 0,
 		alpha: 0.5
-	});
+	}, assert );
 	testParts( whiteAlpha.transition( trans, 0.5 ), {
 		prefix: "whiteAlpha -> transparent 0.5 ",
 		red: 255,
 		green: 255,
 		blue: 255,
 		alpha: 0.25
-	});
+	}, assert );
 
 	// fixes issue #32
 	testParts( jQuery.Color( 255, 0, 0, 0 ).transition( black, 0.5 ), {
@@ -318,10 +314,10 @@ QUnit.test( ".transition() works with $.Colors", function() {
 		green: 0,
 		blue: 0,
 		alpha: 0.5
-	});
+	}, assert );
 });
 
-QUnit.test( ".transtion() works with strings and objects", function() {
+QUnit.test( ".transtion() works with strings and objects", function( assert ) {
 	var black = jQuery.Color( "black" );
 
 	testParts( black.transition( "white", 0.5 ), {
@@ -329,28 +325,27 @@ QUnit.test( ".transtion() works with strings and objects", function() {
 		red: 127,
 		green: 127,
 		blue: 127
-	});
+	}, assert );
 
 	testParts( black.transition( "red", 0.5 ), {
 		prefix: "black -> 'red'",
 		red: 127,
 		green: 0,
 		blue: 0
-	});
+	}, assert );
 	testParts( black.transition({ blue: 255 }, 0.5 ), {
 		prefix: "black -> { blue: 255 }",
 		red: 0,
 		green: 0,
 		blue: 127
-	});
+	}, assert );
 
 	testParts( black.transition([ 200, 200, 200 ], 0.5 ), {
 		prefix: "black -> [ 200, 200, 200 ]",
 		red: 100,
 		green: 100,
 		blue: 100
-	});
-
+	}, assert );
 });
 
 QUnit.test( ".is()", function( assert ) {
@@ -362,7 +357,6 @@ QUnit.test( ".is()", function( assert ) {
 	assert.ok( red.is("red"), "Red is equal to \"red\"");
 	assert.ok( !red.is("blue"), "Red is not blue");
 	assert.ok( !red.is({ alpha: 0 }), "Red is not { alpha: 0 }");
-
 });
 
 QUnit.test( ".toRgbaString()", function( assert ) {
@@ -372,7 +366,6 @@ QUnit.test( ".toRgbaString()", function( assert ) {
 	QUnit.expect( 2 );
 	assert.equal( black.toRgbaString(), "rgb(0,0,0)" );
 	assert.equal( trans.toRgbaString(), "rgba(0,0,0,0.5)" );
-
 });
 
 QUnit.test( ".toHexString()", function( assert ) {
@@ -382,7 +375,6 @@ QUnit.test( ".toHexString()", function( assert ) {
 	QUnit.expect( 2 );
 	assert.equal( almostBlack.toHexString(), "#020010" , "to hex");
 	assert.equal( trans.toHexString( true ), "#0200107f", "to hex with alpha" );
-
 });
 
 QUnit.test( "toString() methods keep alpha intact", function( assert ) {
@@ -402,6 +394,7 @@ QUnit.test( "toString() methods keep alpha intact", function( assert ) {
 });
 
 QUnit.module( "hsla" );
+
 parseTest("hsla(180,50%,50%,0.5)", {
 	expect: 7,
 	hue: 180,
@@ -480,7 +473,7 @@ parseTest( jQuery.Color({ saturation: 0, alpha: 0 }), {
 }, "jQuery.Color({ saturation: 0, alpha: 0 })" );
 
 
-test("HSLA Conversions", function( assert ) {
+QUnit.test("HSLA Conversions", function( assert ) {
 	QUnit.expect(11);
 	assert.equal( jQuery.Color( "#000" ).toHslaString(), "hsl(0,0%,0%)", "HSLA value from #000");
 	assert.equal( jQuery.Color( "#fff" ).toHslaString(), "hsl(0,0%,100%)", "HSLA value from #fff");
@@ -495,7 +488,7 @@ test("HSLA Conversions", function( assert ) {
 	assert.equal( jQuery.Color( "rgba(127,127,127,0.1)" ).toHslaString(), "hsla(0,0%,50%,0.1)", "HSLA value from rgba(127,127,127,0.1)");
 });
 
-test("HSLA Transitions", function() {
+QUnit.test("HSLA Transitions", function( assert ) {
 	var red = jQuery.Color("red"),
 		desaturate = red.transition( jQuery.Color({ saturation: 0 }), 0.5 ),
 		hue10 = red.transition( jQuery.Color({ hue: 10 }), 0.5),
@@ -508,30 +501,29 @@ test("HSLA Transitions", function() {
 		saturation: 0.5,
 		lightness: 0.5,
 		alpha: 1
-	});
+	}, assert );
 	testParts( hue10, {
 		prefix: "red -> hue 10 0.5",
 		hue: 5,
 		saturation: 1,
 		lightness: 0.5,
 		alpha: 1
-	});
+	}, assert );
 	testParts( hue350, {
 		prefix: "red -> hue 350 0.5",
 		hue: 355,
 		saturation: 1,
 		lightness: 0.5,
 		alpha: 1
-	});
+	}, assert );
 	testParts( hueWrapPos, {
 		prefix: " hue 350 -> hue 10 0.5",
 		hue: 0,
 		saturation: null,
 		lightness: null,
 		alpha: 1
-	});
+	}, assert );
 });
-
 
 QUnit.test( "hue saturation lightness alpha Setters", function( assert ) {
 	var props = "hue saturation lightness alpha".split(" "),
@@ -556,9 +548,8 @@ QUnit.test( "alpha setter leaves space as hsla", function( assert ) {
 	assert.ok( test._hsla, "HSLA cache still exists after calling alpha setter" );
 });
 
-
 QUnit.module( "animate" );
-QUnit.test( "animated", function() {
+QUnit.test( "animated", function( assert ) {
 	var el = jQuery( "<div></div>" ).appendTo( "body" ).css({ color: "#000000" });
 
 	QUnit.expect( 8 );
@@ -570,7 +561,7 @@ QUnit.test( "animated", function() {
 			green: 255,
 			blue: 255,
 			alpha: 1
-		});
+		}, assert );
 
 		el.css( "color", "white" ).animate({ color: "#000000" }, 200).stop( true );
 		testParts( jQuery.Color( el, "color" ), {
@@ -579,7 +570,7 @@ QUnit.test( "animated", function() {
 			green: 255,
 			blue: 255,
 			alpha: 1
-		});
+		}, assert );
 
 		el.remove();
 		QUnit.start();
