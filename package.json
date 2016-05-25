@@ -2,7 +2,7 @@
   "name": "jquery-color",
   "title": "jQuery Color",
   "description": "jQuery plugin for color manipulation and animation support.",
-  "version": "2.1.3pre",
+  "version": "3.0.0-pre",
   "homepage": "https://github.com/jquery/jquery-color",
   "author": {
     "name": "jQuery Foundation and other contributors",
