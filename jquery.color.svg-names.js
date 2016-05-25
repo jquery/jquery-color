@@ -2,8 +2,8 @@
  * jQuery Color Animations v@VERSION - SVG Color Names
  * https://github.com/jquery/jquery-color
  *
- * Remaining HTML/CSS color names per W3C's CSS Color Module Level 3.
- * http://www.w3.org/TR/css3-color/#svg-color
+ * Remaining HTML/CSS color names per W3C's CSS Color Module Level 4 draft.
+ * https://drafts.csswg.org/css-color-4/
  *
  * Copyright jQuery Foundation and other contributors
  * Released under the MIT license.
@@ -120,6 +120,7 @@ jQuery.extend( jQuery.Color.names, {
 	pink: "#ffc0cb",
 	plum: "#dda0dd",
 	powderblue: "#b0e0e6",
+	rebeccapurple: "#663399",
 	rosybrown: "#bc8f8f",
 	royalblue: "#4169e1",
 	saddlebrown: "#8b4513",
