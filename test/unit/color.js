@@ -37,7 +37,7 @@ QUnit.test( "jQuery.Color( 255, 255, 255 )", function( assert ) {
 });
 
 QUnit.test( "jQuery.Color( element, \"color\" )", function( assert ) {
-	var $div = jQuery( "<div>" ).appendTo( "body" ).css( "color", "#fff" );
+	var $div = jQuery( "<div>" ).css( "color", "#fff" );
 	QUnit.expect( 8 );
 	testParts( jQuery.Color( $div, "color" ), {
 		prefix: "jQuery(<div>): ",
@@ -53,7 +53,6 @@ QUnit.test( "jQuery.Color( element, \"color\" )", function( assert ) {
 		blue: 255,
 		alpha: 1
 	}, assert );
-	$div.remove();
 });
 
 parseTest( jQuery.Color({ red: 100 }), {
@@ -548,7 +547,7 @@ QUnit.test( "alpha setter leaves space as hsla", function( assert ) {
 
 QUnit.module( "animate" );
 QUnit.test( "animated", function( assert ) {
-	var el = jQuery( "<div></div>" ).appendTo( "body" ).css({ color: "#000000" });
+	var el = jQuery( "<div></div>" ).css({ color: "#000000" });
 
 	QUnit.expect( 8 );
 	QUnit.stop();
@@ -570,7 +569,6 @@ QUnit.test( "animated", function( assert ) {
 			alpha: 1
 		}, assert );
 
-		el.remove();
 		QUnit.start();
 	});
 });
@@ -586,20 +584,20 @@ QUnit.asyncTest( "animated documentFragment", function( assert ) {
 });
 
 QUnit.test( "Setting CSS to empty string / inherit", function( assert ) {
-	var el = jQuery( "<div></div>" ).appendTo( "body" ).css({ color: "#fff" });
+	var el = jQuery( "<div></div>" ).css({ color: "#fff" });
 	QUnit.expect( 2 );
 
 	el.css( "color", "" );
 	assert.equal( el[0].style.color, "", "CSS was set to empty string" );
 
 	el.css( "color", "inherit" );
-	assert.ok( el[0].style.color === "" || el[0].style.color === "inherit", "Setting CSS to inherit didn't throw error" );
+	assert.ok( el[0].style.color === "inherit", "Setting CSS to inherit didn't throw error" );
 });
 
 QUnit.test( "Setting CSS to transparent", function( assert ) {
 	QUnit.expect( 1 );
 
-	var parentEl = jQuery("<div></div>").appendTo("body").css({ backgroundColor: "blue" }),
+	var parentEl = jQuery("<div></div>").css({ backgroundColor: "blue" }),
 		el = jQuery("<div></div>").appendTo( parentEl );
 
 	el.css( "backgroundColor", "transparent" );
