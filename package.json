@@ -10,7 +10,7 @@
   },
   "scripts": {
     "browserstack": "sh build/run-browserstack.sh",
-    "ci": "node_modules/grunt-cli/bin/grunt ci"
+    "ci": "grunt ci"
   },
   "maintainers": [
     {
