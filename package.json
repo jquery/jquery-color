@@ -10,7 +10,8 @@
   },
   "scripts": {
     "browserstack": "sh build/run-browserstack.sh",
-    "ci": "grunt ci"
+    "ci": "grunt ci",
+    "test": "grunt ci"
   },
   "maintainers": [
     {
