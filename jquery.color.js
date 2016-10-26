@@ -9,24 +9,26 @@
  * Date: @DATE
  */
 
-(function( root, factory ) {
-	if ( typeof define === "function" && define.amd) {
+( function( root, factory ) {
+	if ( typeof define === "function" && define.amd ) {
 
 		// AMD. Register as an anonymous module.
-		define( [ "jquery" ], factory);
+		define( [ "jquery" ], factory );
 	} else if ( typeof exports === "object" ) {
 		module.exports = factory( require( "jquery" ) );
 	} else {
 		factory( root.jQuery );
 	}
-})( this, function( jQuery, undefined ) {
+} )( this, function( jQuery, undefined ) {
 
-	var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightColor borderTopColor color columnRuleColor outlineColor textDecorationColor textEmphasisColor",
+	var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightColor " +
+		"borderTopColor color columnRuleColor outlineColor textDecorationColor textEmphasisColor",
 
 	// plusequals test for += 100 -= 100
 	rplusequals = /^([\-+])=\s*(\d+\.?\d*)/,
+
 	// a set of RE's that can match strings and generate color tuples.
-	stringParsers = [{
+	stringParsers = [ {
 			re: /rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,
 			parse: function( execResult ) {
 				return [
@@ -47,6 +49,7 @@
 				];
 			}
 		}, {
+
 			// this regex ignores A-F because it's compared against an already lowercased string
 			re: /#([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})/,
 			parse: function( execResult ) {
@@ -57,6 +60,7 @@
 				];
 			}
 		}, {
+
 			// this regex ignores A-F because it's compared against an already lowercased string
 			re: /#([a-f0-9])([a-f0-9])([a-f0-9])/,
 			parse: function( execResult ) {
@@ -77,7 +81,7 @@
 					execResult[ 4 ]
 				];
 			}
-		}],
+		} ],
 
 	// jQuery.Color( )
 	color = jQuery.Color = function( color, green, blue, alpha ) {
@@ -147,26 +151,27 @@ each( spaces, function( spaceName, space ) {
 		type: "percent",
 		def: 1
 	};
-});
+} );
 
 function clamp( value, prop, allowEmpty ) {
 	var type = propTypes[ prop.type ] || {};
 
 	if ( value == null ) {
-		return (allowEmpty || !prop.def) ? null : prop.def;
+		return ( allowEmpty || !prop.def ) ? null : prop.def;
 	}
 
 	// ~~ is an short way of doing floor for positive numbers
 	value = type.floor ? ~~value : parseFloat( value );
 
 	if ( type.mod ) {
+
 		// we add mod before modding to make sure that negatives values
 		// get converted properly: -10 -> 350
-		return (value + type.mod) % type.mod;
+		return ( value + type.mod ) % type.mod;
 	}
 
 	// for now all property types without mod have min and max
-	return 0 > value ? 0 : type.max < value ? type.max : value;
+	return Math.min( type.max, Math.max( 0, value ) );
 }
 
 function stringParse( string ) {
@@ -192,7 +197,7 @@ function stringParse( string ) {
 			// exit each( stringParsers ) here because we matched
 			return false;
 		}
-	});
+	} );
 
 	// Found a stringParser that handled it
 	if ( rgba.length ) {
@@ -237,7 +242,7 @@ color.fn = jQuery.extend( color.prototype, {
 		if ( type === "array" ) {
 			each( spaces.rgba.props, function( key, prop ) {
 				rgba[ prop.idx ] = clamp( red[ prop.idx ], prop );
-			});
+			} );
 			return this;
 		}
 
@@ -247,7 +252,7 @@ color.fn = jQuery.extend( color.prototype, {
 					if ( red[ space.cache ] ) {
 						inst[ space.cache ] = red[ space.cache ].slice();
 					}
-				});
+				} );
 			} else {
 				each( spaces, function( spaceName, space ) {
 					var cache = space.cache;
@@ -267,17 +272,18 @@ color.fn = jQuery.extend( color.prototype, {
 						// this is the only case where we allow nulls for ALL properties.
 						// call clamp with alwaysAllowEmpty
 						inst[ cache ][ prop.idx ] = clamp( red[ key ], prop, true );
-					});
+					} );
 
 					// everything defined but alpha?
 					if ( inst[ cache ] && jQuery.inArray( null, inst[ cache ].slice( 0, 3 ) ) < 0 ) {
+
 						// use the default of 1
 						inst[ cache ][ 3 ] = 1;
 						if ( space.from ) {
 							inst._rgba = space.from( inst[ cache ] );
 						}
 					}
-				});
+				} );
 			}
 			return this;
 		}
@@ -290,17 +296,17 @@ color.fn = jQuery.extend( color.prototype, {
 		each( spaces, function( _, space ) {
 			var localCache,
 				isCache = is[ space.cache ];
-			if (isCache) {
+			if ( isCache ) {
 				localCache = inst[ space.cache ] || space.to && space.to( inst._rgba ) || [];
 				each( space.props, function( _, prop ) {
 					if ( isCache[ prop.idx ] != null ) {
 						same = ( isCache[ prop.idx ] === localCache[ prop.idx ] );
 						return same;
 					}
-				});
+				} );
 			}
 			return same;
-		});
+		} );
 		return same;
 	},
 	_space: function() {
@@ -310,7 +316,7 @@ color.fn = jQuery.extend( color.prototype, {
 			if ( inst[ space.cache ] ) {
 				used.push( spaceName );
 			}
-		});
+		} );
 		return used.pop();
 	},
 	transition: function( other, distance ) {
@@ -332,6 +338,7 @@ color.fn = jQuery.extend( color.prototype, {
 			if ( endValue === null ) {
 				return;
 			}
+
 			// if null - use end
 			if ( startValue === null ) {
 				result[ index ] = endValue;
@@ -345,10 +352,11 @@ color.fn = jQuery.extend( color.prototype, {
 				}
 				result[ index ] = clamp( ( endValue - startValue ) * distance + startValue, prop );
 			}
-		});
+		} );
 		return this[ spaceName ]( result );
 	},
 	blend: function( opaque ) {
+
 		// if we are already opaque - return ourself
 		if ( this._rgba[ 3 ] === 1 ) {
 			return this;
@@ -360,13 +368,16 @@ color.fn = jQuery.extend( color.prototype, {
 
 		return color( jQuery.map( rgb, function( v, i ) {
 			return ( 1 - a ) * blend[ i ] + a * v;
-		}));
+		} ) );
 	},
 	toRgbaString: function() {
 		var prefix = "rgba(",
 			rgba = jQuery.map( this._rgba, function( v, i ) {
-				return v == null ? ( i > 2 ? 1 : 0 ) : v;
-			});
+                if ( v != null ) {
+                    return v;
+                }
+				return i > 2 ? 1 : 0;
+			} );
 
 		if ( rgba[ 3 ] === 1 ) {
 			rgba.pop();
@@ -387,7 +398,7 @@ color.fn = jQuery.extend( color.prototype, {
 					v = Math.round( v * 100 ) + "%";
 				}
 				return v;
-			});
+			} );
 
 		if ( hsla[ 3 ] === 1 ) {
 			hsla.pop();
@@ -407,12 +418,12 @@ color.fn = jQuery.extend( color.prototype, {
 
 			// default to 0 when nulls exist
 			return ( "0" + ( v || 0 ).toString( 16 ) ).substr( -2 );
-		}).join("");
+		} ).join( "" );
 	},
 	toString: function() {
 		return this._rgba[ 3 ] === 0 ? "transparent" : this.toRgbaString();
 	}
-});
+} );
 color.fn.parse.prototype = color.fn;
 
 // hsla conversions adapted from:
@@ -421,18 +432,18 @@ color.fn.parse.prototype = color.fn;
 function hue2rgb( p, q, h ) {
 	h = ( h + 1 ) % 1;
 	if ( h * 6 < 1 ) {
-		return p + (q - p) * h * 6;
+		return p + ( q - p ) * h * 6;
 	}
-	if ( h * 2 < 1) {
+	if ( h * 2 < 1 ) {
 		return q;
 	}
 	if ( h * 3 < 2 ) {
-		return p + (q - p) * ((2/3) - h) * 6;
+		return p + ( q - p ) * ( ( 2 / 3 ) - h ) * 6;
 	}
 	return p;
 }
 
-spaces.hsla.to = function ( rgba ) {
+spaces.hsla.to = function( rgba ) {
 	if ( rgba[ 0 ] == null || rgba[ 1 ] == null || rgba[ 2 ] == null ) {
 		return [ null, null, null, rgba[ 3 ] ];
 	}
@@ -466,10 +477,10 @@ spaces.hsla.to = function ( rgba ) {
 	} else {
 		s = diff / ( 2 - add );
 	}
-	return [ Math.round(h) % 360, s, l, a == null ? 1 : a ];
+	return [ Math.round( h ) % 360, s, l, a == null ? 1 : a ];
 };
 
-spaces.hsla.from = function ( hsla ) {
+spaces.hsla.from = function( hsla ) {
 	if ( hsla[ 0 ] == null || hsla[ 1 ] == null || hsla[ 2 ] == null ) {
 		return [ null, null, null, hsla[ 3 ] ];
 	}
@@ -517,7 +528,7 @@ each( spaces, function( spaceName, space ) {
 				val = local[ prop.idx ];
 			}
 			local[ prop.idx ] = clamp( val, prop );
-		});
+		} );
 
 		if ( from ) {
 			ret = color( from( local ) );
@@ -530,16 +541,22 @@ each( spaces, function( spaceName, space ) {
 
 	// makes red() green() blue() alpha() hue() saturation() lightness()
 	each( props, function( key, prop ) {
+
 		// alpha is included in more than one space
 		if ( color.fn[ key ] ) {
 			return;
 		}
 		color.fn[ key ] = function( value ) {
-			var vtype = jQuery.type( value ),
-				fn = ( key === "alpha" ? ( this._hsla ? "hsla" : "rgba" ) : spaceName ),
-				local = this[ fn ](),
-				cur = local[ prop.idx ],
-				match;
+			var local, cur, match, fn,
+				vtype = jQuery.type( value );
+
+			if ( key === "alpha" ) {
+				fn = this._hsla ? "hsla" : "rgba";
+			} else {
+				fn = spaceName;
+			}
+			local = this[ fn ]();
+			cur = local[ prop.idx ];
 
 			if ( vtype === "undefined" ) {
 				return cur;
@@ -561,8 +578,8 @@ each( spaces, function( spaceName, space ) {
 			local[ prop.idx ] = value;
 			return this[ fn ]( local );
 		};
-	});
-});
+	} );
+} );
 
 // add cssHook and .fx.step function for each named hook.
 // accept a space separated string of properties
@@ -588,7 +605,7 @@ color.hook = function( hook ) {
 			}
 			jQuery.cssHooks[ hook ].set( fx.elem, fx.start.transition( fx.end, fx.pos ) );
 		};
-	});
+	} );
 
 };
 
@@ -600,7 +617,7 @@ jQuery.cssHooks.borderColor = {
 
 		each( [ "Top", "Right", "Bottom", "Left" ], function( i, part ) {
 			expanded[ "border" + part + "Color" ] = value;
-		});
+		} );
 		return expanded;
 	}
 };
@@ -609,6 +626,7 @@ jQuery.cssHooks.borderColor = {
 // Usage of any of the other color names requires adding yourself or including
 // jquery.color.svg-names.js.
 colors = jQuery.Color.names = {
+
 	// 4.1. Basic color keywords
 	aqua: "#00ffff",
 	black: "#000000",
@@ -633,4 +651,4 @@ colors = jQuery.Color.names = {
 	_default: "#ffffff"
 };
 
-});
+} );

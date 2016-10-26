@@ -1,0 +1,25 @@
+{
+	"extends": "eslint-config-jquery",
+	"root": true,
+	"rules": {
+
+		// Increase max-len to 120 for now, there are too many violations and the rule
+		// is not auto-fixable.
+		"max-len": [
+			"error",
+			{
+				"code": 150,
+				"ignoreComments": true
+			}
+		]
+	},
+	"env": {
+		"node": true
+	},
+	"globals": {
+		"jQuery": true,
+		"define": true,
+		"require": true,
+		"module": true
+	}
+}
