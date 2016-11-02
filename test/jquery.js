@@ -1,4 +1,4 @@
-(function() {
+( function() {
 
 var parts = document.location.search.slice( 1 ).split( "&" ),
 	length = parts.length,
@@ -23,4 +23,4 @@ if ( version === "git" ) {
 
 document.write( "<script src='" + url + "'></script>" );
 
-}() );
+} )();

@@ -1,10 +1,9 @@
-/*jshint node: true */
 module.exports = function( grunt ) {
 
 "use strict";
 
 var max = [ "dist/jquery.color.js", "dist/jquery.color.svg-names.js" ],
-	min = [ "dist/jquery.color.min.js", "dist/jquery.color.svg-names.min.js", "dist/jquery.color.plus-names.min.js"],
+	min = [ "dist/jquery.color.min.js", "dist/jquery.color.svg-names.min.js", "dist/jquery.color.plus-names.min.js" ],
 	combined = "dist/jquery.color.plus-names.js",
 	minify = {
 		main: {
@@ -33,15 +32,9 @@ minify.svg.files[ min[ 1 ] ] = [ max[ 1 ] ];
 minify.combined.files[ min[ 2 ] ] = [ combined ];
 concat[ combined ] = [ max[ 0 ], max[ 1 ] ];
 
-grunt.loadNpmTasks( "grunt-bowercopy" );
-grunt.loadNpmTasks( "grunt-compare-size" );
-grunt.loadNpmTasks( "grunt-contrib-concat" );
-grunt.loadNpmTasks( "grunt-contrib-jshint" );
-grunt.loadNpmTasks( "grunt-contrib-qunit" );
-grunt.loadNpmTasks( "grunt-contrib-uglify" );
-grunt.loadNpmTasks( "grunt-git-authors" );
+require( "load-grunt-tasks" )( grunt );
 
-grunt.initConfig({
+grunt.initConfig( {
 	pkg: grunt.file.readJSON( "package.json" ),
 
 	bowercopy: {
@@ -96,13 +89,22 @@ grunt.initConfig({
 		}
 	},
 
-	jshint: {
+	eslint: {
 		options: {
-			jshintrc: true
+
+			// See https://github.com/sindresorhus/grunt-eslint/issues/119
+			quiet: true
 		},
-		src: [ "jquery.color.js", "jquery.color.svg-names.js" ],
-		grunt: "Gruntfile.js",
-		test: "test/unit/**"
+
+		source: {
+			src: [ "jquery.color.js", "jquery.color.svg-names.js" ]
+		},
+		grunt: {
+			src: "Gruntfile.js"
+		},
+		test: {
+			src: "test/unit/**"
+		}
 	},
 
 	qunit: {
@@ -118,11 +120,11 @@ grunt.initConfig({
 		"svg-names": [ max[ 1 ], min[ 1 ] ],
 		"combined": [ combined, min[ 2 ] ]
 	}
-});
+} );
 
 
 function gitDate( fn ) {
-	grunt.util.spawn({
+	grunt.util.spawn( {
 		cmd: "git",
 		args: [ "log", "-1", "--pretty=format:%ad" ]
 	}, function( error, result ) {
@@ -132,7 +134,7 @@ function gitDate( fn ) {
 		}
 
 		fn( null, result );
-	});
+	} );
 }
 
 grunt.registerTask( "max", function() {
@@ -142,7 +144,7 @@ grunt.registerTask( "max", function() {
 	if ( process.env.COMMIT ) {
 		version += " " + process.env.COMMIT;
 	}
-	gitDate(function( error, date ) {
+	gitDate( function( error, date ) {
 		if ( error ) {
 			return done( false );
 		}
@@ -154,13 +156,13 @@ grunt.registerTask( "max", function() {
 						.replace( /@VERSION/g, version )
 						.replace( /@DATE/g, date );
 				}
-			});
-		});
+			} );
+		} );
 
 
 		done();
-	});
-});
+	} );
+} );
 
 grunt.registerTask( "testswarm", function( commit, configFile ) {
 	var testswarm = require( "testswarm" ),
@@ -173,7 +175,7 @@ grunt.registerTask( "testswarm", function( commit, configFile ) {
 	.auth( {
 		id: config.authUsername,
 		token: config.authToken
-	})
+	} )
 	.addjob(
 		{
 			name: "Commit <a href='https://github.com/jquery/jquery-color/commit/" + commit + "'>" + commit.substr( 0, 10 ) + "</a>",
@@ -189,11 +191,11 @@ grunt.registerTask( "testswarm", function( commit, configFile ) {
 			done( passed );
 		}
 	);
-});
+} );
 
 grunt.registerTask( "manifest", function() {
 	var pkg = grunt.config( "pkg" );
-	grunt.file.write( "color.jquery.json", JSON.stringify({
+	grunt.file.write( "color.jquery.json", JSON.stringify( {
 		name: "color",
 		title: pkg.title,
 		description: pkg.description,
@@ -204,10 +206,10 @@ grunt.registerTask( "manifest", function() {
 			url: pkg.author.url.replace( "master", pkg.version )
 		},
 		maintainers: pkg.maintainers,
-		licenses: pkg.licenses.map(function( license ) {
+		licenses: pkg.licenses.map( function( license ) {
 			license.url = license.url.replace( "master", pkg.version );
 			return license;
-		}),
+		} ),
 		bugs: pkg.bugs,
 		homepage: pkg.homepage,
 		docs: pkg.homepage,
@@ -216,10 +218,10 @@ grunt.registerTask( "manifest", function() {
 			jquery: ">=1.5"
 		}
 	}, null, "\t" ) );
-});
+} );
 
-grunt.registerTask( "default", [ "jshint", "qunit", "build", "compare_size" ] );
+grunt.registerTask( "default", [ "eslint", "qunit", "build", "compare_size" ] );
 grunt.registerTask( "build", [ "max", "concat", "uglify" ] );
-grunt.registerTask( "ci", [ "jshint", "qunit" ] );
+grunt.registerTask( "ci", [ "eslint", "qunit" ] );
 
 };
