@@ -92,6 +92,7 @@ jQuery.extend( jQuery.Color.names, {
 	lightyellow: "#ffffe0",
 	limegreen: "#32cd32",
 	linen: "#faf0e6",
+	magenta: "#ff00ff",
 	mediumaquamarine: "#66cdaa",
 	mediumblue: "#0000cd",
 	mediumorchid: "#ba55d3",
