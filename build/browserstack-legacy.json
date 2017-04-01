@@ -8,10 +8,7 @@
 	"browsers": [
 		"chrome_previous",
 		"firefox_previous",
-		{
-			"browser": "safari",
-			"browser_version": "8.0"
-		},
+		"safari_previous",
 		"ie_9",
 		"ie_10",
 		{
