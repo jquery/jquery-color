@@ -3,7 +3,7 @@
 	"root": true,
 	"rules": {
 
-		// Increase max-len to 120 for now, there are too many violations and the rule
+		// Increase max-len to 150 for now, there are too many violations and the rule
 		// is not auto-fixable.
 		"max-len": [
 			"error",
