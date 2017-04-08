@@ -40,8 +40,10 @@
     "grunt-contrib-qunit": "0.5.1",
     "grunt-contrib-uglify": "0.4.0",
     "grunt-git-authors": "1.2.0",
-    "testswarm": "1.1.0",
-    "qunitjs": "1.14.0"
+    "npm-install-version": "^6.0.1",
+    "qunitjs": "1.14.0",
+    "request": "2.81.0",
+    "testswarm": "1.1.0"
   },
   "commitplease": {
     "components": [
