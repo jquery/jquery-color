@@ -9,7 +9,8 @@
     "url": "https://github.com/jquery/jquery-color/blob/master/AUTHORS.txt"
   },
   "scripts": {
-    "ci": "node_modules/grunt-cli/bin/grunt ci"
+    "ci": "node_modules/grunt-cli/bin/grunt ci",
+    "postinstall": "node scripts/external-resources.js"
   },
   "maintainers": [
     {
