@@ -1,12 +1,12 @@
 /*!
- * jQuery Color Animations v@VERSION
+ * jQuery Color Animations v2.1.2
  * https://github.com/jquery/jquery-color
  *
  * Copyright jQuery Foundation and other contributors
  * Released under the MIT license.
  * http://jquery.org/license
  *
- * Date: @DATE
+ * Date: January 10 2013
  */
 
 ( function( root, factory ) {
