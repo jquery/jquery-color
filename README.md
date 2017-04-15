@@ -219,3 +219,7 @@ jQuery.Color.fn.contrastColor = function() {
 jQuery.Color("#bada55").contrastColor(); // "black"
 element.css( "color", jQuery.Color( element, "backgroundColor" ).contrastColor() );
 ```
+
+## jQuery Color Support
+
+jQuery color has the same support as the jQuery 1.x for browsers. [Check it](http://swarm.jquery.org/job/1746)
