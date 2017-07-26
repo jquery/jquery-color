@@ -1,4 +1,4 @@
-[![Build Status](http://jenkins.jquery.com/job/jQuery%20Color/badge/icon)](http://jenkins.jquery.com/job/jQuery%20Color/)
+[![Travis](https://api.travis-ci.org/jquery/jquery-color.svg?branch=master)](https://travis-ci.org/jquery/jquery-color)
 
 # jQuery Color
 
