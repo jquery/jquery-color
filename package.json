@@ -26,7 +26,13 @@
   },
   "bugs": "https://github.com/jquery/jquery-color/issues",
   "license": "MIT",
-  "main": "jquery.color.js",
+  "main": "dist/jquery.color.js",
+  "files": [
+    "dist",
+    "README.md",
+    "AUTHORS.txt",
+    "LICENSE.txt"
+  ],
   "dependencies": {},
   "peerDependencies": {
     "jquery": ">=1.11.0"
