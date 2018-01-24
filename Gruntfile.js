@@ -199,33 +199,6 @@ grunt.registerTask( "testswarm", function( commit, configFile ) {
 	);
 } );
 
-grunt.registerTask( "manifest", function() {
-	var pkg = grunt.config( "pkg" );
-	grunt.file.write( "color.jquery.json", JSON.stringify( {
-		name: "color",
-		title: pkg.title,
-		description: pkg.description,
-		keywords: pkg.keywords,
-		version: pkg.version,
-		author: {
-			name: pkg.author.name,
-			url: pkg.author.url.replace( "master", pkg.version )
-		},
-		maintainers: pkg.maintainers,
-		licenses: pkg.licenses.map( function( license ) {
-			license.url = license.url.replace( "master", pkg.version );
-			return license;
-		} ),
-		bugs: pkg.bugs,
-		homepage: pkg.homepage,
-		docs: pkg.homepage,
-		download: "http://code.jquery.com/#color",
-		dependencies: {
-			jquery: ">=1.5"
-		}
-	}, null, "\t" ) );
-} );
-
 grunt.registerTask( "default", [ "eslint", "qunit", "build", "compare_size" ] );
 grunt.registerTask( "build", [ "max", "concat", "uglify" ] );
 grunt.registerTask( "ci", [ "eslint", "qunit" ] );
