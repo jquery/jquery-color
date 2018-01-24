@@ -36,6 +36,18 @@ QUnit.test( "jQuery.Color( 255, 255, 255 )", function( assert ) {
 	}, assert );
 } );
 
+
+QUnit.test( "jQuery.Color({ red: 10, green: 20, blue: 30, alpha: 0.4 })", function( assert ) {
+	var blue = jQuery.Color( { red: 10, green: 20, blue: 30, alpha: 0.4 } );
+	testParts( blue, {
+		red: 10,
+		green: 20,
+		blue: 30,
+		alpha: 0.4
+	}, assert );
+	assert.ok( !blue._hsla, "No HSLA cache" );
+} );
+
 QUnit.test( "jQuery.Color( element, \"color\" )", function( assert ) {
 	var $div = jQuery( "<div>" ).css( "color", "#fff" );
 	assert.expect( 8 );
@@ -81,6 +93,17 @@ QUnit.test( "jQuery.Color({ alpha: 1 })", function( assert ) {
 		green: null,
 		blue: null,
 		alpha: 1
+	}, assert );
+	assert.ok( !blue._hsla, "No HSLA cache" );
+} );
+
+QUnit.test( "jQuery.Color({ alpha: 0.4 })", function( assert ) {
+	var blue = jQuery.Color( { alpha: 0.4 } );
+	testParts( blue, {
+		red: null,
+		green: null,
+		blue: null,
+		alpha: 0.4
 	}, assert );
 	assert.ok( !blue._hsla, "No HSLA cache" );
 } );
