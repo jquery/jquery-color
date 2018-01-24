@@ -16,7 +16,7 @@
 		"test"
 	],
 	"devDependencies": {
-		"qunit": "1.22.0",
+		"qunit": "2.5.0",
 		"jquery-1.5.2": "jquery#1.5.2",
 		"jquery-1.6.4": "jquery#1.6.4",
 		"jquery-1.7.2": "jquery#1.7.2",

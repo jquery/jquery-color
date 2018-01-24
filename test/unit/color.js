@@ -4,7 +4,7 @@ function testParts( color, parts, assert ) {
 	var prefix = parts.prefix || "";
 
 	if ( parts.expect ) {
-		QUnit.expect( parts.expect );
+		assert.expect( parts.expect );
 	}
 
 	jQuery.each( parts, function( key, value ) {
@@ -26,7 +26,7 @@ function parseTest( str, results, descr ) {
 }
 
 QUnit.test( "jQuery.Color( 255, 255, 255 )", function( assert ) {
-	QUnit.expect( 4 );
+	assert.expect( 4 );
 	testParts( jQuery.Color( 255, 255, 255 ), {
 		expect: 4,
 		red: 255,
@@ -38,7 +38,7 @@ QUnit.test( "jQuery.Color( 255, 255, 255 )", function( assert ) {
 
 QUnit.test( "jQuery.Color( element, \"color\" )", function( assert ) {
 	var $div = jQuery( "<div>" ).css( "color", "#fff" );
-	QUnit.expect( 8 );
+	assert.expect( 8 );
 	testParts( jQuery.Color( $div, "color" ), {
 		prefix: "jQuery(<div>): ",
 		red: 255,
@@ -199,7 +199,7 @@ QUnit.test( "red green blue alpha Setters", function( assert ) {
 	var props = "red green blue alpha".split( " " ),
 		color = jQuery.Color( [ 0, 0, 0, 0 ] );
 
-	QUnit.expect( 4 * props.length );
+	assert.expect( 4 * props.length );
 	jQuery.each( props, function( i, fn ) {
 		var tv = fn === "alpha" ? 0.5 : 255,
 			set = color[ fn ]( tv ),
@@ -221,7 +221,7 @@ QUnit.test( ".rgba()", function( assert ) {
 		set2 = color.rgba( [ null, null, 100, 0.5 ] ),
 		set3 = color.rgba( { red: 300, alpha: 2 } );
 
-	QUnit.expect( 14 );
+	assert.expect( 14 );
 
 	assert.deepEqual( getter, color._rgba, "Returned a array has same values" );
 	assert.notEqual( getter, color._rgba, "Returned a COPY of the rgba" );
@@ -256,7 +256,7 @@ QUnit.test( ".blend()", function( assert ) {
 		red = jQuery.Color( "red" ),
 		blend = halfwhite.blend( red );
 
-	QUnit.expect( 8 );
+	assert.expect( 8 );
 
 	testParts( blend, {
 		prefix: "Blending with color object: ",
@@ -281,7 +281,7 @@ QUnit.test( ".transition() works with $.Colors", function( assert ) {
 		trans = jQuery.Color( "transparent" ),
 		fifty = black.transition( whiteAlpha, 0.5 );
 
-	QUnit.expect( 16 );
+	assert.expect( 16 );
 	testParts( fifty, {
 		prefix: "black -> whiteAlpha 0.5",
 		red: 127,
@@ -360,7 +360,7 @@ QUnit.test( ".toRgbaString()", function( assert ) {
 	var black = jQuery.Color( "black" ),
 		trans = black.alpha( 0.5 );
 
-	QUnit.expect( 2 );
+	assert.expect( 2 );
 	assert.equal( black.toRgbaString(), "rgb(0,0,0)" );
 	assert.equal( trans.toRgbaString(), "rgba(0,0,0,0.5)" );
 } );
@@ -369,7 +369,7 @@ QUnit.test( ".toHexString()", function( assert ) {
 	var almostBlack = jQuery.Color( "black" ).red( 2 ).blue( 16 ),
 		trans = almostBlack.alpha( 0.5 );
 
-	QUnit.expect( 2 );
+	assert.expect( 2 );
 	assert.equal( almostBlack.toHexString(), "#020010", "to hex" );
 	assert.equal( trans.toHexString( true ), "#0200107f", "to hex with alpha" );
 } );
@@ -378,7 +378,7 @@ QUnit.test( "toString() methods keep alpha intact", function( assert ) {
 	var trans = jQuery.Color( "transparent" ),
 		opaque = jQuery.Color( "red" );
 
-	QUnit.expect( 4 );
+	assert.expect( 4 );
 	trans.toRgbaString();
 	opaque.toRgbaString();
 	assert.equal( trans.alpha(), 0, "toRgbaString()" );
@@ -471,7 +471,7 @@ parseTest( jQuery.Color( { saturation: 0, alpha: 0 } ), {
 
 
 QUnit.test( "HSLA Conversions", function( assert ) {
-	QUnit.expect( 11 );
+	assert.expect( 11 );
 	assert.equal( jQuery.Color( "#000" ).toHslaString(), "hsl(0,0%,0%)", "HSLA value from #000" );
 	assert.equal( jQuery.Color( "#fff" ).toHslaString(), "hsl(0,0%,100%)", "HSLA value from #fff" );
 	assert.equal( jQuery.Color( "#f00" ).toHslaString(), "hsl(0,100%,50%)", "HSLA value from #f00" );
@@ -525,7 +525,7 @@ QUnit.test( "HSLA Transitions", function( assert ) {
 QUnit.test( "hue saturation lightness alpha Setters", function( assert ) {
 	var props = "hue saturation lightness alpha".split( " " ),
 		color = jQuery.Color( [ 0, 0, 0, 0 ] );
-	QUnit.expect( 4 * props.length );
+	assert.expect( 4 * props.length );
 	jQuery.each( props, function( i, fn ) {
 		var tv = fn === "hue" ? 359 : 0.5,
 			set = color[ fn ]( tv ),
@@ -547,10 +547,11 @@ QUnit.test( "alpha setter leaves space as hsla", function( assert ) {
 
 QUnit.module( "animate" );
 QUnit.test( "animated", function( assert ) {
-	var el = jQuery( "<div></div>" ).css( { color: "#000000" } );
+	assert.expect( 8 );
 
-	QUnit.expect( 8 );
-	QUnit.stop();
+	var done = assert.async(),
+		el = jQuery( "<div></div>" ).css( { color: "#000000" } );
+
 	el.animate( { color: "#ffffff" }, 1, function() {
 		testParts( jQuery.Color( el, "color" ), {
 			prefix: "Post Animated Color finished properly",
@@ -569,23 +570,25 @@ QUnit.test( "animated", function( assert ) {
 			alpha: 1
 		}, assert );
 
-		QUnit.start();
+		done();
 	} );
 } );
 
-QUnit.asyncTest( "animated documentFragment", function( assert ) {
-	var el = jQuery( "<div></div>" );
-	QUnit.expect( 1 );
+QUnit.test( "animated documentFragment", function( assert ) {
+	assert.expect( 1 );
+
+	var done = assert.async(),
+		el = jQuery( "<div></div>" );
 
 	el.animate( { color: "red" }, 200, function() {
 		assert.ok( true, "Animation of color on documentFragment did not fail" );
-		QUnit.start();
+		done();
 	} );
 } );
 
 QUnit.test( "Setting CSS to empty string / inherit", function( assert ) {
 	var el = jQuery( "<div></div>" ).css( { color: "#fff" } );
-	QUnit.expect( 2 );
+	assert.expect( 2 );
 
 	el.css( "color", "" );
 	assert.equal( el[ 0 ].style.color, "", "CSS was set to empty string" );
@@ -595,7 +598,7 @@ QUnit.test( "Setting CSS to empty string / inherit", function( assert ) {
 } );
 
 QUnit.test( "Setting CSS to transparent", function( assert ) {
-	QUnit.expect( 1 );
+	assert.expect( 1 );
 
 	var parentEl = jQuery( "<div></div>" ).css( { backgroundColor: "blue" } ),
 		el = jQuery( "<div></div>" ).appendTo( parentEl );
@@ -604,7 +607,8 @@ QUnit.test( "Setting CSS to transparent", function( assert ) {
 	assert.equal( jQuery.Color( el[ 0 ].style.backgroundColor ).alpha(), 0, "CSS was set to transparent" );
 } );
 
-QUnit.test( "jQuery.Color.hook() - Create new hooks for color properties", 2, function( assert ) {
+QUnit.test( "jQuery.Color.hook() - Create new hooks for color properties", function( assert ) {
+	assert.expect( 2 );
 
 	// these shouldn't be there, but just in case....
 	delete jQuery.cssHooks.testy;
