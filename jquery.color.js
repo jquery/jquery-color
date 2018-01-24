@@ -24,6 +24,9 @@
 	var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightColor " +
 		"borderTopColor color columnRuleColor outlineColor textDecorationColor textEmphasisColor",
 
+	class2type = {},
+	toString = class2type.toString,
+
 	// plusequals test for += 100 -= 100
 	rplusequals = /^([\-+])=\s*(\d+\.?\d*)/,
 
@@ -153,6 +156,22 @@ each( spaces, function( spaceName, space ) {
 	};
 } );
 
+// Populate the class2type map
+jQuery.each( "Boolean Number String Function Array Date RegExp Object Error Symbol".split( " " ),
+	function( i, name ) {
+		class2type[ "[object " + name + "]" ] = name.toLowerCase();
+	} );
+
+function getType( obj ) {
+	if ( obj == null ) {
+		return obj + "";
+	}
+
+	return typeof obj === "object" ?
+		class2type[ toString.call( obj ) ] || "object" :
+		typeof obj;
+}
+
 function clamp( value, prop, allowEmpty ) {
 	var type = propTypes[ prop.type ] || {};
 
@@ -226,7 +245,7 @@ color.fn = jQuery.extend( color.prototype, {
 		}
 
 		var inst = this,
-			type = jQuery.type( red ),
+			type = getType( red ),
 			rgba = this._rgba = [];
 
 		// more than 1 argument specified - assume ( red, green, blue, alpha )
@@ -518,7 +537,7 @@ each( spaces, function( spaceName, space ) {
 		}
 
 		var ret,
-			type = jQuery.type( value ),
+			type = getType( value ),
 			arr = ( type === "array" || type === "object" ) ? value : arguments,
 			local = this[ cache ].slice();
 
@@ -548,7 +567,7 @@ each( spaces, function( spaceName, space ) {
 		}
 		color.fn[ key ] = function( value ) {
 			var local, cur, match, fn,
-				vtype = jQuery.type( value );
+				vtype = getType( value );
 
 			if ( key === "alpha" ) {
 				fn = this._hsla ? "hsla" : "rgba";
@@ -564,7 +583,7 @@ each( spaces, function( spaceName, space ) {
 
 			if ( vtype === "function" ) {
 				value = value.call( this, cur );
-				vtype = jQuery.type( value );
+				vtype = getType( value );
 			}
 			if ( value == null && prop.empty ) {
 				return this;
@@ -590,7 +609,7 @@ color.hook = function( hook ) {
 			set: function( elem, value ) {
 				var parsed;
 
-				if ( value !== "transparent" && ( jQuery.type( value ) !== "string" || ( parsed = stringParse( value ) ) ) ) {
+				if ( value !== "transparent" && ( getType( value ) !== "string" || ( parsed = stringParse( value ) ) ) ) {
 					value = color( parsed || value );
 					value = value.toRgbaString();
 				}
