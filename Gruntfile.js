@@ -84,7 +84,13 @@ grunt.initConfig( {
 				"jquery-3.0.0/LICENSE.txt": "jquery-3.0.0/LICENSE.txt",
 
 				"jquery-3.1.1/jquery.js": "jquery-3.1.1/dist/jquery.js",
-				"jquery-3.1.1/LICENSE.txt": "jquery-3.1.1/LICENSE.txt"
+				"jquery-3.1.1/LICENSE.txt": "jquery-3.1.1/LICENSE.txt",
+
+				"jquery-3.2.1/jquery.js": "jquery-3.2.1/dist/jquery.js",
+				"jquery-3.2.1/LICENSE.txt": "jquery-3.2.1/LICENSE.txt",
+
+				"jquery-3.3.1/jquery.js": "jquery-3.3.1/dist/jquery.js",
+				"jquery-3.3.1/LICENSE.txt": "jquery-3.3.1/LICENSE.txt"
 			}
 		}
 	},
