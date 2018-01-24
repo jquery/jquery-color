@@ -75,12 +75,12 @@ div {
 <script>
 jQuery("#go").click(function(){
 	jQuery("#block").animate({
-			backgroundColor: "#abcdef"
+		backgroundColor: "#abcdef"
 	}, 1500 );
 });
 jQuery("#sat").click(function(){
 	jQuery("#block").animate({
-			backgroundColor: jQuery.Color({ saturation: 0 })
+		backgroundColor: jQuery.Color({ saturation: 0 })
 	}, 1500 );
 });
 </script>
