@@ -2,11 +2,11 @@
   "name": "jquery-color",
   "title": "jQuery Color",
   "description": "jQuery plugin for color manipulation and animation support.",
-  "version": "3.0.0-pre",
+  "version": "3.0.0-alpha.1",
   "homepage": "https://github.com/jquery/jquery-color",
   "author": {
     "name": "jQuery Foundation and other contributors",
-    "url": "https://github.com/jquery/jquery-color/blob/master/AUTHORS.txt"
+    "url": "https://github.com/jquery/jquery-color/blob/3.0.0-alpha.1/AUTHORS.txt"
   },
   "scripts": {
     "browserstack": "sh build/run-browserstack.sh",
