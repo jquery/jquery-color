@@ -1,7 +1,7 @@
 sudo: false
 language: node_js
 node_js:
-  - "6"
+  - "8"
 cache:
   directories:
   - node_modules
@@ -20,7 +20,7 @@ env:
 matrix:
   fast_finish: true
   include:
-    - node_js: "6"
+    - node_js: "8"
       env: NPM_SCRIPT=browserstack
 script:
   - npm run-script $NPM_SCRIPT
