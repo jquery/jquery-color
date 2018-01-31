@@ -297,7 +297,10 @@ color.fn = jQuery.extend( color.prototype, {
 					if ( inst[ cache ] && jQuery.inArray( null, inst[ cache ].slice( 0, 3 ) ) < 0 ) {
 
 						// use the default of 1
-						inst[ cache ][ 3 ] = 1;
+						if ( inst[ cache ][ 3 ] == null ) {
+							inst[ cache ][ 3 ] = 1;
+						}
+
 						if ( space.from ) {
 							inst._rgba = space.from( inst[ cache ] );
 						}
