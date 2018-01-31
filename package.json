@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "browserstack-runner": "0.7.0",
-    "commitplease": "3.1.0",
+    "commitplease": "2.7.10",
     "eslint-config-jquery": "1.0.1",
     "grunt": "1.0.1",
     "grunt-bowercopy": "1.2.4",
