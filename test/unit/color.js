@@ -170,6 +170,27 @@ var sevens = {
 };
 parseTest( "#777", sevens );
 parseTest( "#777777", sevens );
+parseTest( "#77777726", {
+	expect: 4,
+	red: 119,
+	green: 119,
+	blue: 119,
+	alpha: 0.15
+} );
+parseTest( "#777777FF", {
+	expect: 4,
+	red: 119,
+	green: 119,
+	blue: 119,
+	alpha: 1
+} );
+parseTest( "#77777700", {
+	expect: 4,
+	red: 119,
+	green: 119,
+	blue: 119,
+	alpha: 0
+} );
 
 var fiftypercent = {
 	expect: 4,
