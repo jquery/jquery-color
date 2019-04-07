@@ -170,10 +170,22 @@ grunt.registerTask( "max", function() {
 	} );
 } );
 
-grunt.registerTask( "testswarm", function( commit, configFile ) {
-	var testswarm = require( "testswarm" ),
-		config = grunt.file.readJSON( configFile ).jquerycolor,
+grunt.registerTask( "testswarm", function( commit, configFile, projectName, browserSets,
+	timeout ) {
+	var config,
+		testswarm = require( "testswarm" ),
 		done = this.async();
+
+	projectName = projectName || "jquerycolor";
+	config = grunt.file.readJSON( configFile )[ projectName ];
+	browserSets = browserSets || config.browserSets;
+	if ( browserSets[ 0 ] === "[" ) {
+
+		// We got an array, parse it
+		browserSets = JSON.parse( browserSets );
+	}
+	timeout = timeout || 1000 * 60 * 15;
+
 	testswarm.createClient( {
 		url: config.swarmUrl
 	} )
@@ -189,7 +201,8 @@ grunt.registerTask( "testswarm", function( commit, configFile ) {
 				"jQuery color": config.testUrl + commit + "/test/index.html"
 			},
 			runMax: config.runMax,
-			browserSets: config.browserSets
+			browserSets: browserSets,
+			timeout: timeout
 		}, function( err, passed ) {
 			if ( err ) {
 				grunt.log.error( err );
