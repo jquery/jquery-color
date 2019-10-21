@@ -223,7 +223,7 @@ QUnit.test( "red green blue alpha Setters", function( assert ) {
 		color = jQuery.Color( [ 0, 0, 0, 0 ] );
 
 	assert.expect( 4 * props.length );
-	jQuery.each( props, function( i, fn ) {
+	jQuery.each( props, function( _i, fn ) {
 		var tv = fn === "alpha" ? 0.5 : 255,
 			set = color[ fn ]( tv ),
 			clamp = fn === "alpha" ? 1 : 255,
@@ -549,7 +549,7 @@ QUnit.test( "hue saturation lightness alpha Setters", function( assert ) {
 	var props = "hue saturation lightness alpha".split( " " ),
 		color = jQuery.Color( [ 0, 0, 0, 0 ] );
 	assert.expect( 4 * props.length );
-	jQuery.each( props, function( i, fn ) {
+	jQuery.each( props, function( _i, fn ) {
 		var tv = fn === "hue" ? 359 : 0.5,
 			set = color[ fn ]( tv ),
 			clamp = fn === "hue" ? -360 : 1,
