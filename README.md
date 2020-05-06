@@ -65,7 +65,7 @@ div {
 	border: 1px solid green;
 }
 </style>
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="jquery.color.min.js"></script>
 </head>
 <body>
@@ -73,13 +73,13 @@ div {
 <button id="sat">Desaturate</button>
 <div id="block">Hello!</div>
 <script>
-jQuery("#go").click(function(){
-	jQuery("#block").animate({
+$( "#go" ).on( "click", function() {
+	$( "#block" ).animate( {
 		backgroundColor: "#abcdef"
 	}, 1500 );
 });
-jQuery("#sat").click(function(){
-	jQuery("#block").animate({
+$( "#sat" ).on( "click", function() {
+	$( "#block" ).animate( {
 		backgroundColor: jQuery.Color({ saturation: 0 })
 	}, 1500 );
 });
@@ -109,8 +109,8 @@ The `jQuery.Color()` function allows you to create and manipulate color objects 
 ```javascript
 // Parsing String Colors:
 jQuery.Color( "#abcdef" );
-jQuery.Color( "rgb(100,200,255)" );
-jQuery.Color( "rgba(100,200,255,0.5)" );
+jQuery.Color( "rgb(100, 200, 255)" );
+jQuery.Color( "rgba(100, 200, 255, 0.5)" );
 jQuery.Color( "aqua" );
 
 // Creating Color Objects in Code:
@@ -147,14 +147,14 @@ lightness( val )  // returns a copy of the color object with the lightness set t
 rgba() // returns a rgba "tuple" [ red, green, blue, alpha ]
 // rgba() setters: returns a copy of the color with any defined values set to the new value
 rgba( red, green, blue, alpha )
-rgba({ red: red, green: green, blue: blue, alpha: alpha })
-rgba([ red, green, blue, alpha ])
+rgba( { red: red, green: green, blue: blue, alpha: alpha } )
+rgba( [ red, green, blue, alpha ] )
 
 hsla() // returns a HSL tuple [ hue, saturation, lightness, alpha ]
 // much like the rgb setter - returns a copy with any defined values set
 hsla( hue, saturation, lightness, alpha )
-hsla({ hue: hue, saturation: saturation, lightness: lightness, alpha: alpha )
-hsla([ hue, saturation, lightness, alpha ])
+hsla( { hue: hue, saturation: saturation, lightness: lightness, alpha: alpha } )
+hsla( [ hue, saturation, lightness, alpha ] )
 ```
 
 ### String methods
@@ -192,7 +192,7 @@ There is also a named color `"_default"` which by default is white, this is used
 A special note about the color `"transparent"` - It returns `null` for red green and blue unless you specify colors for these values.
 
 ```javascript
-jQuery.Color("#abcdef").transition("transparent", 0.5)
+jQuery.Color( "#abcdef" ).transition( "transparent", 0.5 )
 ```
 
 Animating to or from the value `"transparent"` will still use "#abcdef" for red green and blue.
@@ -211,11 +211,11 @@ It is possible for you to add your own functions to the color object.  For insta
 ```javascript
 // method taken from https://gist.github.com/960189
 jQuery.Color.fn.contrastColor = function() {
-	var r = this._rgba[0], g = this._rgba[1], b = this._rgba[2];
-	return (((r*299)+(g*587)+(b*144))/1000) >= 131.5 ? "black" : "white";
+	var r = this._rgba[ 0 ], g = this._rgba[ 1 ], b = this._rgba[ 2 ];
+	return ( ( ( r * 299 ) + ( g * 587 ) + ( b * 144 ) ) / 1000 ) >= 131.5 ? "black" : "white";
 };
 
 // usage examples:
-jQuery.Color("#bada55").contrastColor(); // "black"
+jQuery.Color( "#bada55" ).contrastColor(); // "black"
 element.css( "color", jQuery.Color( element, "backgroundColor" ).contrastColor() );
 ```
