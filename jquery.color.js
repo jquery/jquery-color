@@ -402,9 +402,9 @@ color.fn = jQuery.extend( color.prototype, {
 	toRgbaString: function() {
 		var prefix = "rgba(",
 			rgba = jQuery.map( this._rgba, function( v, i ) {
-                if ( v != null ) {
-                    return v;
-                }
+				if ( v != null ) {
+					return v;
+				}
 				return i > 2 ? 1 : 0;
 			} );
 
