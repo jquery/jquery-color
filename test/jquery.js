@@ -18,7 +18,7 @@ for ( ; i < length; i++ ) {
 if ( version === "git" || version === "3.x-git" ) {
 	url = "https://code.jquery.com/jquery-" + version + ".js";
 } else {
-	url = "../external/jquery-" + ( version || "3.4.1" ) + "/jquery.js";
+	url = "../external/jquery-" + ( version || "3.5.1" ) + "/jquery.js";
 }
 
 document.write( "<script src='" + url + "'></script>" );
