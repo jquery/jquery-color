@@ -16,8 +16,12 @@
   "maintainers": [
     {
       "name": "Corey Frang",
-      "email": "gnarf37@gmail.com",
-      "url": "http://gnarf.net"
+      "email": "gnarf37@gmail.com"
+    },
+    {
+      "name": "Michał Gołębiowski-Owczarek",
+      "email": "m.goleb@gmail.com",
+      "url": "https://github.com/mgol"
     }
   ],
   "repository": {
