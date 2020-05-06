@@ -192,6 +192,28 @@ parseTest( "#77777700", {
 	alpha: 0
 } );
 
+parseTest( "#7776", {
+	expect: 4,
+	red: 119,
+	green: 119,
+	blue: 119,
+	alpha: 0.4
+} );
+parseTest( "#777F", {
+	expect: 4,
+	red: 119,
+	green: 119,
+	blue: 119,
+	alpha: 1
+} );
+parseTest( "#7770", {
+	expect: 4,
+	red: 119,
+	green: 119,
+	blue: 119,
+	alpha: 0
+} );
+
 var fiftypercent = {
 	expect: 4,
 	red: 127,
