@@ -10,26 +10,23 @@
 		"firefox_previous",
 		"safari_previous",
 		"edge_previous",
-		"ie_9",
 		"ie_10",
 		{
 			"os": "iOS",
 			"os_version": "7.0",
+			"device": "iPhone 5S",
 			"real_mobile": false
 		},
 		{
 			"os": "iOS",
 			"os_version": "8.3",
+			"device": "iPhone 6",
 			"real_mobile": false
 		},
 		{
 			"os": "iOS",
 			"os_version": "9.3",
-			"real_mobile": false
-		},
-		{
-			"os": "iOS",
-			"os_version": "10.3",
+			"device": "iPhone 6S",
 			"real_mobile": false
 		}
 	]
