@@ -427,7 +427,7 @@ color.fn = jQuery.extend( color.prototype, {
 			prefix = "rgb(";
 		}
 
-		return prefix + rgba.join( ", " ) + ")";
+		return prefix + rgba.join() + ")";
 	},
 	toHslaString: function() {
 		var prefix = "hsla(",
@@ -447,7 +447,7 @@ color.fn = jQuery.extend( color.prototype, {
 			hsla.pop();
 			prefix = "hsl(";
 		}
-		return prefix + hsla.join( ", " ) + ")";
+		return prefix + hsla.join() + ")";
 	},
 	toHexString: function( includeAlpha ) {
 		var rgba = this._rgba.slice(),
@@ -465,7 +465,7 @@ color.fn = jQuery.extend( color.prototype, {
 		} ).join( "" );
 	},
 	toString: function() {
-		return this.toRgbaString();
+		return this._rgba[ 3 ] === 0 ? "transparent" : this.toRgbaString();
 	}
 } );
 color.fn.parse.prototype = color.fn;

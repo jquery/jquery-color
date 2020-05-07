@@ -228,12 +228,12 @@ var fiftypercent = {
 	blue: 127,
 	alpha: 0.5
 };
-parseTest( "rgb(127, 127, 127)", fiftypercent );
-parseTest( "rgb(50%, 50%, 50%)", fiftypercent );
-parseTest( "rgba(127, 127, 127, 1)", fiftypercent );
-parseTest( "rgba(50%, 50%, 50%, 1)", fiftypercent );
-parseTest( "rgba(127, 127, 127, 0.5)", fiftypercentalpha );
-parseTest( "rgba(50%, 50%, 50%, 0.5)", fiftypercentalpha );
+parseTest( "rgb(127,127,127)", fiftypercent );
+parseTest( "rgb(50%,50%,50%)", fiftypercent );
+parseTest( "rgba(127,127,127,1)", fiftypercent );
+parseTest( "rgba(50%,50%,50%,1)", fiftypercent );
+parseTest( "rgba(127,127,127,0.5)", fiftypercentalpha );
+parseTest( "rgba(50%,50%,50%,0.5)", fiftypercentalpha );
 parseTest( "rgba(127, 127, 127, .5)", fiftypercentalpha );
 parseTest( "rgba(50%, 50%, 50%, .5)", fiftypercentalpha );
 parseTest( "rgba(0, 0, 0, 0)", {
@@ -417,7 +417,7 @@ QUnit.test( ".is()", function( assert ) {
 	assert.ok( red.is( red ), "Red is itself" );
 	assert.ok( red.is( { red: 255 } ), "Red is equal to { red: 255 }" );
 	assert.ok( red.is( { saturation: 1 } ), "Red is equal to { saturation: 1 }" );
-	assert.ok( red.is( [ 255, 0, 0 ] ), "Red is equal to [255, 0, 0]" );
+	assert.ok( red.is( [ 255, 0, 0 ] ), "Red is equal to [255,0,0]" );
 	assert.ok( red.is( "red" ), "Red is equal to \"red\"" );
 	assert.ok( !red.is( "blue" ), "Red is not blue" );
 	assert.ok( !red.is( { alpha: 0 } ), "Red is not { alpha: 0 }" );
@@ -428,8 +428,8 @@ QUnit.test( ".toRgbaString()", function( assert ) {
 		trans = black.alpha( 0.5 );
 
 	assert.expect( 2 );
-	assert.equal( black.toRgbaString(), "rgb(0, 0, 0)" );
-	assert.equal( trans.toRgbaString(), "rgba(0, 0, 0, 0.5)" );
+	assert.equal( black.toRgbaString(), "rgb(0,0,0)" );
+	assert.equal( trans.toRgbaString(), "rgba(0,0,0,0.5)" );
 } );
 
 QUnit.test( ".toHexString()", function( assert ) {
@@ -459,7 +459,7 @@ QUnit.test( "toString() methods keep alpha intact", function( assert ) {
 
 QUnit.module( "hsla" );
 
-parseTest( "hsla(180, 50%, 50%, 0.5)", {
+parseTest( "hsla(180,50%,50%,0.5)", {
 	expect: 7,
 	hue: 180,
 	saturation: 0.5,
@@ -539,17 +539,17 @@ parseTest( jQuery.Color( { saturation: 0, alpha: 0 } ), {
 
 QUnit.test( "HSLA Conversions", function( assert ) {
 	assert.expect( 11 );
-	assert.equal( jQuery.Color( "#000" ).toHslaString(), "hsl(0, 0%, 0%)", "HSLA value from #000" );
-	assert.equal( jQuery.Color( "#fff" ).toHslaString(), "hsl(0, 0%, 100%)", "HSLA value from #fff" );
-	assert.equal( jQuery.Color( "#f00" ).toHslaString(), "hsl(0, 100%, 50%)", "HSLA value from #f00" );
-	assert.equal( jQuery.Color( "#ff0" ).toHslaString(), "hsl(60, 100%, 50%)", "HSLA value from #ff0" );
-	assert.equal( jQuery.Color( "#0f0" ).toHslaString(), "hsl(120, 100%, 50%)", "HSLA value from #0f0" );
-	assert.equal( jQuery.Color( "#0ff" ).toHslaString(), "hsl(180, 100%, 50%)", "HSLA value from #0ff" );
-	assert.equal( jQuery.Color( "#00f" ).toHslaString(), "hsl(240, 100%, 50%)", "HSLA value from #00f" );
-	assert.equal( jQuery.Color( "#f0f" ).toHslaString(), "hsl(300, 100%, 50%)", "HSLA value from #f0f" );
-	assert.equal( jQuery.Color( "#7f007f" ).toHslaString(), "hsl(300, 100%, 25%)", "HSLA value from #7f007f" );
-	assert.equal( jQuery.Color( "#ff7fff" ).toHslaString(), "hsl(300, 100%, 75%)", "HSLA value from #ff7fff" );
-	assert.equal( jQuery.Color( "rgba(127, 127, 127, 0.1)" ).toHslaString(), "hsla(0, 0%, 50%, 0.1)", "HSLA value from rgba(127, 127, 127, 0.1)" );
+	assert.equal( jQuery.Color( "#000" ).toHslaString(), "hsl(0,0%,0%)", "HSLA value from #000" );
+	assert.equal( jQuery.Color( "#fff" ).toHslaString(), "hsl(0,0%,100%)", "HSLA value from #fff" );
+	assert.equal( jQuery.Color( "#f00" ).toHslaString(), "hsl(0,100%,50%)", "HSLA value from #f00" );
+	assert.equal( jQuery.Color( "#ff0" ).toHslaString(), "hsl(60,100%,50%)", "HSLA value from #ff0" );
+	assert.equal( jQuery.Color( "#0f0" ).toHslaString(), "hsl(120,100%,50%)", "HSLA value from #0f0" );
+	assert.equal( jQuery.Color( "#0ff" ).toHslaString(), "hsl(180,100%,50%)", "HSLA value from #0ff" );
+	assert.equal( jQuery.Color( "#00f" ).toHslaString(), "hsl(240,100%,50%)", "HSLA value from #00f" );
+	assert.equal( jQuery.Color( "#f0f" ).toHslaString(), "hsl(300,100%,50%)", "HSLA value from #f0f" );
+	assert.equal( jQuery.Color( "#7f007f" ).toHslaString(), "hsl(300,100%,25%)", "HSLA value from #7f007f" );
+	assert.equal( jQuery.Color( "#ff7fff" ).toHslaString(), "hsl(300,100%,75%)", "HSLA value from #ff7fff" );
+	assert.equal( jQuery.Color( "rgba(127,127,127,0.1)" ).toHslaString(), "hsla(0,0%,50%,0.1)", "HSLA value from rgba(127,127,127,0.1)" );
 } );
 
 QUnit.test( "HSLA Transitions", function( assert ) {
