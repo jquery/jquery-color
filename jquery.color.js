@@ -640,7 +640,7 @@ color.hook = function( hook ) {
 					if ( !support.rgba && value._rgba[ 3 ] !== 1 ) {
 						curElem = hook === "backgroundColor" ? elem.parentNode : elem;
 						while (
-							(backgroundColor === "" || backgroundColor === "transparent") &&
+							( backgroundColor === "" || backgroundColor === "transparent" ) &&
 							curElem && curElem.style
 						) {
 							try {
@@ -659,7 +659,8 @@ color.hook = function( hook ) {
 				}
 				try {
 					elem.style[ hook ] = value;
-				} catch( e ) {
+				} catch ( e ) {
+
 					// wrapped to prevent IE from throwing errors on "invalid" values like 'auto' or 'inherit'
 				}
 			}
