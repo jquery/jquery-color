@@ -6,21 +6,19 @@ Supported jQuery versions: 1.5+
 
 ## Browser Support
 
-jQuery Color 3.x supports the following browsers:
+jQuery Color 2.x supports the following browsers:
 
 Desktop:
 * Chrome: (Current - 1) and Current
 * Edge: (Current - 1) and Current, 18
 * Firefox: (Current - 1) and Current, ESR
-* Internet Explorer: 9+
-* Safari: (Current - 1) and Current
+* Internet Explorer: 6+
+* Safari: 5.1+
 * Opera: Current
 
 Mobile:
-* Chrome on Android: (Current - 1) and Current
-* Safari on iOS: (Current - 2), (Current - 1) and Current
-
-Information on browser support of jQuery Color 2.x can be found in the [Browser Support section](https://github.com/jquery/jquery-color/blob/2.x-stable/README.md#browser-support) in its README.
+* Stock browser on Android 4.0+
+* Safari on iOS 7+
 
 ## Using jQuery Color in Production
 We release jQuery Color by itself, or in a bundle.  The extended names can be included as a jQuery Color plugin, or you can download the version of jQuery Color that includes the names.  Choose your build from the following list:
