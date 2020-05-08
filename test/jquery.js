@@ -15,7 +15,7 @@ for ( ; i < length; i++ ) {
 	}
 }
 
-if ( version === "git" || version === "3.x-git" ) {
+if ( /(?:3.x-)?git(\.min)?/.test( version ) ) {
 	url = "https://code.jquery.com/jquery-" + version + ".js";
 } else {
 	url = "../external/jquery-" + ( version || "3.5.1" ) + "/jquery.js";

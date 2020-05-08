@@ -37,6 +37,34 @@ require( "load-grunt-tasks" )( grunt );
 grunt.initConfig( {
 	pkg: grunt.file.readJSON( "package.json" ),
 
+	tests: {
+		jquery: [
+			"git",
+			"git.min"
+		],
+		"jquery-3": [
+			"3.x-git",
+			"3.x-git.min",
+			"3.5.1",
+			"3.4.1",
+			"3.3.1",
+			"3.2.1",
+			"3.1.1",
+			"3.0.0",
+			"2.2.4",
+			"2.1.4",
+			"2.0.3",
+			"1.12.4",
+			"1.11.3",
+			"1.10.2",
+			"1.9.1",
+			"1.8.3",
+			"1.7.2",
+			"1.6.4",
+			"1.5.2"
+		]
+	},
+
 	bowercopy: {
 		all: {
 			options: {
@@ -178,8 +206,9 @@ grunt.registerTask( "max", function() {
 
 grunt.registerTask( "testswarm", function( commit, configFile, projectName, browserSets,
 	timeout ) {
-	var config,
+	var config, tests,
 		testswarm = require( "testswarm" ),
+		runs = {},
 		done = this.async();
 
 	projectName = projectName || "jquerycolor";
@@ -192,6 +221,15 @@ grunt.registerTask( "testswarm", function( commit, configFile, projectName, brow
 	}
 	timeout = timeout || 1000 * 60 * 15;
 
+	tests = grunt.config( "tests" )[
+		Array.isArray( browserSets ) ? browserSets[ 0 ] : browserSets ||
+			"jquery" ];
+
+	tests.forEach( function( jQueryVersion ) {
+		runs[ jQueryVersion ] = config.testUrl + commit +
+			"/test/index.html?jquery=" + jQueryVersion;
+	} );
+
 	testswarm.createClient( {
 		url: config.swarmUrl
 	} )
@@ -203,9 +241,7 @@ grunt.registerTask( "testswarm", function( commit, configFile, projectName, brow
 	.addjob(
 		{
 			name: "Commit <a href='https://github.com/jquery/jquery-color/commit/" + commit + "'>" + commit.substr( 0, 10 ) + "</a>",
-			runs: {
-				"jQuery color": config.testUrl + commit + "/test/index.html"
-			},
+			runs: runs,
 			runMax: config.runMax,
 			browserSets: browserSets,
 			timeout: timeout
