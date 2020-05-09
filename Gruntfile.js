@@ -59,9 +59,7 @@ grunt.initConfig( {
 			"1.10.2",
 			"1.9.1",
 			"1.8.3",
-			"1.7.2",
-			"1.6.4",
-			"1.5.2"
+			"1.7.2"
 		]
 	},
 
@@ -74,12 +72,6 @@ grunt.initConfig( {
 				"qunit/qunit.js": "qunit/qunit/qunit.js",
 				"qunit/qunit.css": "qunit/qunit/qunit.css",
 				"qunit/LICENSE.txt": "qunit/LICENSE.txt",
-
-				"jquery-1.5.2/jquery.js": "jquery-1.5.2/jquery.js",
-				"jquery-1.5.2/MIT-LICENSE.txt": "jquery-1.5.2/MIT-LICENSE.txt",
-
-				"jquery-1.6.4/jquery.js": "jquery-1.6.4/jquery.js",
-				"jquery-1.6.4/MIT-LICENSE.txt": "jquery-1.6.4/MIT-LICENSE.txt",
 
 				"jquery-1.7.2/jquery.js": "jquery-1.7.2/jquery.js",
 				"jquery-1.7.2/MIT-LICENSE.txt": "jquery-1.7.2/MIT-LICENSE.txt",
