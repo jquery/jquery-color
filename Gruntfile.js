@@ -42,7 +42,7 @@ grunt.initConfig( {
 			"git",
 			"git.min"
 		],
-		"jquery-3": [
+		"jquery-color": [
 			"3.x-git",
 			"3.x-git.min",
 			"3.5.1",
