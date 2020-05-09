@@ -2,7 +2,7 @@
  * jQuery Color Animations v@VERSION
  * https://github.com/jquery/jquery-color
  *
- * Copyright jQuery Foundation and other contributors
+ * Copyright OpenJS Foundation and other contributors
  * Released under the MIT license.
  * http://jquery.org/license
  *

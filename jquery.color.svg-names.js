@@ -5,7 +5,7 @@
  * Remaining HTML/CSS color names per W3C's CSS Color Module Level 4 draft.
  * https://drafts.csswg.org/css-color-4/
  *
- * Copyright jQuery Foundation and other contributors
+ * Copyright OpenJS Foundation and other contributors
  * Released under the MIT license.
  * http://jquery.org/license
  *
