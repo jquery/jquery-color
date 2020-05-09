@@ -2,6 +2,8 @@
 
 # jQuery Color
 
+Supported jQuery versions: 1.5+
+
 ## Browser Support
 
 jQuery Color 3.x supports the following browsers:
