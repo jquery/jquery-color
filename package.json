@@ -9,7 +9,6 @@
     "url": "https://github.com/jquery/jquery-color/blob/master/AUTHORS.txt"
   },
   "scripts": {
-    "browserstack": "sh build/run-browserstack.sh",
     "ci": "grunt ci",
     "test": "grunt ci"
   },
@@ -42,7 +41,6 @@
     "jquery": ">=1.11.0"
   },
   "devDependencies": {
-    "browserstack-runner": "0.9.1",
     "commitplease": "3.2.0",
     "eslint-config-jquery": "3.0.0",
     "grunt": "1.1.0",

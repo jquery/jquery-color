@@ -12,15 +12,7 @@ notifications:
     template:
     - ! '%{repository}#%{build_number} (%{branch} - %{commit} %{author}): %{message}
       - %{build_url}'
-before_install:
-  - true && `base64 --decode <<< ZXhwb3J0IEJST1dTRVJTVEFDS19VU0VSTkFNRT1qcXVlcnljb2xvcjE=`
-  - true && `base64 --decode <<< ZXhwb3J0IEJST1dTRVJTVEFDS19LRVk9RllGR3Z1WWdyWHF6OHlrN1JXUWU=`
 env:
   - NPM_SCRIPT=ci
-matrix:
-  fast_finish: true
-  include:
-    - node_js: "14"
-      env: NPM_SCRIPT=browserstack
 script:
   - npm run-script $NPM_SCRIPT
