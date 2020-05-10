@@ -1,7 +1,7 @@
 sudo: false
 language: node_js
 node_js:
-  - "14"
+- '14'
 cache:
   directories:
   - node_modules
@@ -10,17 +10,20 @@ notifications:
     channels:
     - chat.freenode.net#jquery-dev
     template:
-    - ! '%{repository}#%{build_number} (%{branch} - %{commit} %{author}): %{message}
-      - %{build_url}'
-before_install:
-  - true && `base64 --decode <<< ZXhwb3J0IEJST1dTRVJTVEFDS19VU0VSTkFNRT1qcXVlcnljb2xvcjE=`
-  - true && `base64 --decode <<< ZXhwb3J0IEJST1dTRVJTVEFDS19LRVk9RllGR3Z1WWdyWHF6OHlrN1JXUWU=`
+    - "%{repository}#%{build_number} (%{branch} - %{commit} %{author}): %{message}
+      - %{build_url}"
 env:
+  matrix:
   - NPM_SCRIPT=ci
+  global:
+  # BROWSER_STACK_USERNAME
+  - secure: epX4ZrtNIdYQP1XDX0+9q/tuVbqwDkWSaFEeVMYu5mDr2ww9pJSIVdQtmcvAx9S9iNLBe6omonsaana6pCOfTtSM2VcbhUFop9/sQliDtOT50l7OMLxuq7/ObawmAQcMc5HT8fRgdBzcRHLw01h3DufUZYDnnYmVqhjEull/paY=
+  # BROWSER_STACK_ACCESS_KEY
+  - secure: JvFcXKk35GoaM4GmzxHQrT3/GAuReXtz32CCEfHqY6rjpdjuAl/ZCtlgRCKn7n0CW9U5q1jD4vHdKkPvdgNyE7KaiGWxbldztytOiz6kFT8TOaajLsjhvkyLB7Oav6ENxBytQpweW1ZTzDndob0rKN4H9SF/xvPV4j6n0pMT7TM=
 matrix:
   fast_finish: true
   include:
-    - node_js: "14"
-      env: NPM_SCRIPT=browserstack
+  - node_js: '14'
+    env: NPM_SCRIPT=browserstack
 script:
-  - npm run-script $NPM_SCRIPT
+- npm run-script $NPM_SCRIPT
