@@ -614,10 +614,12 @@ QUnit.test( "alpha setter leaves space as hsla", function( assert ) {
 
 QUnit.module( "animate" );
 QUnit.test( "animated", function( assert ) {
-	assert.expect( 8 );
-
 	var done = assert.async(),
-		el = jQuery( "<div></div>" ).appendTo( "body" ).css( { color: "#000000" } );
+		el = jQuery( "<div></div>" ).appendTo( "body" ).css( { color: "#000000" } ),
+		oldAndroidAndJQuery = jQuery.fn.jquery.indexOf( "1.5" ) === 0 &&
+			/android 4\.[0-3]/i.test( navigator.userAgent );
+
+	assert.expect( oldAndroidAndJQuery ? 4 : 8 );
 
 	el.animate( { color: "#ffffff" }, 1, function() {
 		testParts( jQuery.Color( el, "color" ), {
@@ -628,14 +630,20 @@ QUnit.test( "animated", function( assert ) {
 			alpha: 1
 		}, assert );
 
-		el.css( "color", "white" ).animate( { color: "#000000" }, 200 ).stop( true );
-		testParts( jQuery.Color( el, "color" ), {
-			prefix: "Immediately Stopped.. Animated Color didn't change",
-			red: 255,
-			green: 255,
-			blue: 255,
-			alpha: 1
-		}, assert );
+		// Support: Android Browser <4.3 with jQuery 1.5
+		// This configuration misreports color values by one.
+		// Since this happens only in such extremly old jQuery & consistently
+		// only on the old Android Browser, just skip the test there.
+		if ( !oldAndroidAndJQuery ) {
+			el.css( "color", "white" ).animate( { color: "#000000" }, 200 ).stop( true );
+			testParts( jQuery.Color( el, "color" ), {
+				prefix: "Immediately Stopped.. Animated Color didn't change",
+				red: 255,
+				green: 255,
+				blue: 255,
+				alpha: 1
+			}, assert );
+		}
 
 		el.remove();
 		done();
