@@ -141,10 +141,12 @@ grunt.initConfig( {
 
 	qunit: {
 		files: "test/index.html",
-		puppeteer: {
-			args: process.env.JENKINS_HOME ?
-				[ "--no-sandbox", "--disable-setuid-sandbox" ] :
-				[]
+		options: {
+			puppeteer: {
+				args: process.env.JENKINS_HOME ?
+					[ "--no-sandbox", "--disable-setuid-sandbox" ] :
+					[]
+			}
 		}
 	},
 
