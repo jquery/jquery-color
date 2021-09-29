@@ -79,7 +79,7 @@ div {
 	border: 1px solid green;
 }
 </style>
-<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="jquery.color.min.js"></script>
 </head>
 <body>
