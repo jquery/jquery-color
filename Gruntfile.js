@@ -257,7 +257,13 @@ grunt.registerTask( "testswarm", function( commit, configFile, projectName, brow
 	);
 } );
 
-grunt.registerTask( "default", [ "eslint", "qunit", "build", "compare_size" ] );
+grunt.registerTask( "default", [
+	"eslint",
+	"bowercopy",
+	"qunit",
+	"build",
+	"compare_size"
+] );
 grunt.registerTask( "build", [ "max", "concat", "uglify" ] );
 grunt.registerTask( "ci", [ "eslint", "qunit" ] );
 
