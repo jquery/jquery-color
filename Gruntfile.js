@@ -45,6 +45,7 @@ grunt.initConfig( {
 		"jquery-color": [
 			"3.x-git",
 			"3.x-git.min",
+			"3.6.0",
 			"3.5.1",
 			"3.4.1",
 			"3.3.1",
@@ -116,7 +117,10 @@ grunt.initConfig( {
 				"jquery-3.4.1/LICENSE.txt": "jquery-3.4.1/LICENSE.txt",
 
 				"jquery-3.5.1/jquery.js": "jquery-3.5.1/dist/jquery.js",
-				"jquery-3.5.1/LICENSE.txt": "jquery-3.5.1/LICENSE.txt"
+				"jquery-3.5.1/LICENSE.txt": "jquery-3.5.1/LICENSE.txt",
+
+				"jquery-3.6.0/jquery.js": "jquery-3.6.0/dist/jquery.js",
+				"jquery-3.6.0/LICENSE.txt": "jquery-3.6.0/LICENSE.txt"
 			}
 		}
 	},
