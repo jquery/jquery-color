@@ -6,7 +6,7 @@
   "homepage": "https://github.com/jquery/jquery-color",
   "author": {
     "name": "OpenJS Foundation and other contributors",
-    "url": "https://github.com/jquery/jquery-color/blob/master/AUTHORS.txt"
+    "url": "https://github.com/jquery/jquery-color/blob/main/AUTHORS.txt"
   },
   "scripts": {
     "browserstack": "sh build/run-browserstack.sh",
