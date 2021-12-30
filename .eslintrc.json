@@ -1,6 +1,17 @@
 {
 	"extends": "eslint-config-jquery",
+
 	"root": true,
+
+	"parserOptions": {
+		"ecmaVersion": 2018
+	},
+
+	"env": {
+		"es6": true,
+		"node": true
+	},
+
 	"rules": {
 
 		// Increase max-len to 150 for now, there are too many violations and the rule
@@ -13,13 +24,41 @@
 			}
 		]
 	},
-	"env": {
-		"node": true
-	},
+
 	"globals": {
 		"jQuery": true,
 		"define": true,
 		"require": true,
 		"module": true
-	}
+	},
+
+	"overrides": [
+		{
+			"files": [
+				"jquery.color.*",
+				"test/data/*.js",
+				"test/unit/*.js"
+			],
+			"parserOptions": {
+				"ecmaVersion": 3
+			},
+			"env": {
+				"es6": false,
+				"browser": true,
+				"node": false
+			}
+		},
+
+		{
+			"files": [ "test/karma/*.js" ],
+			"parserOptions": {
+				"ecmaVersion": 2018
+			},
+			"env": {
+				"es6": true,
+				"browser": false,
+				"node": true
+			}
+		}
+	]
 }

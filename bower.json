@@ -14,24 +14,5 @@
 		"Gruntfile.js",
 		"external",
 		"test"
-	],
-	"devDependencies": {
-		"qunit": "2.10.0",
-		"jquery-1.7.2": "jquery#1.7.2",
-		"jquery-1.8.3": "jquery#1.8.3",
-		"jquery-1.9.1": "jquery#1.9.1",
-		"jquery-1.10.2": "jquery#1.10.2",
-		"jquery-1.11.3": "jquery#1.11.3",
-		"jquery-1.12.4": "jquery#1.12.4",
-		"jquery-2.0.3": "jquery#2.0.3",
-		"jquery-2.1.4": "jquery#2.1.4",
-		"jquery-2.2.4": "jquery#2.2.4",
-		"jquery-3.0.0": "jquery#3.0.0",
-		"jquery-3.1.1": "jquery#3.1.1",
-		"jquery-3.2.1": "jquery#3.2.1",
-		"jquery-3.3.1": "jquery#3.3.1",
-		"jquery-3.4.1": "jquery#3.4.1",
-		"jquery-3.5.1": "jquery#3.5.1",
-		"jquery-3.6.0": "jquery#3.6.0"
-	}
+	]
 }

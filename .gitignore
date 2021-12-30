@@ -1,5 +1,6 @@
 .sizecache.json
-/bower_components
 /dist
 /node_modules
 /package-lock.json
+/*.log
+/*.err

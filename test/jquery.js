@@ -18,7 +18,7 @@ for ( ; i < length; i++ ) {
 if ( /(?:3.x-)?git(\.min)?/.test( version ) ) {
 	url = "https://releases.jquery.com/git/jquery-" + version + ".js";
 } else {
-	url = "../external/jquery-" + ( version || "3.6.0" ) + "/jquery.js";
+	url = "../external/jquery" + ( version ? "-" + version : "" ) + "/jquery.js";
 }
 
 document.write( "<script src='" + url + "'></script>" );
