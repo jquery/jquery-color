@@ -1,0 +1,45 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Node.js 10 is required by jQuery infra
+        NODE_VERSION: [10.x, 16.x]
+        NPM_SCRIPT: ["ci"]
+        include:
+          - NAME: "Browser tests"
+            NODE_VERSION: "16.x"
+            NPM_SCRIPT: "browserstack"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ matrix.NODE_VERSION }}-npm-lock-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ matrix.NODE_VERSION }}-npm-lock-
+
+    - name: Use Node.js ${{ matrix.NODE_VERSION }}
+      uses: actions/setup-node@v2.1.2
+      with:
+        node-version: ${{ matrix.NODE_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        npm install
+
+    - name: Run tests
+      env:
+        BROWSER_STACK_USERNAME: ${{ secrets.BROWSER_STACK_USERNAME }}
+        BROWSER_STACK_ACCESS_KEY: ${{ secrets.BROWSER_STACK_ACCESS_KEY }}
+      run: |
+        export PATH=${HOME}/firefox:$PATH
+        npm run ${{ matrix.NPM_SCRIPT }}
