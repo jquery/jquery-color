@@ -2,7 +2,7 @@
 
 # jQuery Color
 
-Supported jQuery versions: 1.7+
+Supported jQuery versions: 1.8+
 
 ## Browser Support
 
