@@ -41,6 +41,15 @@ minify.svg.files[ min[ 1 ] ] = [ max[ 1 ] ];
 minify.combined.files[ min[ 2 ] ] = [ combined ];
 concat[ combined ] = [ max[ 0 ], max[ 1 ] ];
 
+const oldNode = /^v10\./.test( process.version );
+
+// Support: Node.js <12
+// Skip running tasks that dropped support for Node.js 10
+// in this Node version.
+function runIfNewNode( task ) {
+	return oldNode ? "print_old_node_message:" + task : task;
+}
+
 require( "load-grunt-tasks" )( grunt );
 
 grunt.initConfig( {
@@ -54,7 +63,7 @@ grunt.initConfig( {
 		"jquery-color": [
 			"3.x-git",
 			"3.x-git.min",
-			"3.6.0",
+			"3.6.1",
 			"3.5.1",
 			"3.4.1",
 			"3.3.1",
@@ -73,15 +82,17 @@ grunt.initConfig( {
 	},
 
 	npmcopy: {
-		all: {
+		options: {
+			destPrefix: "external"
+		},
+		legacy: {
 			options: {
-				destPrefix: "external"
+
+				// jQuery `<1.11` and `>=2 <2.1` wasn't published on npm, so
+				// we maintain their copies directly in the repository.
+				srcPrefix: "external-legacy-source"
 			},
 			files: {
-				"qunit/qunit.js": "qunit/qunit/qunit.js",
-				"qunit/qunit.css": "qunit/qunit/qunit.css",
-				"qunit/LICENSE.txt": "qunit/LICENSE.txt",
-
 				"jquery-1.8.3/jquery.js": "jquery-1.8.3/jquery.js",
 				"jquery-1.8.3/MIT-LICENSE.txt": "jquery-1.8.3/MIT-LICENSE.txt",
 
@@ -91,14 +102,21 @@ grunt.initConfig( {
 				"jquery-1.10.2/jquery.js": "jquery-1.10.2/jquery.js",
 				"jquery-1.10.2/MIT-LICENSE.txt": "jquery-1.10.2/MIT-LICENSE.txt",
 
+				"jquery-2.0.3/jquery.js": "jquery-2.0.3/jquery.js",
+				"jquery-2.0.3/MIT-LICENSE.txt": "jquery-2.0.3/MIT-LICENSE.txt"
+			}
+		},
+		modern: {
+			files: {
+				"qunit/qunit.js": "qunit/qunit/qunit.js",
+				"qunit/qunit.css": "qunit/qunit/qunit.css",
+				"qunit/LICENSE.txt": "qunit/LICENSE.txt",
+
 				"jquery-1.11.3/jquery.js": "jquery-1.11.3/dist/jquery.js",
 				"jquery-1.11.3/MIT-LICENSE.txt": "jquery-1.11.3/MIT-LICENSE.txt",
 
 				"jquery-1.12.4/jquery.js": "jquery-1.12.4/dist/jquery.js",
 				"jquery-1.12.4/LICENSE.txt": "jquery-1.12.4/LICENSE.txt",
-
-				"jquery-2.0.3/jquery.js": "jquery-2.0.3/jquery.js",
-				"jquery-2.0.3/MIT-LICENSE.txt": "jquery-2.0.3/MIT-LICENSE.txt",
 
 				"jquery-2.1.4/jquery.js": "jquery-2.1.4/dist/jquery.js",
 				"jquery-2.1.4/MIT-LICENSE.txt": "jquery-2.1.4/MIT-LICENSE.txt",
@@ -124,8 +142,8 @@ grunt.initConfig( {
 				"jquery-3.5.1/jquery.js": "jquery-3.5.1/dist/jquery.js",
 				"jquery-3.5.1/LICENSE.txt": "jquery-3.5.1/LICENSE.txt",
 
-				"jquery-3.6.0/jquery.js": "jquery-3.6.0/dist/jquery.js",
-				"jquery-3.6.0/LICENSE.txt": "jquery-3.6.0/LICENSE.txt",
+				"jquery-3.6.1/jquery.js": "jquery-3.6.1/dist/jquery.js",
+				"jquery-3.6.1/LICENSE.txt": "jquery-3.6.1/LICENSE.txt",
 
 				"jquery/jquery.js": "jquery/dist/jquery.js",
 				"jquery/LICENSE.txt": "jquery/LICENSE.txt"
@@ -306,15 +324,20 @@ grunt.registerTask( "print_no_browserstack_legacy_message", () => {
 		"tests on legacy browsers skipped..." );
 } );
 
+grunt.registerTask( "print_old_node_message", ( ...args ) => {
+	const task = args.join( ":" );
+	grunt.log.writeln( "Old Node.js detected, running the task \"" + task + "\" skipped..." );
+} );
+
 grunt.registerTask( "default", [
-	"eslint",
+	runIfNewNode( "eslint" ),
 	"npmcopy",
 	"qunit",
 	"build",
 	"compare_size"
 ] );
 grunt.registerTask( "build", [ "max", "concat", "uglify" ] );
-grunt.registerTask( "ci", [ "eslint", "qunit" ] );
+grunt.registerTask( "ci", [ "default" ] );
 grunt.registerTask( "karma-browserstack-current", [
 	"build",
 	isBrowserStack ? "karma:browserstack-current" : "karma:local"
