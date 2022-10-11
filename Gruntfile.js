@@ -50,7 +50,9 @@ function runIfNewNode( task ) {
 	return oldNode ? "print_old_node_message:" + task : task;
 }
 
-require( "load-grunt-tasks" )( grunt );
+require( "load-grunt-tasks" )( grunt, {
+	pattern: oldNode ? [ "grunt-*", "!grunt-eslint" ] : [ "grunt-*" ]
+} );
 
 grunt.initConfig( {
 	pkg: grunt.file.readJSON( "package.json" ),
