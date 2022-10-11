@@ -338,6 +338,11 @@ grunt.registerTask( "default", [
 	"build",
 	"compare_size"
 ] );
+grunt.registerTask( "jenkins", [
+	"npmcopy",
+	"build",
+	"compare_size"
+] );
 grunt.registerTask( "build", [ "max", "concat", "uglify" ] );
 grunt.registerTask( "ci", [ "default" ] );
 grunt.registerTask( "karma-browserstack-current", [

@@ -11,7 +11,8 @@
   "scripts": {
     "browserstack": "grunt npmcopy && grunt karma-browserstack-current && grunt karma-browserstack-legacy",
     "ci": "grunt ci",
-    "test": "grunt ci"
+    "test": "grunt ci",
+    "jenkins": "grunt jenkins"
   },
   "maintainers": [
     {
