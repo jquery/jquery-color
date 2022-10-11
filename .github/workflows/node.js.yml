@@ -9,11 +9,11 @@ jobs:
       fail-fast: false
       matrix:
         # Node.js 10 is required by jQuery infra
-        NODE_VERSION: [10.x, 16.x]
+        NODE_VERSION: [10.x, 18.x]
         NPM_SCRIPT: ["ci"]
         include:
           - NAME: "Browser tests"
-            NODE_VERSION: "16.x"
+            NODE_VERSION: "18.x"
             NPM_SCRIPT: "browserstack"
     steps:
     - name: Checkout
