@@ -1,6 +1,6 @@
 import { generateModuleId } from "./generateHash.js";
 
-export function buildTestUrl( modules, { browserstack, jquery, jsdom, port, reportId } ) {
+export function buildTestUrl( modules, { browserstack, jquery, port, reportId } ) {
 	if ( !port ) {
 		throw new Error( "No port specified." );
 	}
@@ -12,10 +12,6 @@ export function buildTestUrl( modules, { browserstack, jquery, jsdom, port, repo
 
 	if ( jquery ) {
 		query.append( "jquery", jquery );
-	}
-
-	if ( jsdom ) {
-		query.append( "jsdom", "true" );
 	}
 
 	if ( reportId ) {

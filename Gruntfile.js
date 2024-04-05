@@ -55,32 +55,6 @@ require( "load-grunt-tasks" )( grunt, {
 grunt.initConfig( {
 	pkg: grunt.file.readJSON( "package.json" ),
 
-	tests: {
-		jquery: [
-			"git",
-			"git.min"
-		],
-		"jquery-color": [
-			"3.x-git",
-			"3.x-git.min",
-			"3.6.1",
-			"3.5.1",
-			"3.4.1",
-			"3.3.1",
-			"3.2.1",
-			"3.1.1",
-			"3.0.0",
-			"2.2.4",
-			"2.1.4",
-			"2.0.3",
-			"1.12.4",
-			"1.11.3",
-			"1.10.2",
-			"1.9.1",
-			"1.8.3"
-		]
-	},
-
 	npmcopy: {
 		options: {
 			destPrefix: "external"
@@ -169,27 +143,6 @@ grunt.initConfig( {
 		},
 		test: {
 			src: "test/unit/**"
-		}
-	},
-
-	karma: {
-		options: {
-			configFile: "test/karma/karma.conf.js",
-			singleRun: true
-		},
-		local: {
-			browsers: [ "ChromeHeadless", "FirefoxHeadless" ]
-		}
-	},
-
-	qunit: {
-		files: "test/index.html",
-		options: {
-			puppeteer: {
-				args: process.env.JENKINS_HOME ?
-					[ "--no-sandbox", "--disable-setuid-sandbox" ] :
-					[]
-			}
 		}
 	},
 

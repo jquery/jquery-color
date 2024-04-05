@@ -38,8 +38,7 @@ const argv = yargs( process.argv.slice( 2 ) )
 		description:
 			"Run tests in a specific browser." +
 			"Pass multiple browsers by repeating the option." +
-			"If using BrowserStack, specify browsers using --browserstack." +
-			"Only the basic module is supported on jsdom.",
+			"If using BrowserStack, specify browsers using --browserstack.",
 		default: [ "chrome" ]
 	} )
 	.option( "headless", {

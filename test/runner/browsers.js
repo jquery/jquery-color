@@ -6,7 +6,6 @@ import {
 	getAvailableSessions
 } from "./browserstack/api.js";
 import createDriver from "./selenium/createDriver.js";
-import createWindow from "./jsdom/createWindow.js";
 
 const workers = Object.create( null );
 
@@ -49,7 +48,7 @@ export async function createBrowserWorker( url, browser, options, restarts = 0 )
 			) }`
 		);
 	}
-	const { browserstack, debug, headless, reportId, runId, tunnelId, verbose } = options;
+	const { browserstack, debug, headless, runId, tunnelId, verbose } = options;
 	while ( await maxWorkersReached( options ) ) {
 		if ( verbose ) {
 			console.log( "\nWaiting for available sessions..." );
@@ -81,11 +80,6 @@ export async function createBrowserWorker( url, browser, options, restarts = 0 )
 			"browserstack.localIdentifier": tunnelId
 		} );
 		worker.quit = () => deleteWorker( worker.id );
-	} else if ( browser.browser === "jsdom" ) {
-		const window = await createWindow( { reportId, url, verbose } );
-		worker = {
-			quit: () => window.close()
-		};
 	} else {
 		const driver = await createDriver( {
 			browserName: browser.browser,

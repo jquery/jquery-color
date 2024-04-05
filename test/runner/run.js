@@ -254,7 +254,6 @@ export async function run( {
 			const url = buildTestUrl( modules, {
 				browserstack,
 				jquery,
-				jsdom: browser.browser === "jsdom",
 				port,
 				reportId
 			} );

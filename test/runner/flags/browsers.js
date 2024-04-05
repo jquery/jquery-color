@@ -13,13 +13,12 @@ export const browsers = [
 	"yandex",
 	"IE Mobile",
 	"Android Browser",
-	"Mobile Safari",
-	"jsdom"
+	"Mobile Safari"
 ];
 
 // A function that can be used to update the above list.
 export async function getAvailableBrowsers() {
 	const browsers = await getBrowsers( { flat: true } );
 	const available = [ ...new Set( browsers.map( ( { browser } ) => browser ) ) ];
-	return available.concat( "jsdom" );
+	return available;
 }
