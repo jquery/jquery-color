@@ -1,95 +1,95 @@
 {
-  "name": "jquery-color",
-  "title": "jQuery Color",
-  "description": "jQuery plugin for color manipulation and animation support.",
-  "version": "3.0.0-pre",
-  "homepage": "https://github.com/jquery/jquery-color",
-  "author": {
-    "name": "OpenJS Foundation and other contributors",
-    "url": "https://github.com/jquery/jquery-color/blob/main/AUTHORS.txt"
-  },
-  "scripts": {
-    "build": "grunt",
-    "test:server": "node test/runner/server.js",
-    "test:unit": "node test/runner/command.js",
-    "test": "grunt && npm run test:unit -- -h"
-  },
-  "maintainers": [
-    {
-      "name": "Corey Frang",
-      "email": "gnarf37@gmail.com"
-    },
-    {
-      "name": "Michał Gołębiowski-Owczarek",
-      "email": "m.goleb@gmail.com",
-      "url": "https://github.com/mgol"
-    }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/jquery/jquery-color.git"
-  },
-  "bugs": "https://github.com/jquery/jquery-color/issues",
-  "license": "MIT",
-  "main": "dist/jquery.color.js",
-  "files": [
-    "dist",
-    "README.md",
-    "AUTHORS.txt",
-    "LICENSE.txt"
-  ],
-  "peerDependencies": {
-    "jquery": ">=1.11.0"
-  },
-  "devDependencies": {
-    "@types/selenium-webdriver": "4.1.22",
-    "body-parser": "1.20.2",
-    "browserstack-local": "1.5.5",
-    "chalk": "5.3.0",
-    "commitplease": "3.2.0",
-    "diff": "5.2.0",
-    "eslint-config-jquery": "3.0.2",
-    "exit-hook": "4.0.0",
-    "express": "4.19.2",
-    "express-body-parser-error-handler": "1.0.7",
-    "grunt": "1.5.3",
-    "grunt-cli": "1.4.3",
-    "grunt-compare-size": "0.4.2",
-    "grunt-contrib-concat": "2.1.0",
-    "grunt-contrib-uglify": "5.2.2",
-    "grunt-eslint": "24.0.0",
-    "grunt-git-authors": "3.2.0",
-    "grunt-npmcopy": "0.2.0",
-    "jquery": "3.7.1",
-    "jquery-1.11.3": "npm:jquery@1.11.3",
-    "jquery-1.12.4": "npm:jquery@1.12.4",
-    "jquery-2.1.4": "npm:jquery@2.1.4",
-    "jquery-2.2.4": "npm:jquery@2.2.4",
-    "jquery-3.0.0": "npm:jquery@3.0.0",
-    "jquery-3.1.1": "npm:jquery@3.1.1",
-    "jquery-3.2.1": "npm:jquery@3.2.1",
-    "jquery-3.3.1": "npm:jquery@3.3.1",
-    "jquery-3.4.1": "npm:jquery@3.4.1",
-    "jquery-3.5.1": "npm:jquery@3.5.1",
-    "jquery-3.6.4": "npm:jquery@3.6.4",
-    "jquery-3.7.1": "npm:jquery@3.7.1",
-    "load-grunt-tasks": "5.1.0",
-    "qunit": "2.19.1",
-    "selenium-webdriver": "4.19.0",
-    "yargs": "17.7.2"
-  },
-  "commitplease": {
-    "components": [
-      "All",
-      "Build",
-      "Core",
-      "Readme",
-      "Test"
-    ]
-  },
-  "keywords": [
-    "color",
-    "animation",
-    "jquery-plugin"
-  ]
+	"name": "jquery-color",
+	"title": "jQuery Color",
+	"description": "jQuery plugin for color manipulation and animation support.",
+	"version": "3.0.0-pre",
+	"homepage": "https://github.com/jquery/jquery-color",
+	"author": {
+		"name": "OpenJS Foundation and other contributors",
+		"url": "https://github.com/jquery/jquery-color/blob/main/AUTHORS.txt"
+	},
+	"scripts": {
+		"build": "grunt",
+		"test:server": "node test/runner/server.js",
+		"test:unit": "node test/runner/command.js",
+		"test": "grunt && npm run test:unit -- -h"
+	},
+	"maintainers": [
+		{
+			"name": "Corey Frang",
+			"email": "gnarf37@gmail.com"
+		},
+		{
+			"name": "Michał Gołębiowski-Owczarek",
+			"email": "m.goleb@gmail.com",
+			"url": "https://github.com/mgol"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/jquery/jquery-color.git"
+	},
+	"bugs": "https://github.com/jquery/jquery-color/issues",
+	"license": "MIT",
+	"main": "dist/jquery.color.js",
+	"files": [
+		"dist",
+		"README.md",
+		"AUTHORS.txt",
+		"LICENSE.txt"
+	],
+	"peerDependencies": {
+		"jquery": ">=1.11.0"
+	},
+	"devDependencies": {
+		"@types/selenium-webdriver": "4.1.22",
+		"body-parser": "1.20.2",
+		"browserstack-local": "1.5.5",
+		"chalk": "5.3.0",
+		"commitplease": "3.2.0",
+		"diff": "5.2.0",
+		"eslint-config-jquery": "3.0.2",
+		"exit-hook": "4.0.0",
+		"express": "4.19.2",
+		"express-body-parser-error-handler": "1.0.7",
+		"grunt": "1.5.3",
+		"grunt-cli": "1.4.3",
+		"grunt-compare-size": "0.4.2",
+		"grunt-contrib-concat": "2.1.0",
+		"grunt-contrib-uglify": "5.2.2",
+		"grunt-eslint": "24.0.0",
+		"grunt-git-authors": "3.2.0",
+		"grunt-npmcopy": "0.2.0",
+		"jquery": "3.7.1",
+		"jquery-1.11.3": "npm:jquery@1.11.3",
+		"jquery-1.12.4": "npm:jquery@1.12.4",
+		"jquery-2.1.4": "npm:jquery@2.1.4",
+		"jquery-2.2.4": "npm:jquery@2.2.4",
+		"jquery-3.0.0": "npm:jquery@3.0.0",
+		"jquery-3.1.1": "npm:jquery@3.1.1",
+		"jquery-3.2.1": "npm:jquery@3.2.1",
+		"jquery-3.3.1": "npm:jquery@3.3.1",
+		"jquery-3.4.1": "npm:jquery@3.4.1",
+		"jquery-3.5.1": "npm:jquery@3.5.1",
+		"jquery-3.6.4": "npm:jquery@3.6.4",
+		"jquery-3.7.1": "npm:jquery@3.7.1",
+		"load-grunt-tasks": "5.1.0",
+		"qunit": "2.19.1",
+		"selenium-webdriver": "4.19.0",
+		"yargs": "17.7.2"
+	},
+	"commitplease": {
+		"components": [
+			"All",
+			"Build",
+			"Core",
+			"Readme",
+			"Test"
+		]
+	},
+	"keywords": [
+		"color",
+		"animation",
+		"jquery-plugin"
+	]
 }
