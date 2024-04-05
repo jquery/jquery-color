@@ -44,6 +44,7 @@
   "devDependencies": {
     "@types/selenium-webdriver": "4.1.22",
     "body-parser": "1.20.2",
+    "browserstack-local": "1.5.5",
     "chalk": "5.3.0",
     "commitplease": "3.2.0",
     "diff": "5.2.0",
@@ -76,14 +77,12 @@
     "jquery-3.7.1": "npm:jquery@3.7.1",
     "jsdom": "24.0.0",
     "karma": "6.4.1",
-    "karma-browserstack-launcher": "1.6.0",
     "karma-chrome-launcher": "3.1.1",
     "karma-firefox-launcher": "2.1.2",
     "karma-qunit": "4.1.2",
     "load-grunt-tasks": "5.1.0",
     "qunit": "2.19.1",
     "selenium-webdriver": "4.19.0",
-    "testswarm": "1.1.2",
     "yargs": "17.7.2"
   },
   "commitplease": {

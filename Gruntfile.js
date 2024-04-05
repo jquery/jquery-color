@@ -179,32 +179,6 @@ grunt.initConfig( {
 		},
 		local: {
 			browsers: [ "ChromeHeadless", "FirefoxHeadless" ]
-		},
-		"browserstack-current": {
-			browsers: [
-				"bs_chrome-current",
-				"bs_firefox-current",
-				"bs_edge-current",
-				"bs_ie-11",
-				"bs_opera",
-				"bs_safari-current",
-				"bs_ios-current",
-				"bs_android"
-			]
-		},
-		"browserstack-legacy": {
-			browsers: [
-				"bs_chrome-previous",
-				"bs_firefox-esr",
-				"bs_firefox-previous",
-				"bs_edge-18",
-				"bs_edge-previous",
-				"bs_ie-9",
-				"bs_ie-10",
-				"bs_safari-previous",
-				"bs_ios-two_versions_back",
-				"bs_ios-previous"
-			]
 		}
 	},
 
@@ -272,61 +246,6 @@ grunt.registerTask( "max", function() {
 	} );
 } );
 
-grunt.registerTask( "testswarm", function( commit, configFile, projectName, browserSets,
-	timeout ) {
-	let config, tests;
-	const testswarm = require( "testswarm" );
-	const runs = {};
-	const done = this.async();
-
-	projectName = projectName || "jquerycolor";
-	config = grunt.file.readJSON( configFile )[ projectName ];
-	browserSets = browserSets || config.browserSets;
-	if ( browserSets[ 0 ] === "[" ) {
-
-		// We got an array, parse it
-		browserSets = JSON.parse( browserSets );
-	}
-	timeout = timeout || 1000 * 60 * 15;
-
-	tests = grunt.config( "tests" )[
-		Array.isArray( browserSets ) ? browserSets[ 0 ] : browserSets ||
-			"jquery" ];
-
-	tests.forEach( jQueryVersion => {
-		runs[ jQueryVersion ] = config.testUrl + commit +
-			"/test/index.html?jquery=" + jQueryVersion;
-	} );
-
-	testswarm.createClient( {
-		url: config.swarmUrl
-	} )
-	.addReporter( testswarm.reporters.cli )
-	.auth( {
-		id: config.authUsername,
-		token: config.authToken
-	} )
-	.addjob(
-		{
-			name: "Commit <a href='https://github.com/jquery/jquery-color/commit/" + commit + "'>" + commit.substr( 0, 10 ) + "</a>",
-			runs: runs,
-			runMax: config.runMax,
-			browserSets: browserSets,
-			timeout: timeout
-		}, ( err, passed ) => {
-			if ( err ) {
-				grunt.log.error( err );
-			}
-			done( passed );
-		}
-	);
-} );
-
-grunt.registerTask( "print_no_browserstack_legacy_message", () => {
-	grunt.log.writeln( "No BrowserStack credentials detected, running " +
-		"tests on legacy browsers skipped..." );
-} );
-
 grunt.registerTask( "print_old_node_message", ( ...args ) => {
 	const task = args.join( ":" );
 	grunt.log.writeln( "Old Node.js detected, running the task \"" + task + "\" skipped..." );
@@ -336,7 +255,6 @@ grunt.registerTask( "build", [ "max", "concat", "uglify", "compare_size" ] );
 grunt.registerTask( "default", [
 	runIfNewNode( "eslint" ),
 	"npmcopy",
-	"qunit",
 	"build"
 ] );
 
