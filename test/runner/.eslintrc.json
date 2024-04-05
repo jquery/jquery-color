@@ -1,0 +1,27 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+
+	"overrides": [
+		{
+			"files": ["./listeners.js"],
+			"env": {
+				"browser": true,
+				"node": false
+			},
+			"globals": {
+				"QUnit": false,
+				"Symbol": false
+			},
+			"parserOptions": {
+				"ecmaVersion": 5,
+				"sourceType": "script"
+			},
+			"rules": {
+				"strict": ["error", "function"]
+			}
+		}
+	]
+}

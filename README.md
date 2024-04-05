@@ -81,7 +81,7 @@ div {
 	border: 1px solid green;
 }
 </style>
-<script src="http://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="jquery.color.min.js"></script>
 </head>
 <body>
@@ -181,7 +181,7 @@ toHslaString() // returns a css string "hsla(330, 75%, 25%, 0.4)"
 toHexString( includeAlpha ) // returns a css string "#abcdef", with "includeAlpha" uses "#rrggbbaa" (alpha *= 255)
 ```
 
-The `toRgbaString` and `toHslaString` methods will only include the alpha channel if it is not `1`. They will return `rgb(...)` and `hsl(...)` strings if the alpha is set to `1`. 
+The `toRgbaString` and `toHslaString` methods will only include the alpha channel if it is not `1`. They will return `rgb(...)` and `hsl(...)` strings if the alpha is set to `1`.
 ### Working with other colors:
 
 ```javascript

@@ -9,10 +9,10 @@
     "url": "https://github.com/jquery/jquery-color/blob/main/AUTHORS.txt"
   },
   "scripts": {
-    "browserstack": "grunt npmcopy && grunt karma-browserstack-current && grunt karma-browserstack-legacy",
-    "ci": "grunt ci",
-    "test": "grunt ci",
-    "jenkins": "grunt jenkins"
+    "build": "grunt",
+    "test:server": "node test/runner/server.js",
+    "test:unit": "node test/runner/command.js",
+    "test": "grunt && npm run test:unit -- -h"
   },
   "maintainers": [
     {
@@ -38,13 +38,19 @@
     "AUTHORS.txt",
     "LICENSE.txt"
   ],
-  "dependencies": {},
   "peerDependencies": {
     "jquery": ">=1.11.0"
   },
   "devDependencies": {
+    "@types/selenium-webdriver": "4.1.22",
+    "body-parser": "1.20.2",
+    "chalk": "5.3.0",
     "commitplease": "3.2.0",
+    "diff": "5.2.0",
     "eslint-config-jquery": "3.0.0",
+    "exit-hook": "4.0.0",
+    "express": "4.19.2",
+    "express-body-parser-error-handler": "1.0.7",
     "grunt": "1.5.3",
     "grunt-cli": "1.4.3",
     "grunt-compare-size": "0.4.2",
@@ -55,6 +61,7 @@
     "grunt-git-authors": "3.2.0",
     "grunt-karma": "4.0.2",
     "grunt-npmcopy": "0.2.0",
+    "jquery": "3.7.1",
     "jquery-1.11.3": "npm:jquery@1.11.3",
     "jquery-1.12.4": "npm:jquery@1.12.4",
     "jquery-2.1.4": "npm:jquery@2.1.4",
@@ -65,8 +72,9 @@
     "jquery-3.3.1": "npm:jquery@3.3.1",
     "jquery-3.4.1": "npm:jquery@3.4.1",
     "jquery-3.5.1": "npm:jquery@3.5.1",
-    "jquery-3.6.1": "npm:jquery@3.6.1",
-    "jquery": "3.6.1",
+    "jquery-3.6.4": "npm:jquery@3.6.4",
+    "jquery-3.7.1": "npm:jquery@3.7.1",
+    "jsdom": "24.0.0",
     "karma": "6.4.1",
     "karma-browserstack-launcher": "1.6.0",
     "karma-chrome-launcher": "3.1.1",
@@ -74,7 +82,9 @@
     "karma-qunit": "4.1.2",
     "load-grunt-tasks": "5.1.0",
     "qunit": "2.19.1",
-    "testswarm": "1.1.2"
+    "selenium-webdriver": "4.19.0",
+    "testswarm": "1.1.2",
+    "yargs": "17.7.2"
   },
   "commitplease": {
     "components": [

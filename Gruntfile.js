@@ -2,8 +2,6 @@ module.exports = grunt => {
 
 "use strict";
 
-const isBrowserStack = !!( process.env.BROWSER_STACK_USERNAME &&
-	process.env.BROWSER_STACK_ACCESS_KEY );
 const max = [
 	"dist/jquery.color.js",
 	"dist/jquery.color.svg-names.js"
@@ -144,8 +142,11 @@ grunt.initConfig( {
 				"jquery-3.5.1/jquery.js": "jquery-3.5.1/dist/jquery.js",
 				"jquery-3.5.1/LICENSE.txt": "jquery-3.5.1/LICENSE.txt",
 
-				"jquery-3.6.1/jquery.js": "jquery-3.6.1/dist/jquery.js",
-				"jquery-3.6.1/LICENSE.txt": "jquery-3.6.1/LICENSE.txt",
+				"jquery-3.6.4/jquery.js": "jquery-3.6.4/dist/jquery.js",
+				"jquery-3.6.4/LICENSE.txt": "jquery-3.6.4/LICENSE.txt",
+
+				"jquery-3.7.1/jquery.js": "jquery-3.7.1/dist/jquery.js",
+				"jquery-3.7.1/LICENSE.txt": "jquery-3.7.1/LICENSE.txt",
 
 				"jquery/jquery.js": "jquery/dist/jquery.js",
 				"jquery/LICENSE.txt": "jquery/LICENSE.txt"
@@ -331,27 +332,12 @@ grunt.registerTask( "print_old_node_message", ( ...args ) => {
 	grunt.log.writeln( "Old Node.js detected, running the task \"" + task + "\" skipped..." );
 } );
 
+grunt.registerTask( "build", [ "max", "concat", "uglify", "compare_size" ] );
 grunt.registerTask( "default", [
 	runIfNewNode( "eslint" ),
 	"npmcopy",
 	"qunit",
-	"build",
-	"compare_size"
+	"build"
 ] );
-grunt.registerTask( "jenkins", [
-	"npmcopy",
-	"build",
-	"compare_size"
-] );
-grunt.registerTask( "build", [ "max", "concat", "uglify" ] );
-grunt.registerTask( "ci", [ "default" ] );
-grunt.registerTask( "karma-browserstack-current", [
-	"build",
-	isBrowserStack ? "karma:browserstack-current" : "karma:local"
-] );
-grunt.registerTask( "karma-browserstack-legacy", isBrowserStack ? [
-	"build",
-	"karma:browserstack-legacy"
-] : [ "print_no_browserstack_legacy_message" ] );
 
 };
