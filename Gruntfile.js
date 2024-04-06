@@ -39,17 +39,8 @@ minify.svg.files[ min[ 1 ] ] = [ max[ 1 ] ];
 minify.combined.files[ min[ 2 ] ] = [ combined ];
 concat[ combined ] = [ max[ 0 ], max[ 1 ] ];
 
-const oldNode = /^v10\./.test( process.version );
-
-// Support: Node.js <12
-// Skip running tasks that dropped support for Node.js 10
-// in this Node version.
-function runIfNewNode( task ) {
-	return oldNode ? "print_old_node_message:" + task : task;
-}
-
 require( "load-grunt-tasks" )( grunt, {
-	pattern: oldNode ? [ "grunt-*", "!grunt-eslint" ] : [ "grunt-*" ]
+	pattern: [ "grunt-*" ]
 } );
 
 grunt.initConfig( {
@@ -199,14 +190,9 @@ grunt.registerTask( "max", function() {
 	} );
 } );
 
-grunt.registerTask( "print_old_node_message", ( ...args ) => {
-	const task = args.join( ":" );
-	grunt.log.writeln( "Old Node.js detected, running the task \"" + task + "\" skipped..." );
-} );
-
 grunt.registerTask( "build", [ "max", "concat", "uglify", "compare_size" ] );
 grunt.registerTask( "default", [
-	runIfNewNode( "eslint" ),
+	"eslint",
 	"npmcopy",
 	"build"
 ] );
