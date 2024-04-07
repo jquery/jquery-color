@@ -1,45 +1,129 @@
-name: CI
+name: Node
 
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches-ignore: "dependabot/**"
+  # Once a week every Monday
+  schedule:
+    - cron: "42 1 * * 1"
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: 20.x
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
+    name: ${{ matrix.BROWSER }}
     strategy:
       fail-fast: false
       matrix:
-        # Node.js 10 is required by jQuery infra
-        NODE_VERSION: [10.x, 18.x]
-        NPM_SCRIPT: ["ci"]
-        include:
-          - NAME: "Browser tests"
-            NODE_VERSION: "18.x"
-            NPM_SCRIPT: "browserstack"
+        BROWSER: [chrome, firefox]
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
-    - name: Cache
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ matrix.NODE_VERSION }}-npm-lock-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-${{ matrix.NODE_VERSION }}-npm-lock-
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
 
-    - name: Use Node.js ${{ matrix.NODE_VERSION }}
-      uses: actions/setup-node@v2.1.2
-      with:
-        node-version: ${{ matrix.NODE_VERSION }}
+      - name: Cache
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-npm-lock-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ env.NODE_VERSION }}-npm-lock-
 
-    - name: Install dependencies
-      run: |
-        npm install
+      - name: Install npm dependencies
+        run: npm install
 
-    - name: Run tests
-      env:
-        BROWSER_STACK_USERNAME: ${{ secrets.BROWSER_STACK_USERNAME }}
-        BROWSER_STACK_ACCESS_KEY: ${{ secrets.BROWSER_STACK_ACCESS_KEY }}
-      run: |
-        export PATH=${HOME}/firefox:$PATH
-        npm run ${{ matrix.NPM_SCRIPT }}
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: |
+          npm run test:unit -- -h -b ${{ matrix.BROWSER }} \
+            --jquery 1.8.3 --jquery 1.9.1 --jquery 1.10.2 --jquery 1.11.3 --jquery 1.12.4 \
+            --jquery 2.0.3 --jquery 2.1.4 --jquery 2.2.4 \
+            --jquery 3.0.0 --jquery 3.1.1 --jquery 3.2.1 --jquery 3.3.1 \
+            --jquery 3.4.1 --jquery 3.5.1 --jquery 3.6.4 --jquery 3.7.1 \
+            --jquery 3.x-git --jquery git \
+            --retries 3 --hard-retries 1
+
+  edge:
+    runs-on: windows-latest
+    name: edge
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-npm-lock-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ env.NODE_VERSION }}-npm-lock-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: |
+          npm run test:unit -- -h -b edge `
+            --jquery 1.8.3 --jquery 1.9.1 --jquery 1.10.2 --jquery 1.11.3 --jquery 1.12.4 `
+            --jquery 2.0.3 --jquery 2.1.4 --jquery 2.2.4 `
+            --jquery 3.0.0 --jquery 3.1.1 --jquery 3.2.1 --jquery 3.3.1 `
+            --jquery 3.4.1 --jquery 3.5.1 --jquery 3.6.4 --jquery 3.7.1 `
+            --jquery 3.x-git --jquery git `
+            --retries 3 --hard-retries 1
+
+  safari:
+    runs-on: macos-latest
+    name: safari
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-npm-lock-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ env.NODE_VERSION }}-npm-lock-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: |
+          npm run test:unit -- -b safari \
+            --jquery 1.8.3 --jquery 1.9.1 --jquery 1.10.2 --jquery 1.11.3 --jquery 1.12.4 \
+            --jquery 2.0.3 --jquery 2.1.4 --jquery 2.2.4 \
+            --jquery 3.0.0 --jquery 3.1.1 --jquery 3.2.1 --jquery 3.3.1 \
+            --jquery 3.4.1 --jquery 3.5.1 --jquery 3.6.4 --jquery 3.7.1 \
+            --jquery 3.x-git --jquery git \
+            --retries 3 --hard-retries 1

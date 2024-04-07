@@ -36,6 +36,7 @@
 		{
 			"files": [
 				"jquery.color.*",
+				"test/jquery.js",
 				"test/data/*.js",
 				"test/unit/*.js"
 			],
@@ -46,18 +47,6 @@
 				"es6": false,
 				"browser": true,
 				"node": false
-			}
-		},
-
-		{
-			"files": [ "test/karma/*.js" ],
-			"parserOptions": {
-				"ecmaVersion": 2018
-			},
-			"env": {
-				"es6": true,
-				"browser": false,
-				"node": true
 			}
 		}
 	]
