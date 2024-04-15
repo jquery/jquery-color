@@ -7,18 +7,12 @@ Supported jQuery versions: 1.8+
 ## Browser Support
 
 jQuery Color 3.x supports the following browsers:
+* Chrome: Current
+* Edge: Current
+* Firefox: Current
+* Safari: Current
 
-Desktop:
-* Chrome: (Current - 1) and Current
-* Edge: (Current - 1) and Current, 18
-* Firefox: (Current - 1) and Current, ESR
-* Internet Explorer: 9+
-* Safari: (Current - 1) and Current
-* Opera: Current
-
-Mobile:
-* Chrome on Android: (Current - 1) and Current
-* Safari on iOS: (Current - 2), (Current - 1) and Current
+Other browsers may also work correctly with this plugin but support is not guaranteed.
 
 Information on browser support of jQuery Color 2.x can be found in the [Browser Support section](https://github.com/jquery/jquery-color/blob/2.x-stable/README.md#browser-support) in its README.
 
