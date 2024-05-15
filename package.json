@@ -39,7 +39,7 @@
 		"LICENSE.txt"
 	],
 	"peerDependencies": {
-		"jquery": ">=1.11.0"
+		"jquery": ">=1.12.0"
 	},
 	"devDependencies": {
 		"@types/selenium-webdriver": "4.1.22",
@@ -61,9 +61,7 @@
 		"grunt-git-authors": "3.2.0",
 		"grunt-npmcopy": "0.2.0",
 		"jquery": "3.7.1",
-		"jquery-1.11.3": "npm:jquery@1.11.3",
 		"jquery-1.12.4": "npm:jquery@1.12.4",
-		"jquery-2.1.4": "npm:jquery@2.1.4",
 		"jquery-2.2.4": "npm:jquery@2.2.4",
 		"jquery-3.0.0": "npm:jquery@3.0.0",
 		"jquery-3.1.1": "npm:jquery@3.1.1",

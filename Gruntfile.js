@@ -50,41 +50,14 @@ grunt.initConfig( {
 		options: {
 			destPrefix: "external"
 		},
-		legacy: {
-			options: {
-
-				// jQuery `<1.11` and `>=2 <2.1` wasn't published on npm, so
-				// we maintain their copies directly in the repository.
-				srcPrefix: "external-legacy-source"
-			},
-			files: {
-				"jquery-1.8.3/jquery.js": "jquery-1.8.3/jquery.js",
-				"jquery-1.8.3/MIT-LICENSE.txt": "jquery-1.8.3/MIT-LICENSE.txt",
-
-				"jquery-1.9.1/jquery.js": "jquery-1.9.1/jquery.js",
-				"jquery-1.9.1/MIT-LICENSE.txt": "jquery-1.9.1/MIT-LICENSE.txt",
-
-				"jquery-1.10.2/jquery.js": "jquery-1.10.2/jquery.js",
-				"jquery-1.10.2/MIT-LICENSE.txt": "jquery-1.10.2/MIT-LICENSE.txt",
-
-				"jquery-2.0.3/jquery.js": "jquery-2.0.3/jquery.js",
-				"jquery-2.0.3/MIT-LICENSE.txt": "jquery-2.0.3/MIT-LICENSE.txt"
-			}
-		},
-		modern: {
+		all: {
 			files: {
 				"qunit/qunit.js": "qunit/qunit/qunit.js",
 				"qunit/qunit.css": "qunit/qunit/qunit.css",
 				"qunit/LICENSE.txt": "qunit/LICENSE.txt",
 
-				"jquery-1.11.3/jquery.js": "jquery-1.11.3/dist/jquery.js",
-				"jquery-1.11.3/MIT-LICENSE.txt": "jquery-1.11.3/MIT-LICENSE.txt",
-
 				"jquery-1.12.4/jquery.js": "jquery-1.12.4/dist/jquery.js",
 				"jquery-1.12.4/LICENSE.txt": "jquery-1.12.4/LICENSE.txt",
-
-				"jquery-2.1.4/jquery.js": "jquery-2.1.4/dist/jquery.js",
-				"jquery-2.1.4/MIT-LICENSE.txt": "jquery-2.1.4/MIT-LICENSE.txt",
 
 				"jquery-2.2.4/jquery.js": "jquery-2.2.4/dist/jquery.js",
 				"jquery-2.2.4/LICENSE.txt": "jquery-2.2.4/LICENSE.txt",
