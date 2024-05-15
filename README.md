@@ -57,7 +57,7 @@ You can also run the tests in a browser by navigating to the `test/` directory.
 
 ## Animated colors
 
-This plugins installs a [`cssHook`](http://api.jquery.com/jQuery.cssHooks/) which allows jQuery's [`.animate()`](http://api.jquery.com/animate) to animate between two colors.
+This plugin installs a [`cssHook`](https://api.jquery.com/jQuery.cssHooks/) which allows jQuery's [`.animate()`](https://api.jquery.com/animate) to animate between two colors.
 
 ## Supported properties
 `backgroundColor`, `borderBottomColor`, `borderLeftColor`, `borderRightColor`, `borderTopColor`, `color`, `columnRuleColor`, `outlineColor`, `textDecorationColor`, `textEmphasisColor`
@@ -75,7 +75,7 @@ div {
 	border: 1px solid green;
 }
 </style>
-<script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="jquery.color.min.js"></script>
 </head>
 <body>

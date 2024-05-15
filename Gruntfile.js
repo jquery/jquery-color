@@ -15,19 +15,19 @@ const combined = "dist/jquery.color.plus-names.js";
 const minify = {
 	main: {
 		options: {
-			banner: "/*! jQuery Color v<%= pkg.version %> http://github.com/jquery/jquery-color | jquery.org/license */\n"
+			banner: "/*! jQuery Color v<%= pkg.version %> https://github.com/jquery/jquery-color | jquery.org/license */\n"
 		},
 		files: {}
 	},
 	svg: {
 		options: {
-			banner: "/*! jQuery Color v<%= pkg.version %> SVG Color Names http://github.com/jquery/jquery-color | jquery.org/license */\n"
+			banner: "/*! jQuery Color v<%= pkg.version %> SVG Color Names https://github.com/jquery/jquery-color | jquery.org/license */\n"
 		},
 		files: {}
 	},
 	combined: {
 		options: {
-			banner: "/*! jQuery Color v<%= pkg.version %> with SVG Color Names http://github.com/jquery/jquery-color | jquery.org/license */\n"
+			banner: "/*! jQuery Color v<%= pkg.version %> with SVG Color Names https://github.com/jquery/jquery-color | jquery.org/license */\n"
 		},
 		files: {}
 	}

@@ -4,7 +4,7 @@
  *
  * Copyright OpenJS Foundation and other contributors
  * Released under the MIT license.
- * http://jquery.org/license
+ * https://jquery.org/license
  *
  * Date: @DATE
  */
