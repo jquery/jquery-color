@@ -1,6 +1,6 @@
 # jQuery Color
 
-Supported jQuery versions: 1.12+ (only the latest version within each jQuery major is tested)
+Supported jQuery versions: 1.12+ / 2.2+
 
 ## Browser Support
 
