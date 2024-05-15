@@ -1,6 +1,6 @@
-module.exports = grunt => {
-
 "use strict";
+
+module.exports = grunt => {
 
 const max = [
 	"dist/jquery.color.js",
@@ -99,14 +99,12 @@ grunt.initConfig( {
 			quiet: true
 		},
 
-		source: {
-			src: [ "jquery.color.js", "jquery.color.svg-names.js" ]
-		},
-		grunt: {
-			src: "Gruntfile.js"
-		},
-		test: {
-			src: "test/unit/**"
+		all: {
+			src: [
+				"*.*js",
+				"build/**/*.*js",
+				"test/**/*.*js"
+			]
 		}
 	},
 

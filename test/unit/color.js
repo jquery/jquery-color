@@ -1,3 +1,5 @@
+"use strict";
+
 QUnit.module( "parse" );
 
 function testParts( color, parts, assert ) {

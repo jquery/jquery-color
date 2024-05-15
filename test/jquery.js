@@ -1,3 +1,5 @@
+"use strict";
+
 ( function() {
 
 var parts = document.location.search.slice( 1 ).split( "&" ),

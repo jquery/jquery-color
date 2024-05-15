@@ -248,7 +248,9 @@ export async function run( {
 		const fullBrowser = getBrowserString( browser, headless );
 
 		for ( const jquery of jquerys ) {
-			const reportId = generateHash( `${ modules.join( ":" ) } ${ jquery } ${ fullBrowser }` );
+			const reportId = generateHash( `${ modules.join( ":" ) } ${
+				jquery
+			} ${ fullBrowser }` );
 			reports[ reportId ] = { browser, headless, jquery, modules };
 
 			const url = buildTestUrl( modules, {
