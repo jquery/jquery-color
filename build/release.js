@@ -56,5 +56,5 @@ module.exports = function( Release ) {
 };
 
 module.exports.dependencies = [
-	"shelljs@0.8.4"
+	"shelljs@0.8.5"
 ];
