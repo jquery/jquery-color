@@ -1,8 +1,6 @@
-[![Build Status](http://jenkins.jquery.com/job/jQuery%20Color/badge/icon)](http://jenkins.jquery.com/job/jQuery%20Color/)
-
 # jQuery Color
 
-Supported jQuery versions: 1.8+
+Supported jQuery versions: 1.12+ (only the latest version within each jQuery major is tested)
 
 ## Browser Support
 
@@ -17,21 +15,12 @@ Other browsers may also work correctly with this plugin but support is not guara
 Information on browser support of jQuery Color 2.x can be found in the [Browser Support section](https://github.com/jquery/jquery-color/blob/2.x-stable/README.md#browser-support) in its README.
 
 ## Using jQuery Color in Production
-We release jQuery Color by itself, or in a bundle.  The extended names can be included as a jQuery Color plugin, or you can download the version of jQuery Color that includes the names.  Choose your build from the following list:
 
-**Current version: 2.1.2**
-
-* jQuery Color [Compressed](http://code.jquery.com/color/jquery.color-2.1.2.min.js) [Uncompressed](http://code.jquery.com/color/jquery.color-2.1.2.js)
-* jQuery Color Extended Names [Compressed](http://code.jquery.com/color/jquery.color.svg-names-2.1.2.min.js) [Uncompressed](http://code.jquery.com/color/jquery.color.svg-names-2.1.2.js)
-* jQuery Color & Extended Names(previous two combined) [Compressed](http://code.jquery.com/color/jquery.color.plus-names-2.1.2.min.js) [Uncompressed](http://code.jquery.com/color/jquery.color.plus-names-2.1.2.js)
+We release jQuery Color by itself, or in a bundle.  The extended names can be included as a jQuery Color plugin, or you can download the version of jQuery Color that includes the names. Choose your version & build from the list at https://releases.jquery.com/color/.
 
 ## How to build and test jQuery Color
 
-First, get a copy of the git repo by running:
-
-```shell
-git clone git://github.com/jquery/jquery-color.git
-```
+First, [clone the jQuery Color git repo](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
 Enter the directory and install the node dependencies:
 
@@ -39,21 +28,10 @@ Enter the directory and install the node dependencies:
 cd jquery-color && npm install
 ```
 
-Make sure you have `grunt` installed by testing:
-
-```shell
-grunt -version
+To build and test jQuery Color, run:
 ```
-
-If not, run:
-
-```shell
-npm install -g grunt
+npm test
 ```
-
-To run tests locally, run `grunt`, and this will run the tests in PhantomJS.
-
-You can also run the tests in a browser by navigating to the `test/` directory.
 
 ## Animated colors
 
@@ -68,6 +46,7 @@ This plugin installs a [`cssHook`](https://api.jquery.com/jQuery.cssHooks/) whic
 <!DOCTYPE html>
 <html>
 <head>
+<title>jQuery Color demo</title>
 <style>
 div {
 	background-color: #bada55;
@@ -215,7 +194,7 @@ If a color is created using any of the HSLA functions or parsers, it will keep t
 
 ## Extensibility
 
-It is possible for you to add your own functions to the color object.  For instance, this function will tell you if its better to use black or white on a given background color.
+It is possible for you to add your own functions to the color object.  For instance, this function will tell you if it's better to use black or white on a given background color.
 
 
 ```javascript
