@@ -21,3 +21,4 @@ Leo Balter <leonardo.balter@gmail.com>
 Leonardo Balter <leonardo.balter@gmail.com>
 Rob Garrison <wowmotty@gmail.com>
 Ryan Jacobson <rejacobson@gmail.com>
+Timmy Willison <timmywil@users.noreply.github.com>
