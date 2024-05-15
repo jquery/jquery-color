@@ -2,12 +2,12 @@
 	"name": "jquery-color",
 	"title": "jQuery Color",
 	"description": "jQuery plugin for color manipulation and animation support.",
-	"version": "3.0.0-pre",
+	"version": "3.0.0",
 	"type": "commonjs",
 	"homepage": "https://github.com/jquery/jquery-color",
 	"author": {
 		"name": "OpenJS Foundation and other contributors",
-		"url": "https://github.com/jquery/jquery-color/blob/main/AUTHORS.txt"
+		"url": "https://github.com/jquery/jquery-color/blob/3.0.0/AUTHORS.txt"
 	},
 	"scripts": {
 		"build": "grunt",
