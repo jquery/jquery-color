@@ -452,7 +452,7 @@ color.fn = jQuery.extend( color.prototype, {
 		return "#" + jQuery.map( rgba, function( v ) {
 
 			// default to 0 when nulls exist
-			return ( "0" + ( v || 0 ).toString( 16 ) ).substr( -2 );
+			return ( "0" + ( v || 0 ).toString( 16 ) ).slice( -2 );
 		} ).join( "" );
 	},
 	toString: function() {
