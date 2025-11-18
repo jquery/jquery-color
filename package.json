@@ -11,9 +11,14 @@
 	},
 	"scripts": {
 		"build": "grunt",
-		"test:server": "node test/runner/server.js",
-		"test:unit": "node test/runner/command.js",
-		"test": "grunt && npm run test:unit -- -h"
+		"test:browser": "npm run build && npm run test:unit -- -b chrome -b firefox --headless",
+		"test:chrome": "npm run build && npm run test:unit -- -v -b chrome --headless",
+		"test:edge": "npm run build && npm run test:unit -- -v -b edge --headless",
+		"test:firefox": "npm run build && npm run test:unit -- -v -b firefox --headless",
+		"test:safari": "npm run build && npm run test:unit -- -b safari",
+		"test:server": "jtr serve",
+		"test:unit": "jtr",
+		"test": "npm run build && npm run test:browser"
 	},
 	"maintainers": [
 		{
@@ -43,22 +48,15 @@
 		"jquery": ">=1.12.0"
 	},
 	"devDependencies": {
-		"@types/selenium-webdriver": "4.1.22",
-		"body-parser": "1.20.3",
-		"browserstack-local": "1.5.5",
-		"chalk": "5.3.0",
+		"chalk": "5.6.2",
 		"commitplease": "3.2.0",
-		"diff": "5.2.0",
 		"eslint-config-jquery": "3.0.2",
-		"exit-hook": "4.0.0",
-		"express": "4.21.1",
-		"express-body-parser-error-handler": "1.0.7",
-		"globals": "15.2.0",
+		"globals": "16.5.0",
 		"grunt": "1.6.1",
 		"grunt-compare-size": "0.4.2",
 		"grunt-contrib-concat": "2.1.0",
 		"grunt-contrib-uglify": "5.2.2",
-		"grunt-eslint": "25.0.0",
+		"grunt-eslint": "26.0.0",
 		"grunt-git-authors": "3.2.0",
 		"grunt-npmcopy": "0.2.0",
 		"jquery": "3.7.1",
@@ -72,10 +70,9 @@
 		"jquery-3.5.1": "npm:jquery@3.5.1",
 		"jquery-3.6.4": "npm:jquery@3.6.4",
 		"jquery-3.7.1": "npm:jquery@3.7.1",
+		"jquery-test-runner": "0.2.8",
 		"load-grunt-tasks": "5.1.0",
-		"qunit": "2.20.1",
-		"selenium-webdriver": "4.20.0",
-		"yargs": "17.7.2"
+		"qunit": "2.24.2"
 	},
 	"commitplease": {
 		"components": [
@@ -83,7 +80,7 @@
 			"Build",
 			"Core",
 			"Readme",
-			"Test"
+			"Tests"
 		]
 	},
 	"keywords": [
