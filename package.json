@@ -10,15 +10,25 @@
 		"url": "https://github.com/jquery/jquery-color/blob/main/AUTHORS.txt"
 	},
 	"scripts": {
-		"build": "grunt",
-		"test:browser": "npm run build && npm run test:unit -- -b chrome -b firefox --headless",
-		"test:chrome": "npm run build && npm run test:unit -- -v -b chrome --headless",
-		"test:edge": "npm run build && npm run test:unit -- -v -b edge --headless",
-		"test:firefox": "npm run build && npm run test:unit -- -v -b firefox --headless",
-		"test:safari": "npm run build && npm run test:unit -- -b safari",
+		"authors:check": "node --input-type=module -e \"import { checkAuthors } from './build/release/authors.js'; checkAuthors()\"",
+		"authors:update": "node --input-type=module -e \"import { updateAuthors } from './build/release/authors.js'; updateAuthors()\"",
+		"build": "node --input-type=module -e \"import { build } from './build/tasks/build.js'; build()\"",
+		"build:clean": "rimraf --glob dist/*.{js,map}",
+		"lint": "eslint --cache .",
+		"npmcopy": "node build/tasks/npmcopy.js",
+		"pretest": "npm run npmcopy && npm run build && npm run lint",
+		"prepare": "husky",
+		"release": "release-it",
+		"release:cdn": "node build/release/cdn.js",
+		"release:clean": "rimraf tmp/release",
+		"test:browser": "npm run pretest && npm run test:unit -- -b chrome -b firefox --headless",
+		"test:chrome": "npm run pretest && npm run test:unit -- -v -b chrome --headless",
+		"test:edge": "npm run pretest && npm run test:unit -- -v -b edge --headless",
+		"test:firefox": "npm run pretest && npm run test:unit -- -v -b firefox --headless",
+		"test:safari": "npm run pretest && npm run test:unit -- -b safari",
 		"test:server": "jtr serve",
 		"test:unit": "jtr",
-		"test": "npm run build && npm run test:browser"
+		"test": "npm run test:browser"
 	},
 	"maintainers": [
 		{
@@ -48,18 +58,14 @@
 		"jquery": ">=1.12.0"
 	},
 	"devDependencies": {
-		"chalk": "5.6.2",
+		"@swc/core": "1.11.24",
 		"commitplease": "3.2.0",
+		"cross-env": "7.0.3",
+		"eslint": "9.22.0",
 		"eslint-config-jquery": "3.0.2",
 		"globals": "16.5.0",
-		"grunt": "1.6.1",
-		"grunt-compare-size": "0.4.2",
-		"grunt-contrib-concat": "2.1.0",
-		"grunt-contrib-uglify": "5.2.2",
-		"grunt-eslint": "26.0.0",
-		"grunt-git-authors": "3.2.0",
-		"grunt-npmcopy": "0.2.0",
-		"jquery": "3.7.1",
+		"husky": "9.1.7",
+		"jquery": "4.0.0",
 		"jquery-1.12.4": "npm:jquery@1.12.4",
 		"jquery-2.2.4": "npm:jquery@2.2.4",
 		"jquery-3.0.0": "npm:jquery@3.0.0",
@@ -70,11 +76,14 @@
 		"jquery-3.5.1": "npm:jquery@3.5.1",
 		"jquery-3.6.4": "npm:jquery@3.6.4",
 		"jquery-3.7.1": "npm:jquery@3.7.1",
+		"jquery-4.0.0": "npm:jquery@4.0.0",
 		"jquery-test-runner": "0.2.8",
-		"load-grunt-tasks": "5.1.0",
-		"qunit": "2.24.2"
+		"qunit": "2.24.2",
+		"release-it": "18.1.2",
+		"rimraf": "6.1.0"
 	},
 	"commitplease": {
+		"nohook": true,
 		"components": [
 			"All",
 			"Build",
