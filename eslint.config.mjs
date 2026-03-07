@@ -15,39 +15,8 @@ export default [
 
 	{
 		files: [
-			"*.js",
-			"*.cjs"
-		],
-		languageOptions: {
-			ecmaVersion: 6,
-			sourceType: "script",
-			globals: {
-				...globals.node
-			}
-		},
-		rules: {
-			...jqueryConfig.rules,
-			strict: [ "error", "global" ],
-
-			// Increase max-len to 150 for now, there are too many violations and the rule
-			// is not auto-fixable.
-			// "max-len": [
-			// 	"error",
-			// 	{
-			// 		"code": 150,
-			// 		"ignoreComments": true
-			// 	}
-			// ]
-		}
-	},
-
-	{
-		files: [
-			"build",
-			"test/runner/**/*"
-		],
-		ignores: [
-			"test/runner/listeners.js"
+			".release-it.cjs",
+			"build/**"
 		],
 		languageOptions: {
 			ecmaVersion: 2022,
@@ -58,47 +27,13 @@ export default [
 		},
 		rules: {
 			...jqueryConfig.rules,
-			strict: [ "error", "global" ],
-
-			// Increase max-len to 150 for now, there are too many violations and the rule
-			// is not auto-fixable.
-			// "max-len": [
-			// 	"error",
-			// 	{
-			// 		"code": 150,
-			// 		"ignoreComments": true
-			// 	}
-			// ]
+			strict: "off"
 		}
 	},
 
 	{
 		files: [
-			"test/runner/listeners.js"
-		],
-		languageOptions: {
-			ecmaVersion: 5,
-			sourceType: "script",
-			globals: {
-				...globals.browser,
-				QUnit: false,
-				Symbol: false
-			}
-		},
-		rules: {
-			...jqueryConfig.rules,
-			strict: [ "error", "function" ],
-
-		}
-	},
-
-	{
-		files: [
-			"jquery.color.*",
-			"test/**/*"
-		],
-		ignores: [
-			"test/runner/**/*"
+			"jquery.color.*"
 		],
 		languageOptions: {
 			ecmaVersion: 5,
@@ -121,15 +56,20 @@ export default [
 		files: [
 			"test/**/*"
 		],
-		ignores: [
-			"test/runner/**/*"
-		],
 		languageOptions: {
+			ecmaVersion: 5,
+			sourceType: "script",
 			globals: {
+				...globals.browser,
+				"jQuery": true,
+				"define": true,
+				"require": true,
+				"module": true,
 				"QUnit": true
 			}
 		},
 		rules: {
+			...jqueryConfig.rules,
 			strict: [ "error", "global" ],
 
 			// Increase max-len to 150 for now, there are too many violations

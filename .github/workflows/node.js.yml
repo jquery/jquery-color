@@ -31,12 +31,8 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
-
       - name: Test
-        run: |
-          npm run test:browser
+        run: npm run test:browser
 
   edge:
     runs-on: windows-latest
@@ -55,12 +51,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
-
       - name: Test
-        run: |
-          npm run test:edge
+        run: npm run test:edge
 
   safari:
     runs-on: macos-latest
@@ -79,9 +71,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
-
       - name: Test
-        run: |
-          npm run test:safari
+        run: npm run test:safari
