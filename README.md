@@ -54,8 +54,8 @@ div {
 	border: 1px solid green;
 }
 </style>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="jquery.color.min.js"></script>
+<script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+<script src="https://code.jquery.com/color/jquery.color-3.0.0.min.js"></script>
 </head>
 <body>
 <button id="go">Simple</button>

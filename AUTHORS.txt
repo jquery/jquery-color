@@ -1,10 +1,11 @@
-Authors ordered by first contribution
+Authors ordered by first contribution.
 
 John Resig <jeresig@gmail.com>
 Scott González <scott.gonzalez@gmail.com>
 Corey Frang <gnarf@gnarf.net>
 Eddie Monge <eddie@eddiemonge.com>
 Timo Tijhof <krinklemail@gmail.com>
+Richard D. Worth <rdworth@gmail.com>
 Jörn Zaefferer <joern.zaefferer@gmail.com>
 Mike Sherov <mike.sherov@gmail.com>
 Brendan Byrd <github@resonatorsoft.org>
@@ -22,3 +23,4 @@ Leonardo Balter <leonardo.balter@gmail.com>
 Rob Garrison <wowmotty@gmail.com>
 Ryan Jacobson <rejacobson@gmail.com>
 Timmy Willison <timmywil@users.noreply.github.com>
+Sedat Kapanoğlu <sedat@kapanoglu.com>
