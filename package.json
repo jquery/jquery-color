@@ -79,7 +79,7 @@
 		"jquery-4.0.0": "npm:jquery@4.0.0",
 		"jquery-test-runner": "0.2.8",
 		"qunit": "2.24.2",
-		"release-it": "18.1.2",
+		"release-it": "21.0.1",
 		"rimraf": "6.1.0"
 	},
 	"commitplease": {
