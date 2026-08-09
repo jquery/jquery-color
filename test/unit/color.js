@@ -172,6 +172,10 @@ var sevens = {
 };
 parseTest( "#777", sevens );
 parseTest( "#777777", sevens );
+
+// Tolerate whitespace. https://github.com/jquery/jquery-ui/issues/2411
+parseTest( "  #777  ", sevens );
+parseTest( "  #777777  ", sevens );
 parseTest( "#77777726", {
 	expect: 4,
 	red: 119,
@@ -237,6 +241,9 @@ parseTest( "rgba(127, 127, 127, 0.5)", fiftypercentalpha );
 parseTest( "rgba(50%, 50%, 50%, 0.5)", fiftypercentalpha );
 parseTest( "rgba(127, 127, 127, .5)", fiftypercentalpha );
 parseTest( "rgba(50%, 50%, 50%, .5)", fiftypercentalpha );
+
+// Tolerate whitespace. https://github.com/jquery/jquery-ui/issues/2411
+parseTest( "  rgba( 50%, 50%, 50%, .5 )  ", fiftypercentalpha );
 parseTest( "rgba(0, 0, 0, 0)", {
 	expect: 4,
 	red: null,
@@ -673,6 +680,21 @@ QUnit.test( "Setting CSS to transparent", function( assert ) {
 
 	el.css( "backgroundColor", "transparent" );
 	assert.equal( jQuery.Color( el[ 0 ].style.backgroundColor ).alpha(), 0, "CSS was set to transparent" );
+} );
+
+QUnit.test.each( "Setting CSS to a variable", {
+	"without fallback": [ "var(--meh)", "var(--meh)" ],
+	"without fallback and whitespace": [ "  var( --meh )  ", "var( --meh )" ],
+	"with fallback": [ "var(--meh,#ff0077)", "var(--meh,#ff0077)" ],
+	"with fallback and whitespace": [ "  var( --meh,  #ff0077 )  ", "var( --meh,  #ff0077 )" ]
+}, function( assert, data ) {
+	var el = jQuery( "<div></div>" ).css( { color: data[ 0 ] } );
+	assert.expect( 1 );
+
+	// Support: Safari 26
+	// WebKit fails to trim trailing whitespace. https://bugs.webkit.org/show_bug.cgi?id=320186
+	var actual = el[ 0 ].style.color.replace( / +$/, "" );
+	assert.equal( actual, data[ 1 ], "Declared value" );
 } );
 
 QUnit.test( "jQuery.Color.hook() - Create new hooks for color properties", function( assert ) {
