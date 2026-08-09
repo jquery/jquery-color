@@ -77,8 +77,8 @@
 		"jquery-3.6.4": "npm:jquery@3.6.4",
 		"jquery-3.7.1": "npm:jquery@3.7.1",
 		"jquery-4.0.0": "npm:jquery@4.0.0",
-		"jquery-test-runner": "0.2.8",
-		"qunit": "2.24.2",
+		"jquery-test-runner": "0.3.1",
+		"qunit": "2.26.0",
 		"release-it": "21.0.1",
 		"rimraf": "6.1.0"
 	},
