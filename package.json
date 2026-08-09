@@ -61,7 +61,7 @@
 		"@swc/core": "1.11.24",
 		"commitplease": "3.2.0",
 		"cross-env": "7.0.3",
-		"eslint": "9.22.0",
+		"eslint": "9.39.5",
 		"eslint-config-jquery": "3.0.2",
 		"globals": "16.5.0",
 		"husky": "9.1.7",
