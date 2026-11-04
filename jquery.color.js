@@ -35,7 +35,7 @@
 
 	// a set of RE's that can match strings and generate color tuples.
 	stringParsers = [ {
-			re: /^\s*rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,
+			re: /^\s*rgba?\(\s*(\d{1,3}(?:\.\d+)?)\s*,\s*(\d{1,3}(?:\.\d+)?)\s*,\s*(\d{1,3}(?:\.\d+)?)\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,
 			parse: function( execResult ) {
 				return [
 					execResult[ 1 ],
