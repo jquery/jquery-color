@@ -241,6 +241,8 @@ parseTest( "rgba(127, 127, 127, 0.5)", fiftypercentalpha );
 parseTest( "rgba(50%, 50%, 50%, 0.5)", fiftypercentalpha );
 parseTest( "rgba(127, 127, 127, .5)", fiftypercentalpha );
 parseTest( "rgba(50%, 50%, 50%, .5)", fiftypercentalpha );
+parseTest( "rgb(127.5, 127.25, 127.9)", fiftypercent );
+parseTest( "rgba(127.5, 127.25, 127.9, 0.5)", fiftypercentalpha );
 
 // Tolerate whitespace. https://github.com/jquery/jquery-ui/issues/2411
 parseTest( "  rgba( 50%, 50%, 50%, .5 )  ", fiftypercentalpha );
